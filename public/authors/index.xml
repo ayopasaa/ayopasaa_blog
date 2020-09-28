@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Authors on Alejandro Yopasá Arenas</title>
+    <link>/authors/</link>
+    <description>Recent content in Authors on Alejandro Yopasá Arenas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 07 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>/authors/admin/</link>
+      <pubDate>Sun, 07 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/admin/</guid>
+      <description>Alejandro Yopasá Arenas is a PhD candidate at Institut of Chemistry/UNICAMP at the Environmental Chemistry Group. His research interests include analytical chemistry, data science and reproducible research. He believes in better ways of doing analytical analysis, based in experimental design and automated report generation.</description>
+    </item>
+    
+    <item>
+      <title>Anne Hélène Fostier</title>
+      <link>/authors/anne-h%C3%A9l%C3%A8ne-fostier/</link>
+      <pubDate>Wed, 27 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/anne-h%C3%A9l%C3%A8ne-fostier/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Anne</title>
+      <link>/authors/anne/</link>
+      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/anne/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

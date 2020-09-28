@@ -1,0 +1,121 @@
+---
+title: "Predicted relative standard deviation of the reproducibility (PRSD(R)), the “Horwitz Trumpet"
+author: "Alejandro Yopasa"
+date: "2019-09-17T00:00:00Z"
+categories: ["R"]
+tags: ["R Markdown", "horwitz", "precission"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+# Predicted relative standard deviation of the reproducibility (PRSD(R)), the “Horwitz Trumpet”.
+
+Based on the results of thousands of interlaboratory method performance studies,  Dr William Horwitz  calculates the estimates of the repeatability and reproducibility (between laboratory) standard deviations. He noticed that as the concentration of the analyte decreased over two orders of magnitude, the relative standard deviation of reproducibility (RSD~R~) increased by a factor of two. This pattern persisted at least down to sub-ppm levels. These findings gave rise to the famous ‘Horwitz Trumpet’, which depicts the relationship expressed as a two-sided one-sigma confidence interval. The predicted reproducibility standard deviation $\sigma_R$ in function of the concentration $C$, expressed as mass ratio (decimal fraction), is expresed by:
+
+
+$$
+\sigma_R = 0.02 C^{0.8495} \qquad or \qquad log_{10} \sigma_R = 0.8495 log_{10} C -1.6990
+$$
+
+The predicted relative standard deviation expressed as percentage (%), is calculated as:
+
+$$
+PRSD_R(\%)= \frac{\sigma_R}{C} \times 100 \qquad so \qquad PRSD_R(\%)= 2 \times C^{0.8495}C^{-1} = 2C^{-0.1505}
+$$
+
+In guidelines for standard methods requeriments of the AOAC this PRSD~R~ is a measure of the *reproducibility* from among-laboratory data. And the *repeatability*, or within-laboratory acceptable predicted target values for repeatability (PRSD~r~) are calculated as $PRSD_r(\%)=PRSD_R(\%)/2$, which represents the best case.
+
+
+
+
+## Calculation
+
+For calculating and reporting statistical parameters, data may be expressed in any convenient units (e.g., %, ppm, ppb, mg g^-1^, μg g^-1^; μg kg^-1^; μg L^-1^, μg μL^-1^, etc.). For reporting HorRat values, or for calculation or  the PRSD(R) data must be reported as a mass fraction, where the units of the numerator and denominator are the same, for example:
+
+$$
+1 \%= \frac{1 g}{100 g}= 0.01; \qquad \qquad 1 ppm=\frac{1 mg}{1 kg}=\frac{1 mg}{1000000 mg}= 0.000001
+$$
+
+We can create a R function to calculate the PRSD~R~ as follows:
+
+```{r}
+PRSDR<-function(conc, unit){
+  # Converting to mass ratio units
+  if (unit== "massratio") {
+    mr=conc
+  } else if (unit== "percentage") {
+    mr=conc/100
+  } else if (unit== "%") {
+    mr=conc/100
+  } else if (unit== "ppm") {
+    mr=conc/1000000
+  } else if (unit== "ppb") {
+    mr=conc/1000000000
+  } else if (unit== "ppt") {
+    mr=conc/1000000000000
+  } else {
+    warning("Please define one Concentration Unit: massratio, %, percentage, ppm, ppb,
+          ppt")
+  }
+
+  # Compute the Horwitz reproducibility standard deviation
+  2*(mr^-0.1505)
+
+}
+
+```
+
+So, using the formula we can graph the Horwitz curve from the concentration of a pure material (100 \%, mass ratio= `r 100/100`) to the concentration range of for example trace pollutants (1 ppb, mass ratio= `r 1/1e9`), the concentration in x is expressed as logarithm.
+
+
+
+```{r}
+conc <- seq(from = log10(1e-9), to = log10(1), length.out = 100)
+
+PRSDR_R <- PRSDR(10^(conc), "massratio")
+
+Hor_tru <- data.frame(conc, PRSDR_R)
+
+library(ggplot2)
+
+events <- data.frame(conc2 = c(log10(1),
+                               log10(0.1),
+                               log10(0.01),
+                               log10(0.001),
+                               log10(100/1e6),
+                               log10(10/1e6),
+                               log10(1/1e6),
+                               log10(100/1e9),
+                               log10(10/1e9),
+                               log10(1/1e9)),
+                     text = c('100 %',
+                              "10 %",
+                              '1 %',
+                              "0.1%",
+                              "100 ppm",
+                              "10 ppm",
+                              "1 ppm",
+                              "100 ppb",
+                              "10 ppb",
+                              "1 ppb"))
+
+p<-ggplot(Hor_tru, aes(x=conc, y=PRSDR_R))+
+  geom_line(aes(color="Reproducibility"))+
+  geom_line(aes(y=-PRSDR_R, color="Reproducibility"))+
+  geom_line(aes(y= PRSDR_R/2, color="Repeatability"))+
+  geom_line(aes(y=-PRSDR_R/2, color="Repeatability"))+
+  geom_vline(data = events, aes(xintercept = conc2), linetype=2, color="gray70")+
+  geom_text(data = events, mapping = aes(label = text, x=conc2, y=-47), angle = 90, hjust = 0, vjust= 1)+
+  xlab(expression(Log[10](mass~ratio)))+
+  ylab(expression(Predicted~relative~standard~deviation-PRSD~("%")))+
+  theme_light()+
+  theme(legend.title = element_blank())
+p
+
+
+```
+
+
+The Horwitz curve is useful as the initial estimate of expected among-laboratory variability prior to the performance of an interlaboratory study

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R Markdown on Alejandro Yopasá Arenas</title>
+    <link>/tags/r-markdown/</link>
+    <description>Recent content in R Markdown on Alejandro Yopasá Arenas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 17 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Predicted relative standard deviation of the reproducibility (PRSD(R)), the “Horwitz Trumpet</title>
+      <link>/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Tue, 17 Sep 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2015-07-23-r-rmarkdown/</guid>
+      <description>Predicted relative standard deviation of the reproducibility (PRSD(R)), the “Horwitz Trumpet”.Based on the results of thousands of interlaboratory method performance studies, Dr William Horwitz calculates the estimates of the repeatability and reproducibility (between laboratory) standard deviations. He noticed that as the concentration of the analyte decreased over two orders of magnitude, the relative standard deviation of reproducibility (RSDR) increased by a factor of two. This pattern persisted at least down to sub-ppm levels.</description>
+    </item>
+    
+  </channel>
+</rss>
