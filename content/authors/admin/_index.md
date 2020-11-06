@@ -1,28 +1,28 @@
 ---
 authors:
 - admin
-bio: My research interests include analytical chemistry, data science and reproducible research.
+bio: Meus interesses de pesquisa incluem química analítica, ciência de dados e pesquisa reprodutível.
 education:
   courses:
-  - course: PhD in Analytical Chemistry
+  - course: Doutorado em Ciências
     institution: Universidade Estadual de Campinas (UNICAMP)
     year: 2019
-  - course: MSc in Analytical Chemistry
+  - course: Mestrado em Química, na área de Química Analítica
     institution: Universidade Estadual de Campinas (UNICAMP)
     year: 2015
-  - course: BSc in Chemistry
+  - course: Graduação em Química
     institution: Universidad Nacional de Colombia (UN)
     year: 2011
 email: "ayopasaa@gmail.com"
-interests:
+interesses:
 - Data Science
-- Analytical Chemistry
-- Reproducible Research
+- Química Analítica
+- Pesquisa reprodutível
 name: Alejandro Yopasá Arenas
 organizations:
-- name: Grupo de Química Ambiental (GQA)-IQ-UNICAMP
-  url: "http://www.gqa.iqm.unicamp.br"
-role: PhD candidate
+- name: Besins Healthcare
+  url: ""
+role: Analista Químico
 social:
 - icon: envelope
   icon_pack: fas
@@ -39,4 +39,6 @@ user_groups:
 - Visitors
 ---
 
-Alejandro Yopasá Arenas is a PhD candidate at Institut of Chemistry/UNICAMP at the Environmental Chemistry Group. His research interests include analytical chemistry, data science and reproducible research. He believes in better ways of doing analytical analysis, based in experimental design and automated report generation. 
+Possui Mestrado e Doutorado em Química Analítica pela Universidade Estadual de Campinas (2013-2019) e graduação em Química pela Universidad Nacional de Colombia (2011). Conhecimentos na área de química, com ênfase em química analítica e ambiental, preparo de amostras, análise fisicoquímico, cromatográfico e espectrofotomêtrico. Experiência no desenvolvimento de métodos inovadores aplicados a matrizes complexas. 
+
+**As opiniões expressas neste site são de responsabilidade do autor e não representam necessariamente as opiniões ou políticas de sua organização/agência afiliada**

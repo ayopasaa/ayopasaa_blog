@@ -17,19 +17,19 @@ subtitle = ""
 [[feature]]
   icon = "flask"
   icon_pack = "fas"
-  name = "Chemistry"
+  name = "Química"
   description = "" 
 
 [[feature]]
   icon = "flask"
   icon_pack = "fas"
-  name = "Analytical Sciences"
+  name = "Ciências analíticas"
   description = "" 
   
 [[feature]]
   icon = "leaf"
   icon_pack = "fas"
-  name = "Environmental Sciences"
+  name = "Ciência Ambiental"
   description = "" 
 
 [[feature]]
@@ -41,13 +41,13 @@ subtitle = ""
 [[feature]]
   icon = "laptop-code"
   icon_pack = "fas"
-  name = "Chemometrics"
+  name = "Quimiometría"
   description = "" 
 
 [[feature]]
   icon = "chart-bar"
   icon_pack = "fas"
-  name = "Data Science"
+  name = "Ciência de dados"
   description = "" 
   
 

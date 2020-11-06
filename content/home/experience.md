@@ -5,7 +5,7 @@ headless = true  # This file represents a page section.
 active = true  # Activate this widget? true/false
 weight = 40  # Order that this section will appear.
 
-title = "Experience"
+title = "Experiência"
 subtitle = ""
 
 # Date format for experience
@@ -17,20 +17,27 @@ date_format = "Jan 2006"
 #   Required fields are `title`, `company`, and `date_start`.
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
+
 [[experience]]
-  title = "Chemist"
+  title = "Analista Químico"
+  company = "Besins Healthcare"
+  company_url = ""
+  location = "Jundiaí, Brasil"
+  date_start = "2019-10-16"
+  date_end = ""
+  description = """
+
+  """
+
+[[experience]]
+  title = "Analista Químico"
   company = "AQM SAS"
   company_url = ""
   location = "Bogota, Colombia"
   date_start = "2011-08-29"
   date_end = "2013-07-16"
   description = """
-  Responsibilities include:
-  
-  * Sample preparation and analysis using liquid chromatography, spectroscopic and
-electrochemical techniques in compliance with regulatory issues
-  * Troubleshooting of analytical methods
-  * maintenance of equipment and other laboratory facilities
+
   """
 
 

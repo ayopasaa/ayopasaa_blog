@@ -34,17 +34,42 @@
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2019-09-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/horwitz/</loc>
-    <lastmod>2019-09-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-09-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/precis%C3%A3o/</loc>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/2020-10-24-r-rmarkdown-horw-pt/</loc>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-markdown/</loc>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-10-24T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -54,21 +79,6 @@
   
   <url>
     <loc>/post/2015-07-23-r-rmarkdown/</loc>
-    <lastmod>2019-09-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2019-09-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r-markdown/</loc>
-    <lastmod>2019-09-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2019-09-17T00:00:00+00:00</lastmod>
   </url>
   
@@ -113,7 +123,7 @@
   </url>
   
   <url>
-    <loc>/post/jupyter/</loc>
+    <loc>/post/rstudio-r/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
   </url>
   

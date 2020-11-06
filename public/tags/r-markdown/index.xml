@@ -6,7 +6,16 @@
     <description>Recent content in R Markdown on Alejandro Yopasá Arenas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Sep 2019 00:00:00 +0000</lastBuildDate><atom:link href="/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 24 Oct 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/r-markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Predição do Desvio Padrão Relativo da reprodutibilidade (PRSD (R)), ou Trompete de Horwitz</title>
+      <link>/post/2020-10-24-r-rmarkdown-horw-pt/</link>
+      <pubDate>Sat, 24 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2020-10-24-r-rmarkdown-horw-pt/</guid>
+      <description>Predição do Desvio Padrão Relativo da reprodutibilidade (PRSD (R)), ou “Trompete de Horwitz””.Com base nos resultados de milhares de estudos de desempenho de métodos interlaboratoriais, o Dr. William Horwitz calculou as estimativas dos desvios padrão de repetibilidade e reprodutibilidade (entre laboratórios). Ele notou que à medida que a concentração do analito diminuía em duas ordens de magnitude, o desvio padrão relativo da reprodutibilidade (RSDR) aumentava por um fator de dois.</description>
+    </item>
+    
     <item>
       <title>Predicted relative standard deviation of the reproducibility (PRSD(R)), the “Horwitz Trumpet</title>
       <link>/post/2015-07-23-r-rmarkdown/</link>
