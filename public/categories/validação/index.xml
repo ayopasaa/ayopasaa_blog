@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Validação on Alejandro Yopasá Arenas</title>
+    <link>/categories/valida%C3%A7%C3%A3o/</link>
+    <description>Recent content in Validação on Alejandro Yopasá Arenas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 06 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/valida%C3%A7%C3%A3o/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</title>
+      <link>/post/horwitz/</link>
+      <pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/horwitz/</guid>
+      <description>A fascinante função de Horwitz</description>
+    </item>
+    
+  </channel>
+</rss>

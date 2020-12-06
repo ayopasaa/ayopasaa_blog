@@ -6,7 +6,25 @@
     <description>Recent content on Alejandro Yopasá Arenas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 06 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/authors/admin/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</title>
+      <link>/post/horwitz/</link>
+      <pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/horwitz/</guid>
+      <description>A fascinante função de Horwitz</description>
+    </item>
+    
+    <item>
+      <title>Introdução e ferramentas de trabalho</title>
+      <link>/post/rstudio-r/</link>
+      <pubDate>Sat, 05 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/rstudio-r/</guid>
+      <description>Guia básico de R, RStudio e RMarkdown</description>
+    </item>
+    
     <item>
       <title>An example preprint / working paper</title>
       <link>/publication/preprint/</link>
@@ -17,30 +35,12 @@
     </item>
     
     <item>
-      <title>Ferramentas de trabalho</title>
-      <link>/post/rstudio-r/</link>
-      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/rstudio-r/</guid>
-      <description>Guia básico de R, RStudio e RMarkdown</description>
-    </item>
-    
-    <item>
       <title>Exposure of Brazilian soil and groundwater to pollution by coccidiostats and antimicrobial agents used as growth promoters</title>
       <link>/publication/journal-article/</link>
       <pubDate>Wed, 27 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>/publication/journal-article/</guid>
       <description>The model uses relative simple and available data from official sources that were never previously used together for this purpose. Although simple, the qualitative approach based on worst-case scenarios can be used in future research as a way to define possible experimental sites where quantitative analysis could be performed for a better and real risk assessment.</description>
-    </item>
-    
-    <item>
-      <title>Academic: the website builder for Hugo</title>
-      <link>/post/getting-started/</link>
-      <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/post/getting-started/</guid>
-      <description>Create a beautifully simple website in under 10 minutes.</description>
     </item>
     
     <item>

@@ -1,0 +1,88 @@
+---
+authors:
+- admin
+projects: ["Ciência de Dados"]
+categories: ["Software"]
+date: "2020-12-05T00:00:00Z"
+draft: false
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: Introdução e ferramentas de trabalho 
+subtitle: Guia básico de R, RStudio e RMarkdown
+summary: Guia básico de R, RStudio e RMarkdown
+tags: ["R", "R Studio", "tidyverse", "Software"]
+---
+
+
+
+
+
+<!--![png](https://www.r-project.org/Rlogo.png)-->
+
+# Ferramentas básicas utilizadas na construção deste site/blog
+
+Faz muitos anos venho trabalhando num único ambiente integrado ([RStudio](https://rstudio.com/products/rstudio/)) que me ajuda nos diversos desafíos encontrados na carreira de cientista, desde o básico como fazer um teste estatístico, como fazer um artigo reprodutível com foco em ciencia de dados, capítulos inteiros de uma tese de doutorado e incluso este site, que está sendo feito desde o RStudio/[Hugo](https://github.com/wowchemy/wowchemy-hugo-modules).
+
+
+Ferramentas básicas:
+
+
+1. [R](https://www.r-project.org) é a base de tudo o meu trabalho, R é um ambiente de software **livre** para computação estatística.
+
+2. O IDE [RStudio](https://rstudio.com/products/rstudio/) é um conjunto de ferramentas integradas projetadas para ajudar a ser mais produtivo com R e Python. Inclui um console, um editor que oferece suporte à execução direta de código e uma variedade de ferramentas robustas para graficar, depurar e gerenciar o espaço de trabalho.
+
+3. O [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) fornece uma estrutura para autores em ciência de dados. Num único arquivo R Markdown é possível salvar e executar código assim como gerar relatórios de alta qualidade que podem ser compartilhados com um público em diversos formatos. R Markdown é uma variante do [Markdown](https://daringfireball.net/projects/markdown/) que tem blocos de código R incorporados, para serem usados com o [knitr](https://yihui.org/knitr/) para facilitar a criação de relatórios reproduzíveis baseados na web. A sintaxe Markdown tem alguns aprimoramentos; por exemplo, você pode incluir equações em $\LaTeX{}$.
+
+4. O [ggplot2](https://ggplot2.tidyverse.org) é um sistema para a criação declarativa de gráficos, baseado na _Gramática dos Gráficos_. É difícil descrever como o ggplot2 funciona porque ele incorpora uma profunda filosofia da visualização, porém é uma das ferramentas mais interessantes para geração de gráficos complexos. No ggplot você fornece os dados, diz ao ggplot2 como mapear as variáveis para a estética, qual base gráfica utilizar e então adiciona camadas, escalas, especificações de facetas e sistemas de coordenadas. O ggplot2 faz parte do [tidyverse](https://www.tidyverse.org) que é uma coleção de pacotes do R projetados para ciência de dados. Todos os pacotes compartilham uma filosofia de design, gramática e estruturas de dados subjacentes.
+
+
+
+
+# Instalação dos softwares
+
+
+## Instalar R no Windows 
+
+1. Ir a https://cloud.r-project.org/bin/windows/base/
+2. Click no link “Download R 4.0.3 for Windows” (ou a versão que estiver como mais recente)
+3. Baixar o arquivo e dar doble clique para instalar, para manter as configurações predefinidas é só dar clique em "next" até finalizar o processo.
+
+Para outros sistemas operativos as distribuições do R se encontram em https://cloud.r-project.org
+
+
+
+## Instalação do Rstudio
+
+1. Ir a https://rstudio.com/products/rstudio/download/#download
+2. Selecionar o instalador apropiado dependendo do sistema operativo
+3. Baixar o arquivo e dar doble clique para instalar, para manter as configurações predefinidas é só dar clique em "next" até finalizar o processo.
+
+![Área de trabalho típica no RStudio](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Rstudio-R/captura1.png)
+
+## Instalação do Tidyverse
+
+O [tidyverse](https://tidyverse.tidyverse.org) é um conjunto de pacotes que trabalham em armonia fazendo mais mais fácil a instalação é o carregamento em comandos simples.
+
+
+```{r, eval=FALSE}
+# Instalação desde o CRAN (The Comprehensive R Archive Network)
+install.packages("tidyverse")
+
+# Ou para instaçar a versão em desenvolvimento desde o GitHub
+# install.packages("devtools")
+devtools::install_github("tidyverse/tidyverse")
+```
+
+
+Utilizando o comando `r knitr::inline_expr('library(tidyverse)')` vão ser carregados os pacotes da base tidyverse:
+
+* **ggplot2**, para visualização de dados.
+* **dplyr**, para manipulação de dados.
+* **tidyr**, para arranjo de dados.
+* **readr**, para importar dados.
+* **purrr**, para programação funcional.
+* **tibble**, para *tibbles*, uma reimaginação dos *data frames*.
+* **stringr**, para cadeias de caracteres.
+* **forcats**, para fatores.

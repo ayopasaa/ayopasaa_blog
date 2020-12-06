@@ -12,7 +12,7 @@ projects: []
 subtitle: Guia básico de R, RStudio e RMarkdown
 summary: Guia básico de R, RStudio e RMarkdown
 tags: []
-title: Ferramentas de trabalho 
+title: Introdução e ferramentas de trabalho 
 ---
 
 
@@ -23,17 +23,17 @@ title: Ferramentas de trabalho
 
 # Ferramentas básicas utilizadas na construção deste site/blog
 
-faz muitos anos venho trabalhando num ambiente integrado que me permite trabalhar em diversas temáticas na minha carrera como cientista, desde o básico como fazer um teste estatístico e fazer um artigo ciencia de dadoss e incluso caítulos enteiros de uma tese de doutorado e incluso este site está sendo feito desde o RStudio.
+Faz muitos anos venho trabalhando num único ambiente integrado ([RStudio](https://rstudio.com/products/rstudio/)) que me ajuda nos diversos desafíos encontrados na carreira de cientista, desde o básico como fazer um teste estatístico, como fazer um artigo reprodutível com foco em ciencia de dados, capítulos inteiros de uma tese de doutorado e incluso este site, que está sendo feito desde o RStudio/[Hugo](https://github.com/wowchemy/wowchemy-hugo-modules).
 
 
-
+Ferramentas básicas:
 
 
 1. [R](https://www.r-project.org) é a base de tudo o meu trabalho, R é um ambiente de software **livre** para computação estatística.
 
 2. O IDE [RStudio](https://rstudio.com/products/rstudio/) é um conjunto de ferramentas integradas projetadas para ajudar a ser mais produtivo com R e Python. Inclui um console, um editor que oferece suporte à execução direta de código e uma variedade de ferramentas robustas para graficar, depurar e gerenciar o espaço de trabalho.
 
-3. O [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) fornece uma estrutura para autores em ciência de dados. Num único arquivo R Markdown é possível salvar e executar código assim gerar relatórios de alta qualidade que podem ser compartilhados com um público em diversos formatos.
+3. O [R Markdown](https://rmarkdown.rstudio.com/lesson-1.html) fornece uma estrutura para autores em ciência de dados. Num único arquivo R Markdown é possível salvar e executar código assim gerar relatórios de alta qualidade que podem ser compartilhados com um público em diversos formatos.R Markdown é uma variante do [Markdown](https://daringfireball.net/projects/markdown/) que tem blocos de código R incorporados, para serem usados com o [knitr](https://yihui.org/knitr/) para facilitar a criação de relatórios reproduzíveis baseados na web. A sintaxe Markdown tem alguns aprimoramentos; por exemplo, você pode incluir equações $\LaTeX{}$.
 
 4. O [ggplot2](https://ggplot2.tidyverse.org) é um sistema para a criação declarativa de gráficos, baseado na _Gramática dos Gráficos_. É difícil descrever como o ggplot2 funciona porque ele incorpora uma profunda filosofia da visualização, porém é uma das ferramentas mais interessantes para geração de gráficos complexos. No ggplot você fornece os dados, diz ao ggplot2 como mapear as variáveis para a estética, qual base gráfica utilizar e então adiciona camadas, escalas, especificações de facetas e sistemas de coordenadas. O ggplot2 faz parte do [tidyverse](https://www.tidyverse.org) que é uma coleção de pacotes do R projetados para ciência de dados. Todos os pacotes compartilham uma filosofia de design, gramática e estruturas de dados subjacentes.
 

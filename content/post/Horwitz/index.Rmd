@@ -1,0 +1,133 @@
+---
+authors:
+- admin
+projects: ["Química Analítica"]
+categories: ["Validação"]
+date: "2020-12-06T00:00:00Z"
+draft: false
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação
+subtitle:  Trompete de Horwitz
+summary: A fascinante função de Horwitz
+tags: ["R Markdown", "Horwitz", "Precisão", "validação"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE)
+```
+
+
+
+Com base nos resultados de milhares de estudos de desempenho de métodos interlaboratoriais, o Dr. William Horwitz (FDA, AOAC) calculou as estimativas dos desvios padrão de repetibilidade e reprodutibilidade (entre laboratórios). Ele notou que à medida que a concentração do analito diminuía em duas ordens de magnitude, o desvio padrão relativo da reprodutibilidade (RSD~R~) aumentava por um fator de dois. Este padrão persistiu pelo menos até níveis sub-ppm. Essas descobertas deram origem à famosa ‘Trumpete de Horwitz’, que retrata a relação, expressa como um intervalo de confiança, do desvio padrão da reprodutibilidade prevista $\sigma_R$ em função da concentração $C$, sendo esta expressa como razão de massa (fração decimal), $\sigma_R$ é expresso por:
+
+$$
+\sigma_R = 0.02 C^{0.8495} \qquad ou \qquad log_{10} \sigma_R = 0.8495 log_{10} C -1.6990
+$$
+
+O desvio padrão relativo previsto expresso como porcentagem (%), é calculado como:
+
+$$
+PRSD_R(\%)= \frac{\sigma_R}{C} \times 100 \qquad então \qquad PRSD_R(\%)= 2 \times C^{0.8495}C^{-1} = 2C^{-0.1505}
+$$
+
+Nas diretrizes para requisitos de métodos padrão da AOAC, este PRSD~R~ é uma medida da *reprodutibilidade* de dados entre laboratórios. A *repetibilidade*, ou valores alvo preditos aceitáveis em ensaios intralaboratório para repetibilidade (PRSD ~r~) são calculados como $PRSD_r (\%) = PRSD_R (\%) / 2$, que representa o melhor caso.
+
+
+
+
+## Cálculos
+
+Para calcular e relatar parâmetros estatísticos, os dados podem ser expressos em quaisquer unidade conveniente (por exemplo: %, ppm, ppb, mg g^-1^, μg g^-1^; μg kg^-1^; μg L^-1^, μg μL^-1^, etc.). Para relatar valores HorRat, ou para cálculo da PRSD(R) as concentrações devem ser expressas como uma fração de massa, onde as unidades do numerador e denominador são as mesmas, por exemplo:
+
+
+
+$$
+1 \%= \frac{1 g}{100 g}= 0.01; \qquad \qquad 1 ppm=\frac{1 mg}{1 kg}=\frac{1 mg}{1000000 mg}= 0.000001
+$$
+
+Podemos criar uma função R para calcular o PRSD~R~ da seguinte forma:
+
+```{r}
+PRSDR<-function(conc, unit){
+  # Convertendo em unidades de razão de massa
+  if (unit== "razao_massa") {
+    mr=conc
+  } else if (unit== "porcentagem") {
+    mr=conc/100
+  } else if (unit== "%") {
+    mr=conc/100
+  } else if (unit== "ppm") {
+    mr=conc/1000000
+  } else if (unit== "ppb") {
+    mr=conc/1000000000
+  } else if (unit== "ppt") {
+    mr=conc/1000000000000
+  } else {
+    warning("por favor definir a unidade: razao_massa, %, porcentagem, ppm, ppb,
+          ppt")
+  }
+
+  # Calculando o desvio padrão da reprodutibilidade de Horwitz
+  2*(mr^-0.1505)
+
+}
+
+```
+
+
+
+Assim, usando a fórmula, podemos representar graficamente a curva de Horwitz da concentração de um material puro (100 \%, razão de massa = `r 100 / 100`) até uma  faixa de concentração de, por exemplo, traços de poluentes (1 ppb, razão de massa =` r 1/1e9`), a concentração em x é expressa como logaritmo.
+
+
+
+```{r}
+conc <- seq(from = log10(1e-9), to = log10(1), length.out = 100)
+
+PRSDR_R <- PRSDR(10^(conc), "razao_massa")
+
+Hor_tru <- data.frame(conc, PRSDR_R)
+
+library(ggplot2)
+
+events <- data.frame(conc2 = c(log10(1),
+                               log10(0.1),
+                               log10(0.01),
+                               log10(0.001),
+                               log10(100/1e6),
+                               log10(10/1e6),
+                               log10(1/1e6),
+                               log10(100/1e9),
+                               log10(10/1e9),
+                               log10(1/1e9)),
+                     text = c('100 %',
+                              "10 %",
+                              '1 %',
+                              "0.1%",
+                              "100 ppm",
+                              "10 ppm",
+                              "1 ppm",
+                              "100 ppb",
+                              "10 ppb",
+                              "1 ppb"))
+
+p<-ggplot(Hor_tru, aes(x=conc, y=PRSDR_R))+
+  geom_line(aes(color="Reprodutibilidade"))+
+  geom_line(aes(y=-PRSDR_R, color="Reprodutibilidade"))+
+  geom_line(aes(y= PRSDR_R/2, color="Repetibilidade"))+
+  geom_line(aes(y=-PRSDR_R/2, color="Repetibilidade"))+
+  geom_vline(data = events, aes(xintercept = conc2), linetype=2, color="gray70")+
+  geom_text(data = events, mapping = aes(label = text, x=conc2, y=-47), angle = 90, hjust = 0, vjust= 1)+
+  xlab(expression(Log[10](razão~de~massa)))+
+  ylab(expression(Desvio~padrão~relativo~predito~("%")))+
+  theme_light()+
+  theme(legend.title = element_blank())
+p
+
+
+```
+
+A função de Horwitz mostra que o desvio esperado numa precisão depende da concentração de trabalho, para uma análise típico de teor um desvio de uns 2% é aceitável mas também sería aceitável um 40% de desvio numa análise de contaminantes emergentes (sub-ppb) feito por lanboratórios diferentes. A curva de Horwitz é útil como estimativa inicial da variabilidade esperada entre laboratórios antes da realização de um estudo interlaboratorial.
+

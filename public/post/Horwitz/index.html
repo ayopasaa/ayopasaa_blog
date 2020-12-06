@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.1">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Alejandro Yopasá Arenas">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="A fascinante função de Horwitz">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/horwitz/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.e2f43c4e621c76c264988f66a867d2af.css">
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/horwitz/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Alejandro Yopasá Arenas">
+  <meta property="og:url" content="/post/horwitz/">
+  <meta property="og:title" content="Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação | Alejandro Yopasá Arenas">
+  <meta property="og:description" content="A fascinante função de Horwitz"><meta property="og:image" content="/post/horwitz/featured.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-12-06T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-12-06T00:00:00&#43;00:00">
+  
+
+  
+
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<script async type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  <title>Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação | Alejandro Yopasá Arenas</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Alejandro Yopasá Arenas</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured">
+            
+            <span>Publicações</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact">
+            
+            <span>Contacto</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/Curriculim_Vitae_Alejandro_Yopasa_082020.pdf">
+            
+            <span>CV</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/horwitz/featured_hu175bdd3f9d918905103203c4b91ad3b4_76826_800x0_resize_lanczos_2.png');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</h1>
+
+        
+        <p class="page-subtitle">Trompete de Horwitz</p>
+        
+
+        
+
+
+
+<meta content="2020-12-06 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-12-06 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 6, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="">Validação</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Predi%c3%a7%c3%a3o%20do%20Desvio%20Padr%c3%a3o%20Relativo%20da%20Reprodutibilidade%20em%20Valida%c3%a7%c3%a3o&amp;url=%2fpost%2fhorwitz%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fhorwitz%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fhorwitz%2f&amp;title=Predi%c3%a7%c3%a3o%20do%20Desvio%20Padr%c3%a3o%20Relativo%20da%20Reprodutibilidade%20em%20Valida%c3%a7%c3%a3o"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fhorwitz%2f&amp;title=Predi%c3%a7%c3%a3o%20do%20Desvio%20Padr%c3%a3o%20Relativo%20da%20Reprodutibilidade%20em%20Valida%c3%a7%c3%a3o"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Predi%c3%a7%c3%a3o%20do%20Desvio%20Padr%c3%a3o%20Relativo%20da%20Reprodutibilidade%20em%20Valida%c3%a7%c3%a3o&amp;body=%2fpost%2fhorwitz%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="/post/horwitz/featured_hu175bdd3f9d918905103203c4b91ad3b4_76826_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</h1>
+
+  
+  <p class="page-subtitle">Trompete de Horwitz</p>
+  
+
+  
+
+
+
+<meta content="2020-12-06 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-12-06 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 6, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="">Validação</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=&amp;url="
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u="
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=&amp;body=">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+
+<p>Com base nos resultados de milhares de estudos de desempenho de métodos interlaboratoriais, o Dr. William Horwitz (FDA, AOAC) calculou as estimativas dos desvios padrão de repetibilidade e reprodutibilidade (entre laboratórios). Ele notou que à medida que a concentração do analito diminuía em duas ordens de magnitude, o desvio padrão relativo da reprodutibilidade (RSD<sub>R</sub>) aumentava por um fator de dois. Este padrão persistiu pelo menos até níveis sub-ppm. Essas descobertas deram origem à famosa ‘Trumpete de Horwitz’, que retrata a relação, expressa como um intervalo de confiança, do desvio padrão da reprodutibilidade prevista <span class="math inline">\(\sigma_R\)</span> em função da concentração <span class="math inline">\(C\)</span>, sendo esta expressa como razão de massa (fração decimal), <span class="math inline">\(\sigma_R\)</span> é expresso por:</p>
+<p><span class="math display">\[
+\sigma_R = 0.02 C^{0.8495} \qquad ou \qquad log_{10} \sigma_R = 0.8495 log_{10} C -1.6990
+\]</span></p>
+<p>O desvio padrão relativo previsto expresso como porcentagem (%), é calculado como:</p>
+<p><span class="math display">\[
+PRSD_R(\%)= \frac{\sigma_R}{C} \times 100 \qquad então \qquad PRSD_R(\%)= 2 \times C^{0.8495}C^{-1} = 2C^{-0.1505}
+\]</span></p>
+<p>Nas diretrizes para requisitos de métodos padrão da AOAC, este PRSD<sub>R</sub> é uma medida da <em>reprodutibilidade</em> de dados entre laboratórios. A <em>repetibilidade</em>, ou valores alvo preditos aceitáveis em ensaios intralaboratório para repetibilidade (PRSD <sub>r</sub>) são calculados como <span class="math inline">\(PRSD_r (\%) = PRSD_R (\%) / 2\)</span>, que representa o melhor caso.</p>
+<div id="cálculos" class="section level2">
+<h2>Cálculos</h2>
+<p>Para calcular e relatar parâmetros estatísticos, os dados podem ser expressos em quaisquer unidade conveniente (por exemplo: %, ppm, ppb, mg g<sup>-1</sup>, μg g<sup>-1</sup>; μg kg<sup>-1</sup>; μg L<sup>-1</sup>, μg μL<sup>-1</sup>, etc.). Para relatar valores HorRat, ou para cálculo da PRSD(R) as concentrações devem ser expressas como uma fração de massa, onde as unidades do numerador e denominador são as mesmas, por exemplo:</p>
+<p><span class="math display">\[
+1 \%= \frac{1 g}{100 g}= 0.01; \qquad \qquad 1 ppm=\frac{1 mg}{1 kg}=\frac{1 mg}{1000000 mg}= 0.000001
+\]</span></p>
+<p>Podemos criar uma função R para calcular o PRSD<sub>R</sub> da seguinte forma:</p>
+<pre class="r"><code>PRSDR&lt;-function(conc, unit){
+  # Convertendo em unidades de razão de massa
+  if (unit== &quot;razao_massa&quot;) {
+    mr=conc
+  } else if (unit== &quot;porcentagem&quot;) {
+    mr=conc/100
+  } else if (unit== &quot;%&quot;) {
+    mr=conc/100
+  } else if (unit== &quot;ppm&quot;) {
+    mr=conc/1000000
+  } else if (unit== &quot;ppb&quot;) {
+    mr=conc/1000000000
+  } else if (unit== &quot;ppt&quot;) {
+    mr=conc/1000000000000
+  } else {
+    warning(&quot;por favor definir a unidade: razao_massa, %, porcentagem, ppm, ppb,
+          ppt&quot;)
+  }
+
+  # Calculando o desvio padrão da reprodutibilidade de Horwitz
+  2*(mr^-0.1505)
+
+}</code></pre>
+<p>Assim, usando a fórmula, podemos representar graficamente a curva de Horwitz da concentração de um material puro (100 %, razão de massa = 1) até uma faixa de concentração de, por exemplo, traços de poluentes (1 ppb, razão de massa =<code>r 1/1e9</code>), a concentração em x é expressa como logaritmo.</p>
+<pre class="r"><code>conc &lt;- seq(from = log10(1e-9), to = log10(1), length.out = 100)
+
+PRSDR_R &lt;- PRSDR(10^(conc), &quot;razao_massa&quot;)
+
+Hor_tru &lt;- data.frame(conc, PRSDR_R)
+
+library(ggplot2)
+
+events &lt;- data.frame(conc2 = c(log10(1),
+                               log10(0.1),
+                               log10(0.01),
+                               log10(0.001),
+                               log10(100/1e6),
+                               log10(10/1e6),
+                               log10(1/1e6),
+                               log10(100/1e9),
+                               log10(10/1e9),
+                               log10(1/1e9)),
+                     text = c(&#39;100 %&#39;,
+                              &quot;10 %&quot;,
+                              &#39;1 %&#39;,
+                              &quot;0.1%&quot;,
+                              &quot;100 ppm&quot;,
+                              &quot;10 ppm&quot;,
+                              &quot;1 ppm&quot;,
+                              &quot;100 ppb&quot;,
+                              &quot;10 ppb&quot;,
+                              &quot;1 ppb&quot;))
+
+p&lt;-ggplot(Hor_tru, aes(x=conc, y=PRSDR_R))+
+  geom_line(aes(color=&quot;Reprodutibilidade&quot;))+
+  geom_line(aes(y=-PRSDR_R, color=&quot;Reprodutibilidade&quot;))+
+  geom_line(aes(y= PRSDR_R/2, color=&quot;Repetibilidade&quot;))+
+  geom_line(aes(y=-PRSDR_R/2, color=&quot;Repetibilidade&quot;))+
+  geom_vline(data = events, aes(xintercept = conc2), linetype=2, color=&quot;gray70&quot;)+
+  geom_text(data = events, mapping = aes(label = text, x=conc2, y=-47), angle = 90, hjust = 0, vjust= 1)+
+  xlab(expression(Log[10](razão~de~massa)))+
+  ylab(expression(Desvio~padrão~relativo~predito~(&quot;%&quot;)))+
+  theme_light()+
+  theme(legend.title = element_blank())
+p</code></pre>
+<p><img src="/post/Horwitz/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>A função de Horwitz mostra que o desvio esperado numa precisão depende da concentração de trabalho, para uma análise típico de teor um desvio de uns 2% é aceitável mas também sería aceitável um 40% de desvio numa análise de contaminantes emergentes (sub-ppb) feito por lanboratórios diferentes. A curva de Horwitz é útil como estimativa inicial da variabilidade esperada entre laboratórios antes da realização de um estudo interlaboratorial.</p>
+</div>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r-markdown/">R Markdown</a>
+  
+  <a class="badge badge-light" href="/tags/horwitz/">Horwitz</a>
+  
+  <a class="badge badge-light" href="">Precisão</a>
+  
+  <a class="badge badge-light" href="">validação</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu66856b498686ee1cc65495b86c06a655_279091_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></h5>
+      <h6 class="card-subtitle">Analista Químico</h6>
+      <p class="card-text" itemprop="description">Meus interesses de pesquisa incluem química analítica, ciência de dados e pesquisa reprodutível.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.facebook.com/" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/ayopasaa" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+<div class="container">
+  <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="/privacy/">Privacy Policy</a>
+  </p>
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+</div>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.8f3d53582b3c04a038fca31bcc86151b.js"></script>
+
+  </body>
+</html>
+
