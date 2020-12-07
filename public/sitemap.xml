@@ -123,31 +123,6 @@
   </url>
   
   <url>
-    <loc>/publication_types/3/</loc>
-    <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/preprint/</loc>
-    <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication_types/</loc>
-    <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/publication/</loc>
-    <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/source-themes/</loc>
-    <lastmod>2019-04-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/slides/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
   </url>
@@ -173,48 +148,48 @@
   </url>
   
   <url>
-    <loc>/publication/journal-article/</loc>
+    <loc>/publication/journal-article/sig-2018/</loc>
     <lastmod>2018-06-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/deep-learning/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/publication_types/</loc>
+    <lastmod>2018-06-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/demo/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/publication/</loc>
+    <lastmod>2018-06-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/project/external-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/tags/qu%C3%ADmica-ambiental/</loc>
+    <lastmod>2018-06-27T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/project/internal-project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/authors/gustavo-de-souza-pess%C3%B4a/</loc>
+    <lastmod>2017-12-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/project/</loc>
-    <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    <loc>/authors/marco-aur%C3%A9lio-zezzi-arruda/</loc>
+    <lastmod>2017-12-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/publication_types/1/</loc>
-    <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    <loc>/publication/journal-article/pvp-agnp/</loc>
+    <lastmod>2017-12-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/publication/conference-paper/</loc>
-    <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    <loc>/authors/odilon-fran%C3%A7a-de-oliveira-neto/</loc>
+    <lastmod>2017-05-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/authors/anne/</loc>
-    <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    <loc>/publication/journal-article/thiabendazole/</loc>
+    <lastmod>2017-05-29T00:00:00+00:00</lastmod>
   </url>
   
 </urlset>

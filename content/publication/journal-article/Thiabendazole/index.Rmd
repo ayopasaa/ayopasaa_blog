@@ -1,0 +1,42 @@
+---
+abstract: Thiabendazole (TBZ) is an ionizable anthelmintic agent that belongs to the class of benzimidazoles. It is widely used in veterinary medicine and as a fungicide in agriculture. Sorption and desorption are important processes influencing transport, transformation, and bioavailability of xenobiotic compounds in soils; data related to sorption capacity are therefore needed for environmental risk assessments. The aim of this work was to assess the sorption potential of TBZ in four Brazilians soils (sandy, sandy-clay, and clay soils), using batch equilibrium experiments at three pH ranges (2.3–3.0, 3.8–4.2, and 5.5–5.7). The Freundlich sorption coefficient (KF) ranged from 9.0 to 58 μg$^{1–1/n}$ (mL)$^{1/n}$ g$^{−1}$, with higher values generally observed at the lower pH ranges (2.3–3.0 and 3.8–4.2) and for clay soils. The highest organic carbon-normalized sorption coefficients (K$_{OC}$) obtained at pH 3.8–5.7 (around the natural pH range of 4.1–5.0) for both clay soils and sandy-clay soil were 3255 and 2015 mL g$^{−1}$, respectively. The highest correlations K$_F$ vs SOM (r = 0.70) and K$_F$ vs clay content (r = 0.91) were observed at pH 3.8–4.2. Our results suggest that TBZ sorption/desorption is strongly pH dependent and that its mobility could be higher in the studied soils than previously reported in soils from temperate regions.
+authors:
+- Odilon França de Oliveira Neto
+- admin
+- Anne Hélène Fostier
+date: "2017-05-29T00:00:00Z"
+doi: "10.1007/s11356-017-9226-8"
+featured: false
+image:
+  caption: 'Graphical Abstract'
+  focal_point: "smart"
+  preview_only: false
+projects: []
+publication: '*Environmental Science and Pollution Research* volume 24, pages 16503–16512 (2017)'
+publication_short: ""
+publication_types:
+- "2"
+publishDate: "2017-12-05T00:00:00Z"
+slides: false
+summary: 
+tags:
+- Química Ambiental
+title: Sorption of thiabendazole in sub-tropical Brazilian soils
+url_code: ""
+url_dataset: false
+url_pdf: https://www.researchgate.net/publication/317276352_Sorption_of_thiabendazole_in_sub-tropical_Brazilian_soils
+url_poster: ""
+url_project: ""
+url_slides: ""
+url_source: ""
+url_video: ""
+---
+
+{{% alert note %}}
+Click the *Cite* button above  to import publication metadata into a reference management software.
+{{% /alert %}}
+
+<!--{{% alert note %}}
+Click the *Slides* button above to demo Academic's Markdown slides feature.
+{{% /alert %}}-->
+
