@@ -4,7 +4,7 @@ authors:
 projects: ["Química Analítica"]
 categories: ["Validação"]
 date: "2020-12-17T00:00:00Z"
-draft: true
+draft: false
 featured: true
 image:
   caption: ""
@@ -107,7 +107,7 @@ output:
 <p>Utilizando a função <code>list.files()</code> podemos ver o conteúdo da nossa pasta de trabalho, neste exemplo os dados experimentais da linearidade estão no arquivo “dados_linearidade.csv”, esse o arquivo que precissamos importar.</p>
 <pre class="r"><code>list.files()</code></pre>
 <pre><code>##  [1] &quot;anova.html&quot;                          
-##  [2] &quot;arquivos_trabalho.zip&quot;               
+##  [2] &quot;Arquivos&quot;                            
 ##  [3] &quot;blog-lin1.png&quot;                       
 ##  [4] &quot;comp_formulas.PNG&quot;                   
 ##  [5] &quot;comp_graficos.PNG&quot;                   
@@ -119,19 +119,14 @@ output:
 ## [11] &quot;dados_linearidade.csv&quot;               
 ## [12] &quot;ext.PNG&quot;                             
 ## [13] &quot;featured.png&quot;                        
-## [14] &quot;header.tex&quot;                          
-## [15] &quot;index.html&quot;                          
-## [16] &quot;index.Rmd&quot;                           
-## [17] &quot;index.utf8.md&quot;                       
-## [18] &quot;index_cache&quot;                         
-## [19] &quot;index_files&quot;                         
-## [20] &quot;lin_hetero.csv&quot;                      
-## [21] &quot;linearidade_AYA.docx&quot;                
-## [22] &quot;linearidade_AYA.html&quot;                
-## [23] &quot;linearidade_AYA.Rmd&quot;                 
-## [24] &quot;linearidade_hetero_portalaction.docx&quot;
-## [25] &quot;linearidade_hetero_portalaction.html&quot;
-## [26] &quot;linearidade_hetero_portalaction.Rmd&quot;</code></pre>
+## [14] &quot;index.html&quot;                          
+## [15] &quot;index.Rmd&quot;                           
+## [16] &quot;index.utf8.md&quot;                       
+## [17] &quot;index_cache&quot;                         
+## [18] &quot;index_files&quot;                         
+## [19] &quot;lin_hetero.csv&quot;                      
+## [20] &quot;linearidade_AYA.html&quot;                
+## [21] &quot;linearidade_hetero_portalaction.html&quot;</code></pre>
 <p>Neste exemplo a nossa curva está num arquivo delimitado por comas (.csv), logo utilizamos a função <code>read.csv2()</code> para importar os dados é deixar eles num objeto (data.frame) que pode ter cuaisquer nome, neste caso optei por “curva_ex”</p>
 <pre class="r"><code>curva_ex&lt;- read.csv2(&quot;dados_linearidade.csv&quot;, header = TRUE, skip = 0)
 

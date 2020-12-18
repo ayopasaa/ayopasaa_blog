@@ -1,23 +1,13 @@
 ---
-authors:
-- admin
-projects: ["Química Analítica"]
-categories: ["Validação"]
-date: "2020-12-17T00:00:00Z"
-draft: false
-featured: true
-image:
-  caption: ""
-  focal_point: ""
-title: Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166 
-subtitle:  Análise de linearidade conforme Guia 10 da Anvisa (2017) automatizada no R
-summary: Automatização da análise da Linearidade da validação analítica
-tags: ["R Markdown", "Linearidade", "automatização", "validação", "R", "documento dinâmico"]
-output:
-  blogdown::html_page:
-      number_sections: true
-      toc: TRUE
+title: "Linearidade"
+author: "Alejandro Yopasá-Arenas, PhD"
+date: "17/12/2020"
+output: word_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ```{r pacotes-opcoes, message=FALSE, echo=FALSE, warning=FALSE, cache=FALSE}
 packages = c("tidyverse", "knitr",  "grid", "gridExtra", "ggstatsplot", "hrbrthemes", "olsrr", "lmtest")
@@ -38,112 +28,6 @@ package.check <- lapply(packages, FUN = function(x) {
 
 ```
 
-
-
-# Linearidade num só clique?
-
-
-
-Para aqueles familiarizados com programação é que não gostam muito do Excel ([Vantagens do R sobre Excel](https://www.gapintelligence.com/blog/understanding-r-programming-over-excel-for-data-analysis/), [R vs Excel](https://www.jessesadler.com/post/excel-vs-r/#:~:text=In%20a%20spreadsheet%20program%20the,copy%20of%20the%20raw%20data.&text=All%20manipulations%20to%20the%20data,never%20altered%20in%20any%20way.)) existe a opção de automatizar mais fácilmente diversos tipos de análises e relatórios. Ferramentas para o usuário mais familiarizado com o Excel já existem faz tempo é são muito confiáveis e boas, por exemplo [Action Stat](http://www.portalaction.com.br/sobre-o-action) da Estatcamp. Recomento fortemente a revisão do [Portal Action](http://www.portalaction.com.br) para estudo e profundização, grande parte do conteúdo deste post vem da revisão das apostilhas postadas lá junto com a revisão das normas/documentos oficiais que fazem parte do dia a dia do analista que se desenvolve na industria.
-
-O objetivo deste post é mostrar um exemplo de automatização de documento utilizando o ambiente R. No R Markdown é possivel automatizar a análise de linearidade para gerar um [documento dinâmico](http://cursos.leg.ufpr.br/ecr/documentos-dinâmicos.html) em diversos formatos, como Word (o mais popular) ou HTML (este post) pronto para anexar ao relatório de validação analítica. Neste post pretendo mostrar como é a estrutura deste tipo de arquivo Rmarkdown (.Rmd) e suas capacidades na forma de tutorial.
-
-## Vantagens da automatização
-
-
-O meu objetivo principal quando programo é economizar tempo nas minhas rotinas, sendo a análise da linearidada parte do meu trabalho eu dediquei um tempo criando um documento dinâmico que em poucos segundos gera um documento .doc o qual práticamente dá para copiar é colar com mínima revisão num relatório de validação analítica. O documento dinâmico é reprodutível é possui menos erros pois o processo requer mínima intervenção humana. Como gerencio apenas o código-fonte do documento, fico livre de etapas manuais como ter que refazer um gráfico ou uma tabela após qualquer alteração na análise. Com um pouco mais de trabalho da para dinamizar incluso fórmulas e até mesmo o texto mesmo dos relatórios:
-
-![*Processo de geração de relatório de linearidade num só clique*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/blog-lin1.png)
-
-
-Para um novo conjunto de dados é so dar mais um clique e gerar um novo relatório em **segundos**, sem ter que inserir manualmente nada pois já atualiza tabelas, gráficos, equações, textos explicativos e conclusões:
-
-
-![*Processo de geração de relatório de linearidade: tabelas dinâmicas*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/comp_tabelas.png)
-
-![*Processo de geração de relatório de linearidade: gráficos dinâmicos*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/comp_graficos1.png)
-
-![*Processo de geração de relatório de linearidade: gráficos dinâmicos*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/comp_graficos.png)
-
-![*Processo de geração de relatório de linearidade: fórmulas dinâmicas*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/comp_formulas.png)
-
-![*Processo de geração de relatório de linearidade: texto dinâmico*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/comp_texto.png)
-
-
-
-
-Na pasta no Github deste post é possível encontrar, entre outros, dados de exemplo, o arquivo .Rmd que permite gerar o relatório e relatorios de linearidade em word para visualização: [Pasta com arquivos para download](https://github.com/ayopasaa/ayopasaa_blog/tree/main/content/post/Linearidade1) 
-
-
-# Tutorial para análise da linearidade no R
-
-## Preparação
-
-Conforme RDC 166 no Art. 25 para o estabelecimento da linearidade, deve-se utilizar, no mínimo, 5 (cinco) concentrações diferentes da SQR (substância química de referência) para soluções preparadas em, no mínimo, triplicata. Geralmente é utilizada uma planilha de validação simples para calcular as diferentes concentrações e registrar as respostas analíticas (área do pico, absorbância, etc...), neste tipo de planilha é fácil visualizar a curva e calcular o coeficiente de determininação, esta análise de linearidade aparente é importante mas não é comprobatório, sendo necessárias mais análises estatísticos.
-
-
-![*Análise de linearidade aparente numa planilha de cálculo*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/Curva1.png)
-
-
-Como boa prática é bom deixar os dados no tipo de arquivo mais simples possível sem formatos, preferívelmente em texto simples: .csv, .txt, ou então mesmo como planilha de excel, no R é possivel trabalhar com [diversos formatos](https://www.statmethods.net/input/importingdata.html).
-
-![*Arquivo simples e tipico que contém os dados da linearidade*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/csvex.png)
-
-## Importar/inserir os dados no R
-
-
-
-O primeiro é definir o diretório de trabalho, i.e. onde está o arquivo contendo a nossa curva, isto se faz com a função `setwd()` 
-
-```{r}
-setwd("C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\Linearidade1") # vai ser diferente para cada usuário
-```
-
-Utilizando a função `list.files()` podemos ver o conteúdo da nossa pasta de trabalho, neste exemplo os dados experimentais da linearidade estão no arquivo "dados_linearidade.csv", esse o arquivo que precissamos importar.
-
-
-```{r}
-list.files()
-```
-
-
-Neste exemplo a nossa curva está num arquivo delimitado por comas (.csv), logo utilizamos a função `read.csv2()` para importar os dados é deixar eles num objeto (data.frame) que pode ter cuaisquer nome, neste caso optei por "curva_ex"
-
-```{r}
-curva_ex<- read.csv2("dados_linearidade.csv", header = TRUE, skip = 0)
-
-# Para achar ajuda/explicação sobre determinada função do R basta digitar ? 
-# seguido da função: ex: ?read.csv2 vai abrir a aba Help no Rstudio mostrando as 
-# definições dos argumentos, etc...
-```
-
-
-
-
-Neste ponto já podemos ir verificando os dados, se a importação foi correta, etc, para isso simplesmente digitamos o nome do nosso objeto (curva_ex)
-
-```{r}
-curva_ex
-```
-
-Neste caso vamos trabalhar com uma curva em 7 níveis feita em triplicata, o que corresponde a 21 pontos. A resposta neste exemplo corresponde a área de pico cromatográfico .
-
-Se quisermos trocar os nomes da colunas para nomes sem carateres especiais (à, ç, ã, ...), o que é recomendado, utilizamos a funcão `colnames()`
-
-```{r}
-colnames(curva_ex)<-c("conc", "area")
-
-curva_ex
-```
-
-
-
-
-
-
-
-## Ajuste do modelo linear
-
 ```{r opcoes, echo=FALSE}
 
 #### OPÇÕES ######
@@ -152,6 +36,51 @@ options(scipen=6)
 options(digits=4)
 ```
 
+
+## Resultados experimentais
+
+
+```{r, echo=FALSE}
+setwd("C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\Linearidade1") # vai ser diferente para cada usuário
+```
+
+
+```{r, echo=FALSE}
+curva_ex<- read.csv2("lin_hetero.csv", header = TRUE, skip = 0)
+
+colnames(curva_ex)<-c("conc", "area")
+
+# Para achar ajuda/explicação sobre determinada função do R basta digitar ? 
+# seguido da função: ex: ?read.csv2 vai abrir a aba Help no Rstudio mostrando as 
+# definições dos argumentos, etc...
+```
+
+
+```{r rescurva1, echo=FALSE}
+
+obs<-seq(1,length(curva_ex$conc), 1)
+
+x<-curva_ex$conc
+
+y<-curva_ex$area
+
+#yhat<-lin_mod$fitted.values
+
+#residuos<-lin_mod$residuals
+
+dados_cal<-data.frame(obs,x,y)
+
+colnames(dados_cal) <- c("No. Observação", "Concentração", "Resposta")
+
+
+dados_cal %>%
+  kable(caption = "Tabela de resultados", align=rep('c', 3))
+
+```
+
+
+
+## Ajuste do modelo linear
 
 O nosso modelo é representado por:
 
@@ -171,29 +100,47 @@ Em que:
 * $n_i$  representa o número de réplicas do ponto $i$ de concentração;
 * $k$ representa o número de pontos ou níveis.    
 
-O ajuste de modelos lineares é feito no R fácilmente com a função `lm()`. A função faz a regressão e a análise da variância e covariância.
+O ajuste de modelos lineares é feito no R fácilmente com a função `lm()`. A função faz a regressão e a análise da variância e covariância. Obtemos o seguinte modelo
 
-```{r}
+```{r, echo=FALSE}
 
 lin_mod<- lm(area~conc, data=curva_ex)
 
 # Neste caso vamos fazemos regressão da área (coluna 2) em função da concentração
 # (coluna 1) do objeto curva_ex e deixar os resultados num novo objeto que chamaremos de lin_mod
 
-lin_mod
 ```
 
-Pronto, temos um modelo de regressão simples feito no R, temos que os dados são ajustados por uma curva linear de intercepto= `r summary(lin_mod)$coefficients[1,1]` e coeficiente angular= `r summary(lin_mod)$coefficients[2,1]` Os resultados dos componentes de modelo podem ser acessados utilizando a função `summary()`:
+```{r summary, echo=FALSE, warning=FALSE}
+df <-
+  summary(lin_mod)$coefficients %>% 
+  as_tibble()
 
+colnames(df) <- c("Estimativa", "Desvio Padrão", "Valor t", "Pr(>|t|)")
+rownames(df) <- c("Intercepto", "Concentração")
 
-```{r}
-summary(lin_mod)
+df %>% 
+  kable(caption = "Tabela de coeficientes", align=c('c','c','c', "c"))
+
 ```
 
-Podemos criar uma tabela para mostrar os valores ajustados e os residuos:
+
+Temos que os dados são ajustados por uma curva linear de intercepto= `r summary(lin_mod)$coefficients[1,1]` e coeficiente angular= `r summary(lin_mod)$coefficients[2,1]`.
 
 
-```{r rescurva, echo=TRUE}
+```{r GRA_LIN, echo=FALSE, warning=FALSE, fig.width=7}
+
+ggstatsplot::ggscatterstats(
+  data = curva_ex,
+  x = conc,
+  y = area,
+  xlab = "Concentração", # label for x axis
+  ylab = "Resposta analítica", # label for y axis
+  title = "Curva de calibração"
+)
+```
+
+```{r rescurva, echo=FALSE}
 
 obs<-seq(1,length(curva_ex$conc), 1)
 
@@ -211,60 +158,11 @@ colnames(dados_cal) <- c("No. Observação", "Concentração", "Resposta", "Resp
 
 
 dados_cal %>%
-  kable(caption = "Tabela de resultados", align=rep('c', 5))
+  kable(caption = "Tabela de resultados do ajuste", align=rep('c', 5))
 
 ```
-
-
-Uma curva de calibração simples é feita utilizando o pacote *ggplot2* ([tutorial básico](https://blog.gburin.com/tutorial-de-ggplot2/)):
-
-
-```{r}
-#library(ggplot2)
-
-
-lin_plot <- ggplot(lin_mod, aes(x=conc, y=area))+
-  geom_smooth(method = "lm", se = TRUE, color= "red",
-              size= 0.5, formula = y~x)+   #se= confidence interval
-  geom_point()+
-  theme_bw()
-
-lin_plot
-
-```
-
-Um gráfico muito mais elaborado, que cumple o "gold standard" da APA para reporte de resultados estatísticos pode ser feito utilizando o pacote [*ggstatsplot*](https://indrajeetpatil.github.io/ggstatsplot/):
-
-```{r GRA_LIN, echo=TRUE, warning=FALSE}
-
-ggstatsplot::ggscatterstats(
-  data = curva_ex,
-  x = conc,
-  y = area,
-  xlab = "Concentração", # label for x axis
-  ylab = "Resposta analítica", # label for y axis
-  title = "Curva de calibração"
-)
-```
-
-
 
 ## Análise dos coeficientes do modelo linear:
-
-Primeiro avaliamos os coeficientes do modelo linear:
-
-```{r summary, echo=FALSE, warning=FALSE}
-df <-
-  summary(lin_mod)$coefficients %>% 
-  as_tibble()
-
-colnames(df) <- c("Estimativa", "Desvio Padrão", "Valor t", "Pr(>|t|)")
-rownames(df) <- c("Intercepto", "Concentração")
-
-df %>% 
-  kable(caption = "Tabela de coeficientes", align=c('c','c','c', "c"))
-
-```
 
 
 ### Intercepto
@@ -369,21 +267,6 @@ O valor crítico da distribuição $t$ ao nível de significância do 5% ($\alph
 `r qt(a,df)`$. Como o valor $p$ associado a esse teste $t$  $(2\times Pr(t_{`r a`, `r df`}>|t|)=`r summary(lin_mod)$coefficients[1,4]`)$ é `r vetor_b0[1]` que 0,05 `r vetor_b0[2]` $H_0$ e concluimos que o intercepto é `r vetor_b0[3]` zero ao nível de significância do 5%
 
 
-No R, o valor crítico da distribuição $t$ é calculado pela função `qt`:
-
-
-```{r qt2}
-# nível de significancia
-a= 0.95
-
-# graus de liberdade (n-2)
-df= length(curva_ex[,1])-2
-
-# Valor crítico da distribuição t
-qt(a,df)
-```
-
-
 
 ### Coeficiente angular
 
@@ -457,14 +340,6 @@ rownames(df) <- c("Concentração", "Resíduos")
 
 df %>% 
   kable(caption = "Tabela de anova", align=c('c','c','c', "c", "c"))
-
-```
-
-No R o Anova é feito pela função `anova`.
-
-```{r}
-anova(lin_mod)
-
 
 ```
 
@@ -696,21 +571,6 @@ if(sw_p< p_crit_sw){
 
 Como resultado temos um valor estatístico w=`r sw[1]` e que o valor $p$ associado a esse teste (`r sw[2]`) é `r vetor_sw[1]` que 0,05, sendo assim, `r vetor_sw[2]` a hipótese nula $H_0$ de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.
 
-No R o teste é realizado pela funçao `shapiro.test`
-
-
-```{r}
-shapiro.test(lin_mod$residuals)
-```
-
-Ou pela função `ols_test_normality` do pacote *olsrr* que determina test adicionais
-
-
-```{r}
-#library(olsrr)
-ols_test_normality(lin_mod)
-```
-
 
 
 ### Teste de homocedasticidade
@@ -758,15 +618,6 @@ Como resultado temos um valor estatístico BP=`r bp$statistic` e que o valor $p$
 Conforme o [portal action](http://www.portalaction.com.br/validacao-de-metodologia-analitica/exemplo-linearidade-hplc) O teste de Breusch-Pagan é o que melhor se adequa neste caso, visto que assumimos a suposição de normalidade para os erros experimentais. Os teste de Cochran e de Brown-Forsythe não se adequam ao nosso objetivo pois necessitam de grupos e, como os dados do exemplo foram coletados de forma independente, os testes em questão não poderiam ser realizados. Já o teste de Goldfeld-Quandt tem como limitação a exigência de amostras relativamente grandes.
 
 
-No R o teste é realizado pela funçao `bptest` do pacote [*lmtest*](https://cran.r-project.org/web/packages/lmtest/index.html)
-
-
-```{r}
-#library(lmtest)
-
-bptest(lin_mod)
-```
-
 
 
 ### Teste de autocorrelação
@@ -810,17 +661,7 @@ if(dw$p.value< p_crit_dw){
 Como resultado temos um valor estatístico DW=`r dw$statistic` e que o valor $p$ associado a esse teste (`r dw$p.value`) é `r vetor_dw[1]` que 0,05, sendo assim, `r vetor_dw[2]` a hipótese nula $H_0$ de independência das observações ao nível de significância de 5%. 
 
 
-No R o teste é realizado pela funçao `dwtest` do pacote [*lmtest*](https://cran.r-project.org/web/packages/lmtest/index.html)
-
-
-```{r}
-#library(lmtest)
-
-dwtest(lin_mod)
-```
-
-Como conclusão temos que os critérios da RDC 166 que foram atendidos são:
-
+## Conclusões
 
 ```{r conclusions, echo=FALSE}
 if(Pr_i < sig){
@@ -857,288 +698,12 @@ if(dw$p.value< p_crit_dw){
 
 
 
+Critérios da RDC 166:
+
 *	`r vetor_b0_2[1]`;
 * `r vetor_b1_2[1]`;
 * `r vetor_sw_2[1]`;
 * `r vetor_bp_2[1]`;
 * `r vetor_dw_2[1]`.
 
-
-## Limite de detecção e quantificação
-
-A partir da análise de linearidade é fácil determinar os limites de detecção e quantificação:
-
-O limite de detecção é calculado como $LOD=3S_r/b$, onde $S_r$ = desvio padrão dos resíduos e $b$= coeficiente angular da curva de calibração.
-
-```{r LOD, echo=TRUE}
-LOD<-(3*sd(lin_mod$residuals))/(lin_mod$coefficients[[2]])
-LOD
-```
-
-O limite de quantificação é calculado como $LOQ=10S_r/b$, onde $S_r$ = desvio padrão dos resíduos e $b$= coeficiente angular da curva de calibração.
-
-```{r LOQ, echo=TRUE}
-LOD<-(3*sd(lin_mod$residuals))/(lin_mod$coefficients[[2]])
-LOD
-```
-
-# Detalhes adicionais sobre desenvolvimento do documento dinâmico
-
-## Equações
-
-para trabalhar números num formato conveniente: comma como separador decimal, número adequado de algarismos significativos e notação científica para números muito grandes ou pequenos é necessário ajustar algumas opções do R no começo de documento, ex:
-
-```{r opcoes_ex, echo=TRUE}
-
-#### OPÇÕES ######
-options(OutDec= ",")
-options(scipen=6)
-options(digits=4)
-```
-
-
-Na seção 2.4.1 mostramos uma fórmula com resultados que define o valor estatistico t como a razão entre o intercepto e o desvio padrão deste, num relatório automátizado é claro que estes valores são variáveis.
-
-
-$$
-t = \frac{
-          \hat{\beta_0}
-         }
-         {
-         \sqrt{
-                Var(\hat{\beta_0})
-              }
-         } 
-  = \frac{
-        `r summary(lin_mod)$coefficients[1,1]`
-        }
-        {
-        `r summary(lin_mod)$coefficients[1,2]`
-        } 
-  = `r summary(lin_mod)$coefficients[1,3]`
-$$
-
-Poderiamos fazer esta parte semi-automáticamente digitando os valores encontrados no objeto de clase "lm" (`summary(lin_mod)` permite acessar os componentes do modelo linear): 
-
-
-
-![](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/ext.png)
-
-
-Porém esse não é nosso objetivo, para "brincar" com os valores produzidos no R é precisso conhecer a estrutura dos objetos, para isso utilizamos a função `str()`
-
-
-```{r}
-class(lin_mod)
-str(summary(lin_mod))
-```
-Temos que o objeto é uma lista de 11 componentes, neste caso estamos interessados no componente que possui os coefficientes:
-
-
-
-```{r}
-summary(lin_mod)$coefficients
-
-
-```
-Para extrair um valor deste data frame temos que [indexar](https://rpubs.com/paternogbc/48099) o valor que queremos do vetor (`objeto[linhas,colunas]`)
-
-```{r}
-# Extrair intercepto:
-summary(lin_mod)$coefficients[1,1]
-
-# Extrair desvio padrão:
-summary(lin_mod)$coefficients[1,2]
-
-
-# Extrair estatistico t:
-summary(lin_mod)$coefficients[1,3]
-
-# Também é posível calcular este valor t pois conhecemos a fórmula:
-summary(lin_mod)$coefficients[1,1]/summary(lin_mod)$coefficients[1,2]
-```
- 
- 
- 
- 
- 
- As equações tem como base o [$\LaTeX$](http://each.uspnet.usp.br/sarajane/wp-content/uploads/2016/10/manual-latex-3.pdf), começamos com uma fórmula simples que não contém código R,  
- 
- ```
- $$
- T = \frac{\hat{\beta_0}}{\sqrt{Var(\hat{\beta_0})}}= \frac{a}{b}=c
- $$
- ```
- 
- produz:
- 
- 
- 
-$$
-T = \frac{\hat{\beta_{0}}}{\sqrt{Var(\hat{\beta_0})}} = \frac{a}{b} = c
-$$
-
-Agora, $a$ corresponde a `summary(lin_mod)$coefficients[1,1]`, $b$ corresponde a `summary(lin_mod)$coefficients[1,2]` e $c$ corresponde a `summary(lin_mod)$coefficients[1,3]` ou também $c$=`(summary(lin_mod)$coefficients[1,1])`/`(summary(lin_mod)$coefficients[1,2])`.
-
-Misturando então $\LaTeX$ e código R conseguimos a equação que queremos mostrar,
-
-
-```
-$$
-t = \frac{
-          \hat{\beta_0}
-         }
-         {
-         \sqrt{
-                Var(\hat{\beta_0})
-              }
-         } 
-  = \frac{
-        'r summary(lin_mod)$coefficients[1,1]'
-        }
-        {
-        'r summary(lin_mod)$coefficients[1,2]'
-        } 
-  = 'r summary(lin_mod)$coefficients[1,3]'
-$$
-```
-
-Produz
-
-
-$$
-t = \frac{
-          \hat{\beta_0}
-         }
-         {
-         \sqrt{
-                Var(\hat{\beta_0})
-              }
-         } 
-  = \frac{
-        `r summary(lin_mod)$coefficients[1,1]`
-        }
-        {
-        `r summary(lin_mod)$coefficients[1,2]`
-        } 
-  = `r summary(lin_mod)$coefficients[1,3]`
-$$
-
-
-
-## Texto
-
-Na seção 2.5.2 apresentei o teste de normalidade e o como fazer ele no R, em esse e nos outros testes para resíduos é possível criar uma sequência de análise que no final permite criar vetores de texto com as "conclusões" que são possíveis no teste: aceitar ou não a hipótese nula:
-
-
-```{r, shapiro_ex, echo=TRUE, message=FALSE, warning=FALSE}
-
-# teste de shapiro wilk
-sw<-shapiro.test(lin_mod$residuals)
-
-
-# O objeto sw possui a classe "htest", logo precissamos tirar dele o que interessa:
-# a estatistica w e o valor p (sw_p)
-w<-sw$statistic
-sw_p<-sw$p.value
-
-
-# Criamos um data frame com a função data.frame
-sw_df<-data.frame(w, sw_p, row.names = NULL)
-
-# trocamos os nomes das colunas com a função colnames:
-colnames(sw_df) <- c("Estatística w", "p-valor")
-
-# Criamos uma tabela para deixar no relatório com os resultados do teste:
-sw_df %>% 
-  kable(caption = "Teste de normalidade de Shapiro-Wilk",  align=rep('c', 2))
-
-## Parte lógica
-
-p_crit_sw <-0.05  # Valor crítico de p segundo a RDC 166
-
-
-if(sw_p< p_crit_sw){                  # se p-valor do teste é menor que o p crítico (0.05)
-  vetor_sw<-c("menor", "rejeitamos")  # o vetor vetor_sw vai conter as palabras menor e regeitamos
-} else {                              # se p-valor do teste é maior que o p crítico (0.05)
-  vetor_sw<-c("maior", "aceitamos")   # o vetor vetor_sw vai conter as palabras maior e aceitamos
-}
-
-
-```
-
-
-Assim, com esse vetor de palavaras criado podemos dinamizar o texto:
-
-Como resultado temos um valor estatístico w=` sw$statistic` e que o valor $p$ associado a esse teste (` sw$p.value`) é ` vetor_sw[1]` que 0,05, sendo assim, ` vetor_sw[2]` a hipótese nula $H_0$ de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.
-
-Produz:
-
-
-Como resultado temos um valor estatístico w=`r sw$statistic` e que o valor $p$ associado a esse teste (`r sw$p.value`) é `r vetor_sw[1]` que 0,05, sendo assim, `r vetor_sw[2]` a hipótese nula $H_0$ de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.
-
-
-
-## Gráficos
-
-Esta é uma parte complexa quando se quer personalizar e formatar ao gosto os gráficos, neste caso eu atualizei uma função criada por Raju Rimal que permite a criação de 6 gráficos de diagnóstico personalizados:
-
-```{r function_diagnosis_ex, echo=TRUE, warning=FALSE}
-
-#https://rpubs.com/therimalaya/43190 (modificado 12/12/20)
-
-diagPlot<-function(model){
-    p1<-ggplot(model, aes(.fitted, .resid))+geom_point()
-    p1<-p1+stat_smooth(method="loess")+geom_hline(yintercept=0, col="red", linetype="dashed")
-    p1<-p1+xlab("Valores ajustados")+ylab("Residuos")
-    p1<-p1+ggtitle("Residuos vs Valores ajustados")+theme_bw()
-    
-    p2<-ggplot(model, aes(qqnorm(.stdresid)[[1]], .stdresid))+geom_point(na.rm = TRUE)
-    p2<-p2+geom_qq_line(aes(sample=.stdresid))+xlab("Quantis teóricos")+ylab("Resíduos padronizados")
-    p2<-p2+ggtitle("Gráfico Q-Q")+theme_bw()
-    
-    p3<-ggplot(model, aes(.fitted, sqrt(abs(.stdresid))))+geom_point(na.rm=TRUE)
-    p3<-p3+stat_smooth(method="loess", na.rm = TRUE)+xlab("Valores ajustados")
-    p3<-p3+ylab(expression(sqrt("|Resíduos padronizados|")))
-    p3<-p3+ggtitle("Scale-Location")+theme_bw()
-    
-    p4<-ggplot(model, aes(seq_along(.cooksd), .cooksd))+geom_bar(stat="identity", position="identity")
-    p4<-p4+xlab("Número da observação")+ylab("Distância de Cook")
-    p4<-p4+ggtitle("Distância de Cook")+theme_bw()
-    
-    p5<-ggplot(model, aes(.hat, .stdresid))+geom_point(aes(size=.cooksd), na.rm=TRUE)
-    p5<-p5+stat_smooth(method="loess", na.rm=TRUE)
-    p5<-p5+xlab("Leverage")+ylab("Resíduos padronizados")
-    p5<-p5+ggtitle("Resíduos vs Leverage")
-    p5<-p5+scale_size_continuous("Distância de Cook", range=c(1,5))
-    p5<-p5+theme_bw()+theme(legend.position="bottom")
-    
-    p6<-ggplot(model, aes(.hat, .cooksd))+geom_point(na.rm=TRUE)+stat_smooth(method="loess", na.rm=TRUE)
-    p6<-p6+xlab("Leverage hii")+ylab("Distância de Cook")
-    p6<-p6+ggtitle("Distância de Cook vs Leverage hii/(1-hii)")
-    p6<-p6+geom_abline(slope=seq(0,3,0.5), color="gray", linetype="dashed")
-    p6<-p6+theme_bw()
-    
-    return(list(rvfPlot=p1, qqPlot=p2, sclLocPlot=p3, cdPlot=p4, rvlevPlot=p5, cvlPlot=p6))
-}
-```
-
-Criada a função `diagPlot` podemos aplicar ela a nosso modelo linear `lin_mod` e criar o objeto `diagPlts` que contém os 6 gráficos numa lista, com a função `grid.arrange` do pacote [gridExtra](https://cran.r-project.org/web/packages/gridExtra/index.html) podemos plotar os objetos dessa lista como quisermos, podemos imprimir todos os 6 ou menos e num arranjo diferente:
-
-
-```{r diagplot_ex, echo=TRUE, message=FALSE, warning=FALSE, results=FALSE, fig.height=14, fig.width=4}
-
-diagPlts<-diagPlot(lin_mod)
-
-class(diagPlts)
-
-#library(grid)
-#library(gridExtra)
-
-do.call(grid.arrange, c(diagPlts, top="Gráficos de diagnóstico de resíduos", ncol=1))
-
-
-```
-
-Parece díficil e trabalhoso más com prática vai ficando cada día mais fácil, o bom é que esse trabalho só se faz uma vez, quando se tem que fazer o mesmo tipo de relatório várias vezes (exemplo relatorio de linearidade/validação) este trabalho se vê recompensado ao fazer um documento com este tipo de detalhes de forma rápida, reprodutível e livre de erros, pois todo é recalculado e diagramado de novo em poucos segundos.
 
