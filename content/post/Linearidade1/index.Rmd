@@ -51,7 +51,7 @@ O objetivo deste post é mostrar um exemplo de automatização de documento util
 ## Vantagens da automatização
 
 
-O meu objetivo principal quando programo é economizar tempo nas minhas rotinas, sendo a análise da linearidada parte do meu trabalho eu dediquei um tempo criando um documento dinâmico que em poucos segundos gera um documento .doc o qual práticamente dá para copiar é colar com mínima revisão num relatório de validação analítica. O documento dinâmico é reprodutível é possui menos erros pois o processo requer mínima intervenção humana. Como gerencio apenas o código-fonte do documento, fico livre de etapas manuais como ter que refazer um gráfico ou uma tabela após qualquer alteração na análise. Com um pouco mais de trabalho da para dinamizar incluso fórmulas e até mesmo o texto mesmo dos relatórios:
+O meu objetivo principal quando programo é economizar tempo nas minhas rotinas, sendo a análise da linearidada parte do meu trabalho eu dediquei um tempo criando um documento dinâmico que em poucos segundos gera um documento .doc o qual práticamente da para copiar e colar com mínima revisão num relatório de validação analítica. O documento dinâmico é reprodutível e possui menos erros pois o processo requer mínima intervenção humana. Como gerencio apenas o código-fonte do documento, fico livre de etapas manuais como ter que refazer um gráfico ou uma tabela após qualquer alteração na análise. Com um pouco mais de trabalho da para dinamizar incluso fórmulas e até mesmo o texto dos relatórios:
 
 ![*Processo de geração de relatório de linearidade num só clique*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Linearidade1/blog-lin1.png)
 
