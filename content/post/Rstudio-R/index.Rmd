@@ -76,7 +76,7 @@ devtools::install_github("tidyverse/tidyverse")
 ```
 
 
-Utilizando o comando `r knitr::inline_expr('library(tidyverse)')` vão ser carregados os pacotes da base tidyverse:
+Utilizando o comando `library(tidyverse)` vão ser carregados os pacotes da base tidyverse:
 
 * **ggplot2**, para visualização de dados.
 * **dplyr**, para manipulação de dados.

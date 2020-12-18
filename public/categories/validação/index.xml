@@ -6,7 +6,16 @@
     <description>Recent content in Validação on Alejandro Yopasá Arenas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/valida%C3%A7%C3%A3o/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 17 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/valida%C3%A7%C3%A3o/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166</title>
+      <link>/post/linearidade1/</link>
+      <pubDate>Thu, 17 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/linearidade1/</guid>
+      <description>Automatização da análise da Linearidade da validação analítica</description>
+    </item>
+    
     <item>
       <title>Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</title>
       <link>/post/horwitz/</link>

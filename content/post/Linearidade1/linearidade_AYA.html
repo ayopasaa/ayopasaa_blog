@@ -1,0 +1,592 @@
+---
+title: "Linearidade"
+author: "Alejandro Yopasá-Arenas, PhD"
+date: "17/12/2020"
+output: word_document
+---
+
+
+
+<div id="resultados-experimentais" class="section level2">
+<h2>Resultados experimentais</h2>
+<table>
+<caption><span id="tab:rescurva1">Table 1: </span>Tabela de resultados</caption>
+<thead>
+<tr class="header">
+<th align="center">No. Observação</th>
+<th align="center">Concentração</th>
+<th align="center">Resposta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0,8308</td>
+<td align="center">1148099</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">0,8312</td>
+<td align="center">1179522</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0,8300</td>
+<td align="center">1155612</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0,9495</td>
+<td align="center">1313289</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">0,9499</td>
+<td align="center">1298806</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">0,9485</td>
+<td align="center">1309954</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">1,0682</td>
+<td align="center">1481120</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">1,0687</td>
+<td align="center">1485434</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">1,0671</td>
+<td align="center">1469250</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">1,1868</td>
+<td align="center">1643193</td>
+</tr>
+<tr class="odd">
+<td align="center">11</td>
+<td align="center">1,1874</td>
+<td align="center">1640203</td>
+</tr>
+<tr class="even">
+<td align="center">12</td>
+<td align="center">1,1857</td>
+<td align="center">1625966</td>
+</tr>
+<tr class="odd">
+<td align="center">13</td>
+<td align="center">1,3055</td>
+<td align="center">1795933</td>
+</tr>
+<tr class="even">
+<td align="center">14</td>
+<td align="center">1,3062</td>
+<td align="center">1807228</td>
+</tr>
+<tr class="odd">
+<td align="center">15</td>
+<td align="center">1,3042</td>
+<td align="center">1815224</td>
+</tr>
+<tr class="even">
+<td align="center">16</td>
+<td align="center">1,4242</td>
+<td align="center">1980508</td>
+</tr>
+<tr class="odd">
+<td align="center">17</td>
+<td align="center">1,4249</td>
+<td align="center">1963207</td>
+</tr>
+<tr class="even">
+<td align="center">18</td>
+<td align="center">1,4228</td>
+<td align="center">1955687</td>
+</tr>
+<tr class="odd">
+<td align="center">19</td>
+<td align="center">1,5825</td>
+<td align="center">2195774</td>
+</tr>
+<tr class="even">
+<td align="center">20</td>
+<td align="center">1,5832</td>
+<td align="center">2186585</td>
+</tr>
+<tr class="odd">
+<td align="center">21</td>
+<td align="center">1,5809</td>
+<td align="center">2186201</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ajuste-do-modelo-linear" class="section level2">
+<h2>Ajuste do modelo linear</h2>
+<p>O nosso modelo é representado por:</p>
+<p><span class="math display">\[
+Y_{ij}= \beta_0 + \beta_1 x_{ij} + \epsilon_{ij},\quad j=1,...,n_i \quad e \quad i=1,...k
+\]</span></p>
+<p>Em que:</p>
+<ul>
+<li><span class="math inline">\(Y_{ij}\)</span> representa o sinal analítico (área, absorbância. etc…);</li>
+<li><span class="math inline">\(x_{ij}\)</span> representa a concentração;</li>
+<li><span class="math inline">\(\beta_0\)</span> representa o coeficiente linear ou intercepto;</li>
+<li><span class="math inline">\(\beta_1\)</span> representa o coeficiente angular;</li>
+<li><span class="math inline">\(\epsilon\)</span> representa o erro experimental;</li>
+<li><span class="math inline">\(n_i\)</span> representa o número de réplicas do ponto <span class="math inline">\(i\)</span> de concentração;</li>
+<li><span class="math inline">\(k\)</span> representa o número de pontos ou níveis.</li>
+</ul>
+<p>O ajuste de modelos lineares é feito no R fácilmente com a função <code>lm()</code>. A função faz a regressão e a análise da variância e covariância. Obtemos o seguinte modelo</p>
+<table>
+<caption><span id="tab:summary">Table 2: </span>Tabela de coeficientes</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Estimativa</th>
+<th align="center">Desvio Padrão</th>
+<th align="center">Valor t</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercepto</td>
+<td align="center">9714</td>
+<td align="center">11135</td>
+<td align="center">0,8724</td>
+<td align="center">0,3939</td>
+</tr>
+<tr class="even">
+<td align="left">Concentração</td>
+<td align="center">1375205</td>
+<td align="center">9146</td>
+<td align="center">150,3594</td>
+<td align="center">0,0000</td>
+</tr>
+</tbody>
+</table>
+<p>Temos que os dados são ajustados por uma curva linear de intercepto= 9713,8749 e coeficiente angular= 1375205,4338.</p>
+<p><img src="/post/Linearidade1/linearidade_AYA_files/figure-html/GRA_LIN-1.png" width="672" /></p>
+<table>
+<caption><span id="tab:rescurva">Table 3: </span>Tabela de resultados do ajuste</caption>
+<thead>
+<tr class="header">
+<th align="center">No. Observação</th>
+<th align="center">Concentração</th>
+<th align="center">Resposta</th>
+<th align="center">Resposta ajustada</th>
+<th align="center">Resíduo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0,8308</td>
+<td align="center">1148099</td>
+<td align="center">1152224</td>
+<td align="center">-4125,0</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">0,8312</td>
+<td align="center">1179522</td>
+<td align="center">1152793</td>
+<td align="center">26729,1</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0,8300</td>
+<td align="center">1155612</td>
+<td align="center">1151086</td>
+<td align="center">4525,8</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0,9495</td>
+<td align="center">1313289</td>
+<td align="center">1315440</td>
+<td align="center">-2150,7</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">0,9499</td>
+<td align="center">1298806</td>
+<td align="center">1316090</td>
+<td align="center">-17283,9</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">0,9485</td>
+<td align="center">1309954</td>
+<td align="center">1314139</td>
+<td align="center">-4185,4</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">1,0682</td>
+<td align="center">1481120</td>
+<td align="center">1478655</td>
+<td align="center">2464,5</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">1,0687</td>
+<td align="center">1485434</td>
+<td align="center">1479387</td>
+<td align="center">6047,0</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">1,0671</td>
+<td align="center">1469250</td>
+<td align="center">1477193</td>
+<td align="center">-7942,5</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">1,1868</td>
+<td align="center">1643193</td>
+<td align="center">1641871</td>
+<td align="center">1321,8</td>
+</tr>
+<tr class="odd">
+<td align="center">11</td>
+<td align="center">1,1874</td>
+<td align="center">1640203</td>
+<td align="center">1642684</td>
+<td align="center">-2481,0</td>
+</tr>
+<tr class="even">
+<td align="center">12</td>
+<td align="center">1,1857</td>
+<td align="center">1625966</td>
+<td align="center">1640246</td>
+<td align="center">-14279,7</td>
+</tr>
+<tr class="odd">
+<td align="center">13</td>
+<td align="center">1,3055</td>
+<td align="center">1795933</td>
+<td align="center">1805087</td>
+<td align="center">-9154,0</td>
+</tr>
+<tr class="even">
+<td align="center">14</td>
+<td align="center">1,3062</td>
+<td align="center">1807228</td>
+<td align="center">1805981</td>
+<td align="center">1247,0</td>
+</tr>
+<tr class="odd">
+<td align="center">15</td>
+<td align="center">1,3042</td>
+<td align="center">1815224</td>
+<td align="center">1803299</td>
+<td align="center">11925,1</td>
+</tr>
+<tr class="even">
+<td align="center">16</td>
+<td align="center">1,4242</td>
+<td align="center">1980508</td>
+<td align="center">1968303</td>
+<td align="center">12205,3</td>
+</tr>
+<tr class="odd">
+<td align="center">17</td>
+<td align="center">1,4249</td>
+<td align="center">1963207</td>
+<td align="center">1969278</td>
+<td align="center">-6071,0</td>
+</tr>
+<tr class="even">
+<td align="center">18</td>
+<td align="center">1,4228</td>
+<td align="center">1955687</td>
+<td align="center">1966352</td>
+<td align="center">-10665,1</td>
+</tr>
+<tr class="odd">
+<td align="center">19</td>
+<td align="center">1,5825</td>
+<td align="center">2195774</td>
+<td align="center">2185924</td>
+<td align="center">9850,3</td>
+</tr>
+<tr class="even">
+<td align="center">20</td>
+<td align="center">1,5832</td>
+<td align="center">2186585</td>
+<td align="center">2187007</td>
+<td align="center">-422,3</td>
+</tr>
+<tr class="odd">
+<td align="center">21</td>
+<td align="center">1,5809</td>
+<td align="center">2186201</td>
+<td align="center">2183756</td>
+<td align="center">2444,7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="análise-dos-coeficientes-do-modelo-linear" class="section level2">
+<h2>Análise dos coeficientes do modelo linear:</h2>
+<div id="intercepto" class="section level3">
+<h3>Intercepto</h3>
+<p>Com os resultados da tabela acima, além das estimativas dos parâmetros, podemos avaliar a significância dos parâmetros por meio do teste <span class="math inline">\(t\)</span>. O valor t é calculado dividindo o valor do coeficiente pelo erro padrão. Em relação ao parâmetro intercepto, temos que as hipóteses são dadas por:</p>
+<p><span class="math inline">\(H_0\)</span> : Intercepto é igual a zero (<span class="math inline">\(\beta_0= 0\)</span>)</p>
+<p><span class="math inline">\(H_1\)</span> : Intercepto é diferente de zero (<span class="math inline">\(\beta_0 \neq 0\)</span>)</p>
+<p>O <em>valor</em> <span class="math inline">\(t\)</span> para o intercepto é dado por:</p>
+<p><span class="math display">\[
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        9713,8749
+        }
+        {
+        11134,7006
+        } 
+  = 0,8724
+\]</span></p>
+<!--
+$$
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        9714
+        }
+        {
+        11135
+        } 
+  = 0,8724
+$$
+-->
+<p>no qual <span class="math inline">\(\sqrt{Var(\hat{\beta_0})}\)</span> é o desvio padrão do intercepto dado nos resultados da tabela acima.</p>
+<p>O valor crítico da distribuição <span class="math inline">\(t\)</span> ao nível de significância do 5% (<span class="math inline">\(\alpha=0,05\)</span>) e <span class="math inline">\(n-2\)</span> graus de liberdade é dado por <span class="math inline">\(t_{0,95, 19}= 1,7291\)</span>. Como o valor <span class="math inline">\(p\)</span> associado a esse teste <span class="math inline">\(t\)</span> <span class="math inline">\((2\times Pr(t_{0,95, 19}&gt;|t|)=0,3939)\)</span> é maior que 0,05 aceitamos <span class="math inline">\(H_0\)</span> e concluimos que o intercepto é significativamente igual a zero ao nível de significância do 5%</p>
+</div>
+<div id="coeficiente-angular" class="section level3">
+<h3>Coeficiente angular</h3>
+<p>Em relação ao coeficiente angular, temos que as hipóteses são:</p>
+<p><span class="math inline">\(H_0\)</span> : Coeficiente angular é igual a zero (<span class="math inline">\(\beta_1 = 0\)</span>)</p>
+<p><span class="math inline">\(H_1\)</span> : Coeficiente angular é diferente de zero (<span class="math inline">\(\beta_1 \neq 0\)</span>)</p>
+<p>O estatístico T do teste é dado por:</p>
+<p><span class="math display">\[
+T = \frac{
+          \hat{\beta_1}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_1})
+              }
+         }
+  = \frac{
+          1375205,4338
+         }
+         {
+          9146,1194
+         }
+  = 150,3594
+\]</span></p>
+<p>O valor crítico da distribuição <span class="math inline">\(t\)</span> ao nível de significância do 5% (<span class="math inline">\(\alpha=0,05\)</span>) e <span class="math inline">\(n-2\)</span> graus de liberdade é dado por <span class="math inline">\(t_{0,95, 19}= 1,7291\)</span>. Como o valor <span class="math inline">\(p\)</span> associado a esse teste <span class="math inline">\(t\)</span> (<span class="math inline">\(2\times Pr(t_{0,95, 19}&gt;|t|)= 1,087\times 10^{-30}\)</span>) é menor que 0,05 rejeitamos <span class="math inline">\(H_0\)</span> e concluimos que o coeficiente angular é significativamente diferente de zero ao nível de significância do 5%</p>
+</div>
+<div id="anova-no-método-dos-mínimos-quadrados-ordinários-mmqo" class="section level3">
+<h3>Anova no método dos mínimos quadrados ordinários (MMQO)</h3>
+<p>Avaliamos também a significância do modelo por meio do teste F da ANOVA. Vale ressaltar que temos um modelo de regressão simples, desta forma o teste F da ANOVA é equivalente ao teste <span class="math inline">\(t\)</span>. A seguir, temos a Tabela da ANOVA.</p>
+<table>
+<caption><span id="tab:anova">Table 4: </span>Tabela de anova</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Graus de liberdade</th>
+<th align="center">Soma dos quadrados</th>
+<th align="center">Quadrado médio</th>
+<th align="center">valor-F</th>
+<th align="center">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Concentração</td>
+<td align="center">1</td>
+<td align="center">2404379417766</td>
+<td align="center">2404379417766</td>
+<td align="center">22608</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">Resíduos</td>
+<td align="center">19</td>
+<td align="center">2020669009</td>
+<td align="center">106351000</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+</tbody>
+</table>
+<p>Para testarmos a significância do coeficiente angular do modelo com o teste F da ANOVA, apresentamos as seguintes hipóteses:</p>
+<p><span class="math inline">\(H_0\)</span> : Coeficiente angular é igual a zero.</p>
+<p><span class="math inline">\(H_1\)</span> : Coeficiente angular é diferente de zero.</p>
+<p>A estatística de teste é dada pela divisão do quadrado médio da regressão (QMR) pelo quadrado médio dos resíduos ou erros (QME):</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+F_{OBS}= \frac{QMR}{QME}
+        = \frac{\frac{SQR}{p-1}}{\frac{SQE}{n-p}}
+        = \frac{\frac{\sum_{i=1}^{n}(\hat{y_i}-\bar y)^2}{p-1}}
+              {\frac{\sum_{i=1}^{n}({y_i}-\hat{y_i})^2}{n-p}} \\
+F_{OBS}= \frac{\frac{2,4044\times 10^{12}}{1}}
+              {\frac{2020669009,2465}{19}}
+        = 22607,9624
+\end{eqnarray}
+\]</span></p>
+<p>Onde <span class="math inline">\(SQR\)</span> é a soma dos quadrados da regressão, <span class="math inline">\(SQE\)</span> é a soma dos quadrados dos erros ou resíduos, <span class="math inline">\(p\)</span> é o número de parâmetros do modelo, <span class="math inline">\(n\)</span> é o número total de pontos, <span class="math inline">\(\bar{y}\)</span> é a média aritmética dos valores de y no centroide, <span class="math inline">\(y_i\)</span> é um valor individual de y obtido experimentalmente em um determinado ponto (iésimo ponto) e <span class="math inline">\(\hat{y_i}\)</span> é um valor individual de y calculado pelo modelo (equação) em um determinado ponto (i-ésimo ponto).</p>
+<p>A região crítica para o teste F é dada por <span class="math inline">\(F_{\alpha, p-1, n-p}= F_{0.95,1, 19} = 4,3807\)</span>. Como a estatística observada é <em>maior</em> que o quantil da distribuição para a determinação da região crítica (<span class="math inline">\(F_{OBS}\)</span> &gt; <span class="math inline">\(F\)</span>) e o valor <span class="math inline">\(p\)</span> associado a esse teste <span class="math inline">\(F\)</span> (<span class="math inline">\(2\times Pr(F_{0.95,1, 19}&gt;F)= 1,087\times 10^{-30}\)</span>) é menor que 0,05 rejeitamos <span class="math inline">\(H_0\)</span> e concluimos que o coeficiente angular é significativamente diferente de zero ao nível de significância do 5%</p>
+</div>
+</div>
+<div id="análise-de-resíduos" class="section level2">
+<h2>Análise de Resíduos</h2>
+<p>A tabela a seguir, apresenta a análise exploratória dos resíduos.</p>
+<table>
+<caption><span id="tab:res">Table 5: </span>Tabela dos resíduos</caption>
+<thead>
+<tr class="header">
+<th align="right">Mínimo</th>
+<th align="right">1Q</th>
+<th align="right">Mediana</th>
+<th align="right">Média</th>
+<th align="right">3Q</th>
+<th align="right">Máximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-17284</td>
+<td align="right">-6071</td>
+<td align="right">-422,3</td>
+<td align="right">0</td>
+<td align="right">4526</td>
+<td align="right">26729</td>
+</tr>
+</tbody>
+</table>
+<p>Observando a tabela acima, podemos estudar se os valores de mínimo e máximo, em módulo apresentam ou não uma diferença notável, assim como a mediana e a média, o que nos dá indícios de que a distribuição dos resíduos é simétrica.</p>
+<p>O coeficiente de correlação de Pearson mede o grau de proporcionalidade entre a variável explicativa (concentração) e a varíavel resposta (área). Temos que o coeficiente de determinação R<sup>2</sup> é dado pela divisão da soma de quadrados da regressão (SQR) pela soma de quadrados total (SQT=SQR+SQE):</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+R^2= \frac{SQR}{SQT}=\frac{SQE}{SQR+SQE}
+   = \frac{2,4044\times 10^{12}}{2,4064\times 10^{12}}
+   = 0,9992 \\
+r=\sqrt{R^2}=\sqrt{0,9992} =  0,9996
+\end{eqnarray}
+\]</span>
+Logo o critério da RDC em relação ao coeficiente é satisfeto, visto que 0,9996 está acima do valor especificado pela agência reguladora (0,990). Note que o coeficiente de determinação representa a relação sinal/ruído, em que SQR está relacionada ao sinal analítico e o ruído está relacionada ao SQT.</p>
+<div id="gráficos-de-diagnóstico" class="section level3">
+<h3>Gráficos de diagnóstico</h3>
+<p><img src="/post/Linearidade1/linearidade_AYA_files/figure-html/diagplot-1.png" width="768" /></p>
+<ul>
+<li><p>No gráfico de residuos vs valores ajustados observamos se existe comportamento não linear, dados dispersos homogenamente no redor de uma linha horizontal sem padrão aparente é um indicador de relação linear.</p></li>
+<li><p>O gráfico Q-Q indica se os resíduos estão distribuidos normalmente. Se os resíduos seguem a linha reta é um indício de que a suposição de normalidade para os erros experimentais é satisfeita.</p></li>
+<li><p>O gráfico de <em>scale-location</em> indica se os resíduos estão distribuídos igualmente ao longo dos intervalos dos preditores, uma linea horizontal com pontos dispersos aleatóriamente na volta é um indicativo de que a suposição de homocedasticidade é satisfeita.</p></li>
+<li><p>O gráfico de distância de Cook indica se existe algum punto influente, alguns indicam uma distância maior do que 1 para considerar um punto influente. <a href="https://stats.stackexchange.com/questions/22161/how-to-read-cooks-distance-plots#:~:text=Cook%27s%20distance%20can%20be%20contrasted,dropped%20from%20the%20data%20set.">Outras referências</a> indicam como limite um valor de 4/n ou 4/(n-k-1), onde n=número de observações e k é o número de variáveis explicativas.</p></li>
+<li><p>No gráfico de resíduos vs <em>leverage</em> observamos a dispersão dos resíduos em função do <em>leverage</em>. O <em>leverage</em> é uma medida de quão distantes os valores das variáveis independentes de uma observação estão daqueles das outras observações. O gráfico é utilizado principalmente para detectar heteroscedasticidade e não linearidade. A propagação de resíduos padronizados não deve mudar em função do leverage numa situação de homocedasticidade (variância constante).</p></li>
+<li><p>O gráfico de distância de cook vs leverage indica se os pontos com alto <em>leverage</em> podem ter influência: ou seja, se excluí-los mudaria muito o modelo. Para isso, podemos observar a distância de Cook, que mede o efeito da exclusão de um ponto no vetor de parâmetro combinado. Uma diretriz aproximada, para tamanhos de amostra grandes, é considerar os valores de distância de Cook acima de 1 para indicar pontos altamente influentes e valores de <em>leverage</em> maiores que 2 vezes o número de preditores dividido pelo tamanho da amostra para indicar observações de alto <em>leverage</em> (no nosso caso esté limite sería <span class="math inline">\(2\times (1/21)=0,0952\)</span>). Observações de alto <em>leverage</em> são aquelas que possuem valores preditores muito distantes de suas médias, o que pode influenciar muito o modelo ajustado.</p></li>
+</ul>
+<p>Para validar as indicações sugeridas a partir da análise gráfica, vamos verificar as hipótese levantadas por meio dos testes estatísticos:</p>
+</div>
+<div id="teste-de-normalidade-dos-resíduos" class="section level3">
+<h3>Teste de normalidade dos resíduos</h3>
+<p>A seguir, avaliamos a normalidade dos erros experimentais por meio do teste de Shapiro-Wilk, no qual as hipóteses são:</p>
+<p><span class="math inline">\(H_0\)</span> : A distribuição dos erros experimentais é normal</p>
+<p><span class="math inline">\(H_1\)</span> : A distribuição dos erros experimentais não é normal</p>
+<table>
+<caption><span id="tab:shapiro">Table 6: </span>Teste de normalidade de Shapiro-Wilk</caption>
+<thead>
+<tr class="header">
+<th align="center">Estatística w</th>
+<th align="center">p-valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0,9663</td>
+<td align="center">0,651</td>
+</tr>
+</tbody>
+</table>
+<p>Como resultado temos um valor estatístico w=0,9663 e que o valor <span class="math inline">\(p\)</span> associado a esse teste (0,651) é maior que 0,05, sendo assim, aceitamos a hipótese nula <span class="math inline">\(H_0\)</span> de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.</p>
+</div>
+<div id="teste-de-homocedasticidade" class="section level3">
+<h3>Teste de homocedasticidade</h3>
+<p>A seguir, analisamos a homoscedasticidade por meio do teste de Breusch-Pagan, no qual as hipóteses são:</p>
+<p><span class="math inline">\(H_0\)</span> : As variâncias são iguais.</p>
+<p><span class="math inline">\(H_1\)</span> : Pelo menos uma variância difere.</p>
+<table>
+<caption><span id="tab:breusch">Table 7: </span>Teste de homoscedasticidade de Breusch-Pagan</caption>
+<thead>
+<tr class="header">
+<th align="center">Estatística BP</th>
+<th align="center">p-valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1,642</td>
+<td align="center">0,2001</td>
+</tr>
+</tbody>
+</table>
+<p>Como resultado temos um valor estatístico BP=1,6417 e que o valor <span class="math inline">\(p\)</span> associado a esse teste (0,2001) é maior que 0,05, sendo assim, aceitamos a hipótese nula <span class="math inline">\(H_0\)</span> de igualdade das variâncias ao nível de significância de 5%. Note que o resultado do teste está em conformidade com a análise gráfica dos resíduos X valores ajustados. Logo, temos um modelo homocedástico.</p>
+<p>Conforme o <a href="http://www.portalaction.com.br/validacao-de-metodologia-analitica/exemplo-linearidade-hplc">portal action</a> O teste de Breusch-Pagan é o que melhor se adequa neste caso, visto que assumimos a suposição de normalidade para os erros experimentais. Os teste de Cochran e de Brown-Forsythe não se adequam ao nosso objetivo pois necessitam de grupos e, como os dados do exemplo foram coletados de forma independente, os testes em questão não poderiam ser realizados. Já o teste de Goldfeld-Quandt tem como limitação a exigência de amostras relativamente grandes.</p>
+</div>
+<div id="teste-de-autocorrelação" class="section level3">
+<h3>Teste de autocorrelação</h3>
+<p>Para confirmar que não há dependência das observações, isto é, que não temos sequências de pontos decrescentes ou crescentes vamos aplicar o teste de Durbin-Watson. As hipóteses do teste são:</p>
+<p><span class="math inline">\(H_0\)</span> : As observações são independentes.</p>
+<p><span class="math inline">\(H_1\)</span> : As observações não são independentes.</p>
+<table>
+<caption><span id="tab:durbin">Table 8: </span>Teste de autocorrelação de Durbin-Watson</caption>
+<thead>
+<tr class="header">
+<th align="center">Estatística DW</th>
+<th align="center">p-valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1,742</td>
+<td align="center">0,1971</td>
+</tr>
+</tbody>
+</table>
+<p>Como resultado temos um valor estatístico DW=1,7423 e que o valor <span class="math inline">\(p\)</span> associado a esse teste (0,1971) é maior que 0,05, sendo assim, aceitamos a hipótese nula <span class="math inline">\(H_0\)</span> de independência das observações ao nível de significância de 5%.</p>
+</div>
+</div>
+<div id="conclusões" class="section level2">
+<h2>Conclusões</h2>
+<p>Critérios da RDC 166:</p>
+<ul>
+<li>Coeficiente linear não significativo ao nível de significância de 5%;</li>
+<li>Coeficiente angular significativo ao nível de significância de 5%;</li>
+<li>Normalidade dos erros experimentais;</li>
+<li>Igualdade das variâncias ao nível de significância de 5% (modelo homocedástico);</li>
+<li>As observações são independentes.</li>
+</ul>
+</div>

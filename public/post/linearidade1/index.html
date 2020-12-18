@@ -1,0 +1,2042 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.1">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Alejandro Yopasá Arenas">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Automatização da análise da Linearidade da validação analítica">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/linearidade1/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.e2f43c4e621c76c264988f66a867d2af.css">
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/linearidade1/">
+
+  
+  
+  
+  
+    
+  
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="Alejandro Yopasá Arenas">
+  <meta property="og:url" content="/post/linearidade1/">
+  <meta property="og:title" content="Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166 | Alejandro Yopasá Arenas">
+  <meta property="og:description" content="Automatização da análise da Linearidade da validação analítica"><meta property="og:image" content="/post/linearidade1/featured.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-12-17T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-12-17T00:00:00&#43;00:00">
+  
+
+  
+
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<script async type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  <title>Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166 | Alejandro Yopasá Arenas</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Alejandro Yopasá Arenas</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured">
+            
+            <span>Publicações</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact">
+            
+            <span>Contato</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/Curriculim_Vitae_Alejandro_Yopasa_082020.pdf">
+            
+            <span>CV</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="article-header d-xl-none">
+  <div class="featured-image" style="background-image: url('/post/linearidade1/featured_hu1af6972ed1bfcdba0e025f2c53547cc8_29125_800x0_resize_lanczos_2.png');"></div>
+  
+</div>
+
+
+<div class="container-fluid split-header d-none d-xl-block">
+  <div class="row">
+    <div class="col-6">
+      <div class="split-header-content">
+        <h1 itemprop="name">Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166</h1>
+
+        
+        <p class="page-subtitle">Análise de linearidade conforme Guia 10 da Anvisa (2017) automatizada no R</p>
+        
+
+        
+
+
+
+<meta content="2020-12-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-12-17 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 17, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    23 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="">Validação</a></span>
+  
+
+  
+
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+        
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Gera%c3%a7%c3%a3o%20autom%c3%a1tica%20de%20relat%c3%b3rios%20anal%c3%adticos%201.%20%20Linearidade%20conforme%20RDC%20166&amp;url=%2fpost%2flinearidade1%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2flinearidade1%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2flinearidade1%2f&amp;title=Gera%c3%a7%c3%a3o%20autom%c3%a1tica%20de%20relat%c3%b3rios%20anal%c3%adticos%201.%20%20Linearidade%20conforme%20RDC%20166"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2flinearidade1%2f&amp;title=Gera%c3%a7%c3%a3o%20autom%c3%a1tica%20de%20relat%c3%b3rios%20anal%c3%adticos%201.%20%20Linearidade%20conforme%20RDC%20166"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Gera%c3%a7%c3%a3o%20autom%c3%a1tica%20de%20relat%c3%b3rios%20anal%c3%adticos%201.%20%20Linearidade%20conforme%20RDC%20166&amp;body=%2fpost%2flinearidade1%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="split-header-image">
+        <img src="/post/linearidade1/featured_hu1af6972ed1bfcdba0e025f2c53547cc8_29125_680x500_fill_q90_lanczos_smart1_2.png" itemprop="image" alt="">
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="article-container d-xl-none">
+  <h1 itemprop="name">Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166</h1>
+
+  
+  <p class="page-subtitle">Análise de linearidade conforme Guia 10 da Anvisa (2017) automatizada no R</p>
+  
+
+  
+
+
+
+<meta content="2020-12-17 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2020-12-17 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Dec 17, 2020</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    23 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="">Validação</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=&amp;url="
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u="
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=&amp;body=">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#linearidade-num-só-clique"><span class="toc-section-number">1</span> Linearidade num só clique?</a><ul>
+<li><a href="#vantagens-da-automatização"><span class="toc-section-number">1.1</span> Vantagens da automatização</a></li>
+</ul></li>
+<li><a href="#tutorial-para-análise-da-linearidade-no-r"><span class="toc-section-number">2</span> Tutorial para análise da linearidade no R</a><ul>
+<li><a href="#preparação"><span class="toc-section-number">2.1</span> Preparação</a></li>
+<li><a href="#importarinserir-os-dados-no-r"><span class="toc-section-number">2.2</span> Importar/inserir os dados no R</a></li>
+<li><a href="#ajuste-do-modelo-linear"><span class="toc-section-number">2.3</span> Ajuste do modelo linear</a></li>
+<li><a href="#análise-dos-coeficientes-do-modelo-linear"><span class="toc-section-number">2.4</span> Análise dos coeficientes do modelo linear:</a><ul>
+<li><a href="#intercepto"><span class="toc-section-number">2.4.1</span> Intercepto</a></li>
+<li><a href="#coeficiente-angular"><span class="toc-section-number">2.4.2</span> Coeficiente angular</a></li>
+<li><a href="#anova-no-método-dos-mínimos-quadrados-ordinários-mmqo"><span class="toc-section-number">2.4.3</span> Anova no método dos mínimos quadrados ordinários (MMQO)</a></li>
+</ul></li>
+<li><a href="#análise-de-resíduos"><span class="toc-section-number">2.5</span> Análise de Resíduos</a><ul>
+<li><a href="#gráficos-de-diagnóstico"><span class="toc-section-number">2.5.1</span> Gráficos de diagnóstico</a></li>
+<li><a href="#teste-de-normalidade-dos-resíduos"><span class="toc-section-number">2.5.2</span> Teste de normalidade dos resíduos</a></li>
+<li><a href="#teste-de-homocedasticidade"><span class="toc-section-number">2.5.3</span> Teste de homocedasticidade</a></li>
+<li><a href="#teste-de-autocorrelação"><span class="toc-section-number">2.5.4</span> Teste de autocorrelação</a></li>
+</ul></li>
+<li><a href="#limite-de-detecção-e-quantificação"><span class="toc-section-number">2.6</span> Limite de detecção e quantificação</a></li>
+</ul></li>
+<li><a href="#detalhes-adicionais-sobre-desenvolvimento-do-documento-dinâmico"><span class="toc-section-number">3</span> Detalhes adicionais sobre desenvolvimento do documento dinâmico</a><ul>
+<li><a href="#equações"><span class="toc-section-number">3.1</span> Equações</a></li>
+<li><a href="#texto"><span class="toc-section-number">3.2</span> Texto</a></li>
+<li><a href="#gráficos"><span class="toc-section-number">3.3</span> Gráficos</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="linearidade-num-só-clique" class="section level1">
+<h1><span class="header-section-number">1</span> Linearidade num só clique?</h1>
+<p>Para aqueles familiarizados com programação é que não gostam muito do Excel (<a href="https://www.gapintelligence.com/blog/understanding-r-programming-over-excel-for-data-analysis/">Vantagens do R sobre Excel</a>, <a href="https://www.jessesadler.com/post/excel-vs-r/#:~:text=In%20a%20spreadsheet%20program%20the,copy%20of%20the%20raw%20data.&amp;text=All%20manipulations%20to%20the%20data,never%20altered%20in%20any%20way.">R vs Excel</a>) existe a opção de automatizar mais fácilmente diversos tipos de análises e relatórios. Ferramentas para o usuário mais familiarizado com o Excel já existem faz tempo é são muito confiáveis e boas, por exemplo <a href="http://www.portalaction.com.br/sobre-o-action">Action Stat</a> da Estatcamp. Recomento fortemente a revisão do <a href="http://www.portalaction.com.br">Portal Action</a> para estudo e profundização, grande parte do conteúdo deste post vem da revisão das apostilhas postadas lá junto com a revisão das normas/documentos oficiais que fazem parte do dia a dia do analista que se desenvolve na industria.</p>
+<p>O objetivo deste post é mostrar um exemplo de automatização de documento utilizando o ambiente R. No R Markdown é possivel automatizar a análise de linearidade para gerar um <a href="http://cursos.leg.ufpr.br/ecr/documentos-dinâmicos.html">documento dinâmico</a> em diversos formatos, como Word (o mais popular) ou HTML (este post) pronto para anexar ao relatório de validação analítica. Neste post pretendo mostrar como é a estrutura deste tipo de arquivo Rmarkdown (.Rmd) e suas capacidades na forma de tutorial.</p>
+<div id="vantagens-da-automatização" class="section level2">
+<h2><span class="header-section-number">1.1</span> Vantagens da automatização</h2>
+<p>O meu objetivo principal quando programo é economizar tempo nas minhas rotinas, sendo a análise da linearidada parte do meu trabalho eu dediquei um tempo criando um documento dinâmico que em poucos segundos gera um documento .doc o qual práticamente dá para copiar é colar com mínima revisão num relatório de validação analítica. O documento dinâmico é reprodutível é possui menos erros pois o processo requer mínima intervenção humana. Como gerencio apenas o código-fonte do documento, fico livre de etapas manuais como ter que refazer um gráfico ou uma tabela após qualquer alteração na análise. Com um pouco mais de trabalho da para dinamizar incluso fórmulas e até mesmo o texto mesmo dos relatórios:</p>
+<div class="figure">
+<img src="blog-lin1.png" alt="" />
+<p class="caption"><em>Processo de geração de relatório de linearidade num só clique</em></p>
+</div>
+<p>Para um novo conjunto de dados é so dar mais um clique e gerar um novo relatório em <strong>segundos</strong>, sem ter que inserir manualmente nada pois já atualiza tabelas, gráficos, equações, textos explicativos e conclusões:</p>
+<div class="figure">
+<img src="comp_tabelas.PNG" alt="" />
+<p class="caption"><em>Processo de geração de relatório de linearidade: tabelas dinâmicas</em></p>
+</div>
+<div class="figure">
+<img src="comp_graficos1.PNG" alt="" />
+<p class="caption"><em>Processo de geração de relatório de linearidade: gráficos dinâmicos</em></p>
+</div>
+<div class="figure">
+<img src="comp_graficos.PNG" alt="" />
+<p class="caption"><em>Processo de geração de relatório de linearidade: gráficos dinâmicos</em></p>
+</div>
+<div class="figure">
+<img src="comp_formulas.PNG" alt="" />
+<p class="caption"><em>Processo de geração de relatório de linearidade: fórmulas dinâmicas</em></p>
+</div>
+<div class="figure">
+<img src="comp_texto.PNG" alt="" />
+<p class="caption"><em>Processo de geração de relatório de linearidade: texto dinâmico</em></p>
+</div>
+<p>Na pasta no Github deste post é possível encontrar, entre outros, dados de exemplo, o arquivo .Rmd que permite gerar o relatório e relatorios de linearidade em word para visualização: <a href="https://github.com/ayopasaa/ayopasaa_blog/tree/main/content/post/Linearidade1">Pasta com arquivos para download</a></p>
+</div>
+</div>
+<div id="tutorial-para-análise-da-linearidade-no-r" class="section level1">
+<h1><span class="header-section-number">2</span> Tutorial para análise da linearidade no R</h1>
+<div id="preparação" class="section level2">
+<h2><span class="header-section-number">2.1</span> Preparação</h2>
+<p>Conforme RDC 166 no Art. 25 para o estabelecimento da linearidade, deve-se utilizar, no mínimo, 5 (cinco) concentrações diferentes da SQR (substância química de referência) para soluções preparadas em, no mínimo, triplicata. Geralmente é utilizada uma planilha de validação simples para calcular as diferentes concentrações e registrar as respostas analíticas (área do pico, absorbância, etc…), neste tipo de planilha é fácil visualizar a curva e calcular o coeficiente de determininação, esta análise de linearidade aparente é importante mas não é comprobatório, sendo necessárias mais análises estatísticos.</p>
+<div class="figure">
+<img src="Curva1.PNG" alt="" />
+<p class="caption"><em>Análise de linearidade aparente numa planilha de cálculo</em></p>
+</div>
+<p>Como boa prática é bom deixar os dados no tipo de arquivo mais simples possível sem formatos, preferívelmente em texto simples: .csv, .txt, ou então mesmo como planilha de excel, no R é possivel trabalhar com <a href="https://www.statmethods.net/input/importingdata.html">diversos formatos</a>.</p>
+<div class="figure">
+<img src="csvex.PNG" alt="" />
+<p class="caption"><em>Arquivo simples e tipico que contém os dados da linearidade</em></p>
+</div>
+</div>
+<div id="importarinserir-os-dados-no-r" class="section level2">
+<h2><span class="header-section-number">2.2</span> Importar/inserir os dados no R</h2>
+<p>O primeiro é definir o diretório de trabalho, i.e. onde está o arquivo contendo a nossa curva, isto se faz com a função <code>setwd()</code></p>
+<pre class="r"><code>setwd(&quot;C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\Linearidade1&quot;) # vai ser diferente para cada usuário</code></pre>
+<p>Utilizando a função <code>list.files()</code> podemos ver o conteúdo da nossa pasta de trabalho, neste exemplo os dados experimentais da linearidade estão no arquivo “dados_linearidade.csv”, esse o arquivo que precissamos importar.</p>
+<pre class="r"><code>list.files()</code></pre>
+<pre><code>##  [1] &quot;anova.html&quot;                          
+##  [2] &quot;arquivos_trabalho.zip&quot;               
+##  [3] &quot;blog-lin1.png&quot;                       
+##  [4] &quot;comp_formulas.PNG&quot;                   
+##  [5] &quot;comp_graficos.PNG&quot;                   
+##  [6] &quot;comp_graficos1.PNG&quot;                  
+##  [7] &quot;comp_tabelas.PNG&quot;                    
+##  [8] &quot;comp_texto.PNG&quot;                      
+##  [9] &quot;csvex.PNG&quot;                           
+## [10] &quot;Curva1.PNG&quot;                          
+## [11] &quot;dados_linearidade.csv&quot;               
+## [12] &quot;ext.PNG&quot;                             
+## [13] &quot;featured.png&quot;                        
+## [14] &quot;header.tex&quot;                          
+## [15] &quot;index.html&quot;                          
+## [16] &quot;index.Rmd&quot;                           
+## [17] &quot;index.utf8.md&quot;                       
+## [18] &quot;index_cache&quot;                         
+## [19] &quot;index_files&quot;                         
+## [20] &quot;lin_hetero.csv&quot;                      
+## [21] &quot;linearidade_AYA.docx&quot;                
+## [22] &quot;linearidade_AYA.html&quot;                
+## [23] &quot;linearidade_AYA.Rmd&quot;                 
+## [24] &quot;linearidade_hetero_portalaction.docx&quot;
+## [25] &quot;linearidade_hetero_portalaction.html&quot;
+## [26] &quot;linearidade_hetero_portalaction.Rmd&quot;</code></pre>
+<p>Neste exemplo a nossa curva está num arquivo delimitado por comas (.csv), logo utilizamos a função <code>read.csv2()</code> para importar os dados é deixar eles num objeto (data.frame) que pode ter cuaisquer nome, neste caso optei por “curva_ex”</p>
+<pre class="r"><code>curva_ex&lt;- read.csv2(&quot;dados_linearidade.csv&quot;, header = TRUE, skip = 0)
+
+# Para achar ajuda/explicação sobre determinada função do R basta digitar ? 
+# seguido da função: ex: ?read.csv2 vai abrir a aba Help no Rstudio mostrando as 
+# definições dos argumentos, etc...</code></pre>
+<p>Neste ponto já podemos ir verificando os dados, se a importação foi correta, etc, para isso simplesmente digitamos o nome do nosso objeto (curva_ex)</p>
+<pre class="r"><code>curva_ex</code></pre>
+<pre><code>##    concentração    área
+## 1     0.8307923 1148099
+## 2     0.8312060 1179522
+## 3     0.8299649 1155612
+## 4     0.9494770 1313289
+## 5     0.9499498 1298806
+## 6     0.9485314 1309954
+## 7     1.0681616 1481120
+## 8     1.0686935 1485434
+## 9     1.0670978 1469250
+## 10    1.1868462 1643193
+## 11    1.1874372 1640203
+## 12    1.1856642 1625966
+## 13    1.3055308 1795933
+## 14    1.3061809 1807228
+## 15    1.3042306 1815224
+## 16    1.4242154 1980508
+## 17    1.4249246 1963207
+## 18    1.4227970 1955687
+## 19    1.5824616 2195774
+## 20    1.5832496 2186585
+## 21    1.5808856 2186201</code></pre>
+<p>Neste caso vamos trabalhar com uma curva em 7 níveis feita em triplicata, o que corresponde a 21 pontos. A resposta neste exemplo corresponde a área de pico cromatográfico .</p>
+<p>Se quisermos trocar os nomes da colunas para nomes sem carateres especiais (à, ç, ã, …), o que é recomendado, utilizamos a funcão <code>colnames()</code></p>
+<pre class="r"><code>colnames(curva_ex)&lt;-c(&quot;conc&quot;, &quot;area&quot;)
+
+curva_ex</code></pre>
+<pre><code>##         conc    area
+## 1  0.8307923 1148099
+## 2  0.8312060 1179522
+## 3  0.8299649 1155612
+## 4  0.9494770 1313289
+## 5  0.9499498 1298806
+## 6  0.9485314 1309954
+## 7  1.0681616 1481120
+## 8  1.0686935 1485434
+## 9  1.0670978 1469250
+## 10 1.1868462 1643193
+## 11 1.1874372 1640203
+## 12 1.1856642 1625966
+## 13 1.3055308 1795933
+## 14 1.3061809 1807228
+## 15 1.3042306 1815224
+## 16 1.4242154 1980508
+## 17 1.4249246 1963207
+## 18 1.4227970 1955687
+## 19 1.5824616 2195774
+## 20 1.5832496 2186585
+## 21 1.5808856 2186201</code></pre>
+</div>
+<div id="ajuste-do-modelo-linear" class="section level2">
+<h2><span class="header-section-number">2.3</span> Ajuste do modelo linear</h2>
+<p>O nosso modelo é representado por:</p>
+<p><span class="math display">\[
+Y_{ij}= \beta_0 + \beta_1 x_{ij} + \epsilon_{ij},\quad j=1,...,n_i \quad e \quad i=1,...k
+\]</span></p>
+<p>Em que:</p>
+<ul>
+<li><span class="math inline">\(Y_{ij}\)</span> representa o sinal analítico (área, absorbância. etc…);</li>
+<li><span class="math inline">\(x_{ij}\)</span> representa a concentração;</li>
+<li><span class="math inline">\(\beta_0\)</span> representa o coeficiente linear ou intercepto;</li>
+<li><span class="math inline">\(\beta_1\)</span> representa o coeficiente angular;</li>
+<li><span class="math inline">\(\epsilon\)</span> representa o erro experimental;</li>
+<li><span class="math inline">\(n_i\)</span> representa o número de réplicas do ponto <span class="math inline">\(i\)</span> de concentração;</li>
+<li><span class="math inline">\(k\)</span> representa o número de pontos ou níveis.</li>
+</ul>
+<p>O ajuste de modelos lineares é feito no R fácilmente com a função <code>lm()</code>. A função faz a regressão e a análise da variância e covariância.</p>
+<pre class="r"><code>lin_mod&lt;- lm(area~conc, data=curva_ex)
+
+# Neste caso vamos fazemos regressão da área (coluna 2) em função da concentração
+# (coluna 1) do objeto curva_ex e deixar os resultados num novo objeto que chamaremos de lin_mod
+
+lin_mod</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = area ~ conc, data = curva_ex)
+## 
+## Coefficients:
+## (Intercept)         conc  
+##        9714      1375205</code></pre>
+<p>Pronto, temos um modelo de regressão simples feito no R, temos que os dados são ajustados por uma curva linear de intercepto= 9713,8749 e coeficiente angular= 1375205,4338 Os resultados dos componentes de modelo podem ser acessados utilizando a função <code>summary()</code>:</p>
+<pre class="r"><code>summary(lin_mod)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = area ~ conc, data = curva_ex)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -17284  -6071   -422   4526  26729 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     9714      11135    0,87     0,39    
+## conc         1375205       9146  150,36   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0,001 &#39;**&#39; 0,01 &#39;*&#39; 0,05 &#39;.&#39; 0,1 &#39; &#39; 1
+## 
+## Residual standard error: 10300 on 19 degrees of freedom
+## Multiple R-squared:  0,999,  Adjusted R-squared:  0,999 
+## F-statistic: 2,26e+04 on 1 and 19 DF,  p-value: &lt;2e-16</code></pre>
+<p>Podemos criar uma tabela para mostrar os valores ajustados e os residuos:</p>
+<pre class="r"><code>obs&lt;-seq(1,length(curva_ex$conc), 1)
+
+x&lt;-curva_ex$conc
+
+y&lt;-curva_ex$area
+
+yhat&lt;-lin_mod$fitted.values
+
+residuos&lt;-lin_mod$residuals
+
+dados_cal&lt;-data.frame(obs,x,y,yhat,residuos)
+
+colnames(dados_cal) &lt;- c(&quot;No. Observação&quot;, &quot;Concentração&quot;, &quot;Resposta&quot;, &quot;Resposta ajustada&quot;, &quot;Resíduo&quot;)
+
+
+dados_cal %&gt;%
+  kable(caption = &quot;Tabela de resultados&quot;, align=rep(&#39;c&#39;, 5))</code></pre>
+<table>
+<caption><span id="tab:rescurva">Table 2.1: </span>Tabela de resultados</caption>
+<thead>
+<tr class="header">
+<th align="center">No. Observação</th>
+<th align="center">Concentração</th>
+<th align="center">Resposta</th>
+<th align="center">Resposta ajustada</th>
+<th align="center">Resíduo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">0,8308</td>
+<td align="center">1148099</td>
+<td align="center">1152224</td>
+<td align="center">-4125,0</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">0,8312</td>
+<td align="center">1179522</td>
+<td align="center">1152793</td>
+<td align="center">26729,1</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">0,8300</td>
+<td align="center">1155612</td>
+<td align="center">1151086</td>
+<td align="center">4525,8</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">0,9495</td>
+<td align="center">1313289</td>
+<td align="center">1315440</td>
+<td align="center">-2150,7</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">0,9499</td>
+<td align="center">1298806</td>
+<td align="center">1316090</td>
+<td align="center">-17283,9</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">0,9485</td>
+<td align="center">1309954</td>
+<td align="center">1314139</td>
+<td align="center">-4185,4</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">1,0682</td>
+<td align="center">1481120</td>
+<td align="center">1478655</td>
+<td align="center">2464,5</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">1,0687</td>
+<td align="center">1485434</td>
+<td align="center">1479387</td>
+<td align="center">6047,0</td>
+</tr>
+<tr class="odd">
+<td align="center">9</td>
+<td align="center">1,0671</td>
+<td align="center">1469250</td>
+<td align="center">1477193</td>
+<td align="center">-7942,5</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">1,1868</td>
+<td align="center">1643193</td>
+<td align="center">1641871</td>
+<td align="center">1321,8</td>
+</tr>
+<tr class="odd">
+<td align="center">11</td>
+<td align="center">1,1874</td>
+<td align="center">1640203</td>
+<td align="center">1642684</td>
+<td align="center">-2481,0</td>
+</tr>
+<tr class="even">
+<td align="center">12</td>
+<td align="center">1,1857</td>
+<td align="center">1625966</td>
+<td align="center">1640246</td>
+<td align="center">-14279,7</td>
+</tr>
+<tr class="odd">
+<td align="center">13</td>
+<td align="center">1,3055</td>
+<td align="center">1795933</td>
+<td align="center">1805087</td>
+<td align="center">-9154,0</td>
+</tr>
+<tr class="even">
+<td align="center">14</td>
+<td align="center">1,3062</td>
+<td align="center">1807228</td>
+<td align="center">1805981</td>
+<td align="center">1247,0</td>
+</tr>
+<tr class="odd">
+<td align="center">15</td>
+<td align="center">1,3042</td>
+<td align="center">1815224</td>
+<td align="center">1803299</td>
+<td align="center">11925,1</td>
+</tr>
+<tr class="even">
+<td align="center">16</td>
+<td align="center">1,4242</td>
+<td align="center">1980508</td>
+<td align="center">1968303</td>
+<td align="center">12205,3</td>
+</tr>
+<tr class="odd">
+<td align="center">17</td>
+<td align="center">1,4249</td>
+<td align="center">1963207</td>
+<td align="center">1969278</td>
+<td align="center">-6071,0</td>
+</tr>
+<tr class="even">
+<td align="center">18</td>
+<td align="center">1,4228</td>
+<td align="center">1955687</td>
+<td align="center">1966352</td>
+<td align="center">-10665,1</td>
+</tr>
+<tr class="odd">
+<td align="center">19</td>
+<td align="center">1,5825</td>
+<td align="center">2195774</td>
+<td align="center">2185924</td>
+<td align="center">9850,3</td>
+</tr>
+<tr class="even">
+<td align="center">20</td>
+<td align="center">1,5832</td>
+<td align="center">2186585</td>
+<td align="center">2187007</td>
+<td align="center">-422,3</td>
+</tr>
+<tr class="odd">
+<td align="center">21</td>
+<td align="center">1,5809</td>
+<td align="center">2186201</td>
+<td align="center">2183756</td>
+<td align="center">2444,7</td>
+</tr>
+</tbody>
+</table>
+<p>Uma curva de calibração simples é feita utilizando o pacote <em>ggplot2</em> (<a href="https://blog.gburin.com/tutorial-de-ggplot2/">tutorial básico</a>):</p>
+<pre class="r"><code>#library(ggplot2)
+
+
+lin_plot &lt;- ggplot(lin_mod, aes(x=conc, y=area))+
+  geom_smooth(method = &quot;lm&quot;, se = TRUE, color= &quot;red&quot;,
+              size= 0.5, formula = y~x)+   #se= confidence interval
+  geom_point()+
+  theme_bw()
+
+lin_plot</code></pre>
+<p><img src="/post/Linearidade1/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Um gráfico muito mais elaborado, que cumple o “gold standard” da APA para reporte de resultados estatísticos pode ser feito utilizando o pacote <a href="https://indrajeetpatil.github.io/ggstatsplot/"><em>ggstatsplot</em></a>:</p>
+<pre class="r"><code>ggstatsplot::ggscatterstats(
+  data = curva_ex,
+  x = conc,
+  y = area,
+  xlab = &quot;Concentração&quot;, # label for x axis
+  ylab = &quot;Resposta analítica&quot;, # label for y axis
+  title = &quot;Curva de calibração&quot;
+)</code></pre>
+<p><img src="/post/Linearidade1/index_files/figure-html/GRA_LIN-1.png" width="672" /></p>
+</div>
+<div id="análise-dos-coeficientes-do-modelo-linear" class="section level2">
+<h2><span class="header-section-number">2.4</span> Análise dos coeficientes do modelo linear:</h2>
+<p>Primeiro avaliamos os coeficientes do modelo linear:</p>
+<table>
+<caption><span id="tab:summary">Table 2.2: </span>Tabela de coeficientes</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Estimativa</th>
+<th align="center">Desvio Padrão</th>
+<th align="center">Valor t</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Intercepto</td>
+<td align="center">9714</td>
+<td align="center">11135</td>
+<td align="center">0,8724</td>
+<td align="center">0,3939</td>
+</tr>
+<tr class="even">
+<td align="left">Concentração</td>
+<td align="center">1375205</td>
+<td align="center">9146</td>
+<td align="center">150,3594</td>
+<td align="center">0,0000</td>
+</tr>
+</tbody>
+</table>
+<div id="intercepto" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Intercepto</h3>
+<p>Com os resultados da tabela acima, além das estimativas dos parâmetros, podemos avaliar a significância dos parâmetros por meio do teste <span class="math inline">\(t\)</span>. O valor t é calculado dividindo o valor do coeficiente pelo erro padrão. Em relação ao parâmetro intercepto, temos que as hipóteses são dadas por:</p>
+<p><span class="math inline">\(H_0\)</span> : Intercepto é igual a zero (<span class="math inline">\(\beta_0= 0\)</span>)</p>
+<p><span class="math inline">\(H_1\)</span> : Intercepto é diferente de zero (<span class="math inline">\(\beta_0 \neq 0\)</span>)</p>
+<p>O <em>valor</em> <span class="math inline">\(t\)</span> para o intercepto é dado por:</p>
+<p><span class="math display">\[
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        9713,8749
+        }
+        {
+        11134,7006
+        } 
+  = 0,8724
+\]</span></p>
+<!--
+$$
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        9714
+        }
+        {
+        11135
+        } 
+  = 0,8724
+$$
+-->
+<p>no qual <span class="math inline">\(\sqrt{Var(\hat{\beta_0})}\)</span> é o desvio padrão do intercepto dado nos resultados da tabela acima.</p>
+<p>O valor crítico da distribuição <span class="math inline">\(t\)</span> ao nível de significância do 5% (<span class="math inline">\(\alpha=0,05\)</span>) e <span class="math inline">\(n-2\)</span> graus de liberdade é dado por <span class="math inline">\(t_{0,95, 19}= 1,7291\)</span>. Como o valor <span class="math inline">\(p\)</span> associado a esse teste <span class="math inline">\(t\)</span> <span class="math inline">\((2\times Pr(t_{0,95, 19}&gt;|t|)=0,3939)\)</span> é maior que 0,05 aceitamos <span class="math inline">\(H_0\)</span> e concluimos que o intercepto é significativamente igual a zero ao nível de significância do 5%</p>
+<p>No R, o valor crítico da distribuição <span class="math inline">\(t\)</span> é calculado pela função <code>qt</code>:</p>
+<pre class="r"><code># nível de significancia
+a= 0.95
+
+# graus de liberdade (n-2)
+df= length(curva_ex[,1])-2
+
+# Valor crítico da distribuição t
+qt(a,df)</code></pre>
+<pre><code>## [1] 1,729</code></pre>
+</div>
+<div id="coeficiente-angular" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> Coeficiente angular</h3>
+<p>Em relação ao coeficiente angular, temos que as hipóteses são:</p>
+<p><span class="math inline">\(H_0\)</span> : Coeficiente angular é igual a zero (<span class="math inline">\(\beta_1 = 0\)</span>)</p>
+<p><span class="math inline">\(H_1\)</span> : Coeficiente angular é diferente de zero (<span class="math inline">\(\beta_1 \neq 0\)</span>)</p>
+<p>O estatístico T do teste é dado por:</p>
+<p><span class="math display">\[
+T = \frac{
+          \hat{\beta_1}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_1})
+              }
+         }
+  = \frac{
+          1375205,4338
+         }
+         {
+          9146,1194
+         }
+  = 150,3594
+\]</span></p>
+<p>O valor crítico da distribuição <span class="math inline">\(t\)</span> ao nível de significância do 5% (<span class="math inline">\(\alpha=0,05\)</span>) e <span class="math inline">\(n-2\)</span> graus de liberdade é dado por <span class="math inline">\(t_{0,95, 19}= 1,7291\)</span>. Como o valor <span class="math inline">\(p\)</span> associado a esse teste <span class="math inline">\(t\)</span> (<span class="math inline">\(2\times Pr(t_{0,95, 19}&gt;|t|)= 1,087\times 10^{-30}\)</span>) é menor que 0,05 rejeitamos <span class="math inline">\(H_0\)</span> e concluimos que o coeficiente angular é significativamente diferente de zero ao nível de significância do 5%</p>
+</div>
+<div id="anova-no-método-dos-mínimos-quadrados-ordinários-mmqo" class="section level3">
+<h3><span class="header-section-number">2.4.3</span> Anova no método dos mínimos quadrados ordinários (MMQO)</h3>
+<p>Avaliamos também a significância do modelo por meio do teste F da ANOVA. Vale ressaltar que temos um modelo de regressão simples, desta forma o teste F da ANOVA é equivalente ao teste <span class="math inline">\(t\)</span>. A seguir, temos a Tabela da ANOVA.</p>
+<table>
+<caption><span id="tab:anova">Table 2.3: </span>Tabela de anova</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Graus de liberdade</th>
+<th align="center">Soma dos quadrados</th>
+<th align="center">Quadrado médio</th>
+<th align="center">valor-F</th>
+<th align="center">Pr(&gt;F)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Concentração</td>
+<td align="center">1</td>
+<td align="center">2404379417766</td>
+<td align="center">2404379417766</td>
+<td align="center">22608</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="left">Resíduos</td>
+<td align="center">19</td>
+<td align="center">2020669009</td>
+<td align="center">106351000</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+</tbody>
+</table>
+<p>No R o Anova é feito pela função <code>anova</code>.</p>
+<pre class="r"><code>anova(lin_mod)</code></pre>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: area
+##           Df        Sum Sq       Mean Sq F value Pr(&gt;F)    
+## conc       1 2404379417766 2404379417766   22608 &lt;2e-16 ***
+## Residuals 19    2020669009     106351000                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0,001 &#39;**&#39; 0,01 &#39;*&#39; 0,05 &#39;.&#39; 0,1 &#39; &#39; 1</code></pre>
+<p>Para testarmos a significância do coeficiente angular do modelo com o teste F da ANOVA, apresentamos as seguintes hipóteses:</p>
+<p><span class="math inline">\(H_0\)</span> : Coeficiente angular é igual a zero.</p>
+<p><span class="math inline">\(H_1\)</span> : Coeficiente angular é diferente de zero.</p>
+<p>A estatística de teste é dada pela divisão do quadrado médio da regressão (QMR) pelo quadrado médio dos resíduos ou erros (QME):</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+F_{OBS}= \frac{QMR}{QME}
+        = \frac{\frac{SQR}{p-1}}{\frac{SQE}{n-p}}
+        = \frac{\frac{\sum_{i=1}^{n}(\hat{y_i}-\bar y)^2}{p-1}}
+              {\frac{\sum_{i=1}^{n}({y_i}-\hat{y_i})^2}{n-p}} \\
+F_{OBS}= \frac{\frac{2,4044\times 10^{12}}{1}}
+              {\frac{2020669009,2465}{19}}
+        = 22607,9624
+\end{eqnarray}
+\]</span></p>
+<p>Onde <span class="math inline">\(SQR\)</span> é a soma dos quadrados da regressão, <span class="math inline">\(SQE\)</span> é a soma dos quadrados dos erros ou resíduos, <span class="math inline">\(p\)</span> é o número de parâmetros do modelo, <span class="math inline">\(n\)</span> é o número total de pontos, <span class="math inline">\(\bar{y}\)</span> é a média aritmética dos valores de y no centroide, <span class="math inline">\(y_i\)</span> é um valor individual de y obtido experimentalmente em um determinado ponto (iésimo ponto) e <span class="math inline">\(\hat{y_i}\)</span> é um valor individual de y calculado pelo modelo (equação) em um determinado ponto (i-ésimo ponto).</p>
+<p>A região crítica para o teste F é dada por <span class="math inline">\(F_{\alpha, p-1, n-p}= F_{0.95,1, 19} = 4,3807\)</span>. Como a estatística observada é <em>maior</em> que o quantil da distribuição para a determinação da região crítica (<span class="math inline">\(F_{OBS}\)</span> &gt; <span class="math inline">\(F\)</span>) e o valor <span class="math inline">\(p\)</span> associado a esse teste <span class="math inline">\(F\)</span> (<span class="math inline">\(2\times Pr(F_{0.95,1, 19}&gt;F)= 1,087\times 10^{-30}\)</span>) é menor que 0,05 rejeitamos <span class="math inline">\(H_0\)</span> e concluimos que o coeficiente angular é significativamente diferente de zero ao nível de significância do 5%</p>
+</div>
+</div>
+<div id="análise-de-resíduos" class="section level2">
+<h2><span class="header-section-number">2.5</span> Análise de Resíduos</h2>
+<p>A tabela a seguir, apresenta a análise exploratória dos resíduos.</p>
+<table>
+<caption><span id="tab:res">Table 2.4: </span>Tabela dos resíduos</caption>
+<thead>
+<tr class="header">
+<th align="right">Mínimo</th>
+<th align="right">1Q</th>
+<th align="right">Mediana</th>
+<th align="right">Média</th>
+<th align="right">3Q</th>
+<th align="right">Máximo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">-17284</td>
+<td align="right">-6071</td>
+<td align="right">-422,3</td>
+<td align="right">0</td>
+<td align="right">4526</td>
+<td align="right">26729</td>
+</tr>
+</tbody>
+</table>
+<p>Observando a tabela acima, podemos estudar se os valores de mínimo e máximo, em módulo apresentam ou não uma diferença notável, assim como a mediana e a média, o que nos dá indícios de que a distribuição dos resíduos é simétrica.</p>
+<p>O coeficiente de correlação de Pearson mede o grau de proporcionalidade entre a variável explicativa (concentração) e a varíavel resposta (área). Temos que o coeficiente de determinação R<sup>2</sup> é dado pela divisão da soma de quadrados da regressão (SQR) pela soma de quadrados total (SQT=SQR+SQE):</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+R^2= \frac{SQR}{SQT}=\frac{SQE}{SQR+SQE}
+   = \frac{2,4044\times 10^{12}}{2,4064\times 10^{12}}
+   = 0,9992 \\
+r=\sqrt{R^2}=\sqrt{0,9992} =  0,9996
+\end{eqnarray}
+\]</span>
+Logo o critério da RDC em relação ao coeficiente é satisfeto, visto que 0,9996 está acima do valor especificado pela agência reguladora (0,990). Note que o coeficiente de determinação representa a relação sinal/ruído, em que SQR está relacionada ao sinal analítico e o ruído está relacionada ao SQT.</p>
+<div id="gráficos-de-diagnóstico" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> Gráficos de diagnóstico</h3>
+<p><img src="/post/Linearidade1/index_files/figure-html/diagplot-1.png" width="768" /></p>
+<ul>
+<li><p>No gráfico de residuos vs valores ajustados observamos se existe comportamento não linear, dados dispersos homogenamente no redor de uma linha horizontal sem padrão aparente é um indicador de relação linear.</p></li>
+<li><p>O gráfico Q-Q indica se os resíduos estão distribuidos normalmente. Se os resíduos seguem a linha reta é um indício de que a suposição de normalidade para os erros experimentais é satisfeita.</p></li>
+<li><p>O gráfico de <em>scale-location</em> indica se os resíduos estão distribuídos igualmente ao longo dos intervalos dos preditores, uma linea horizontal com pontos dispersos aleatóriamente na volta é um indicativo de que a suposição de homocedasticidade é satisfeita.</p></li>
+<li><p>O gráfico de distância de Cook indica se existe algum punto influente, alguns indicam uma distância maior do que 1 para considerar um punto influente. <a href="https://stats.stackexchange.com/questions/22161/how-to-read-cooks-distance-plots#:~:text=Cook%27s%20distance%20can%20be%20contrasted,dropped%20from%20the%20data%20set.">Outras referências</a> indicam como limite um valor de 4/n ou 4/(n-k-1), onde n=número de observações e k é o número de variáveis explicativas.</p></li>
+<li><p>No gráfico de resíduos vs <em>leverage</em> observamos a dispersão dos resíduos em função do <em>leverage</em>. O <em>leverage</em> é uma medida de quão distantes os valores das variáveis independentes de uma observação estão daqueles das outras observações. O gráfico é utilizado principalmente para detectar heteroscedasticidade e não linearidade. A propagação de resíduos padronizados não deve mudar em função do leverage numa situação de homocedasticidade (variância constante).</p></li>
+<li><p>O gráfico de distância de cook vs leverage indica se os pontos com alto <em>leverage</em> podem ter influência: ou seja, se excluí-los mudaria muito o modelo. Para isso, podemos observar a distância de Cook, que mede o efeito da exclusão de um ponto no vetor de parâmetro combinado. Uma diretriz aproximada, para tamanhos de amostra grandes, é considerar os valores de distância de Cook acima de 1 para indicar pontos altamente influentes e valores de <em>leverage</em> maiores que 2 vezes o número de preditores dividido pelo tamanho da amostra para indicar observações de alto <em>leverage</em> (no nosso caso esté limite sería <span class="math inline">\(2\times (1/21)=0,0952\)</span>). Observações de alto <em>leverage</em> são aquelas que possuem valores preditores muito distantes de suas médias, o que pode influenciar muito o modelo ajustado.</p></li>
+</ul>
+<p>Para validar as indicações sugeridas a partir da análise gráfica, vamos verificar as hipótese levantadas por meio dos testes estatísticos:</p>
+</div>
+<div id="teste-de-normalidade-dos-resíduos" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> Teste de normalidade dos resíduos</h3>
+<p>A seguir, avaliamos a normalidade dos erros experimentais por meio do teste de Shapiro-Wilk, no qual as hipóteses são:</p>
+<p><span class="math inline">\(H_0\)</span> : A distribuição dos erros experimentais é normal</p>
+<p><span class="math inline">\(H_1\)</span> : A distribuição dos erros experimentais não é normal</p>
+<table>
+<caption><span id="tab:shapiro">Table 2.5: </span>Teste de normalidade de Shapiro-Wilk</caption>
+<thead>
+<tr class="header">
+<th align="center">Estatística w</th>
+<th align="center">p-valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0,9663</td>
+<td align="center">0,651</td>
+</tr>
+</tbody>
+</table>
+<p>Como resultado temos um valor estatístico w=0,9663 e que o valor <span class="math inline">\(p\)</span> associado a esse teste (0,651) é maior que 0,05, sendo assim, aceitamos a hipótese nula <span class="math inline">\(H_0\)</span> de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.</p>
+<p>No R o teste é realizado pela funçao <code>shapiro.test</code></p>
+<pre class="r"><code>shapiro.test(lin_mod$residuals)</code></pre>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  lin_mod$residuals
+## W = 0,97, p-value = 0,7</code></pre>
+<p>Ou pela função <code>ols_test_normality</code> do pacote <em>olsrr</em> que determina test adicionais</p>
+<pre class="r"><code>#library(olsrr)
+ols_test_normality(lin_mod)</code></pre>
+<pre><code>## -----------------------------------------------
+##        Test             Statistic       pvalue  
+## -----------------------------------------------
+## Shapiro-Wilk              0,9663         0,6510 
+## Kolmogorov-Smirnov        0,1174         0,9021 
+## Cramer-von Mises          1,7619         0,0000 
+## Anderson-Darling          0,2309         0,7758 
+## -----------------------------------------------</code></pre>
+</div>
+<div id="teste-de-homocedasticidade" class="section level3">
+<h3><span class="header-section-number">2.5.3</span> Teste de homocedasticidade</h3>
+<p>A seguir, analisamos a homoscedasticidade por meio do teste de Breusch-Pagan, no qual as hipóteses são:</p>
+<p><span class="math inline">\(H_0\)</span> : As variâncias são iguais.</p>
+<p><span class="math inline">\(H_1\)</span> : Pelo menos uma variância difere.</p>
+<table>
+<caption><span id="tab:breusch">Table 2.6: </span>Teste de homoscedasticidade de Breusch-Pagan</caption>
+<thead>
+<tr class="header">
+<th align="center">Estatística BP</th>
+<th align="center">p-valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1,642</td>
+<td align="center">0,2001</td>
+</tr>
+</tbody>
+</table>
+<p>Como resultado temos um valor estatístico BP=1,6417 e que o valor <span class="math inline">\(p\)</span> associado a esse teste (0,2001) é maior que 0,05, sendo assim, aceitamos a hipótese nula <span class="math inline">\(H_0\)</span> de igualdade das variâncias ao nível de significância de 5%. Note que o resultado do teste está em conformidade com a análise gráfica dos resíduos X valores ajustados. Logo, temos um modelo homocedástico.</p>
+<p>Conforme o <a href="http://www.portalaction.com.br/validacao-de-metodologia-analitica/exemplo-linearidade-hplc">portal action</a> O teste de Breusch-Pagan é o que melhor se adequa neste caso, visto que assumimos a suposição de normalidade para os erros experimentais. Os teste de Cochran e de Brown-Forsythe não se adequam ao nosso objetivo pois necessitam de grupos e, como os dados do exemplo foram coletados de forma independente, os testes em questão não poderiam ser realizados. Já o teste de Goldfeld-Quandt tem como limitação a exigência de amostras relativamente grandes.</p>
+<p>No R o teste é realizado pela funçao <code>bptest</code> do pacote <a href="https://cran.r-project.org/web/packages/lmtest/index.html"><em>lmtest</em></a></p>
+<pre class="r"><code>#library(lmtest)
+
+bptest(lin_mod)</code></pre>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  lin_mod
+## BP = 1,6, df = 1, p-value = 0,2</code></pre>
+</div>
+<div id="teste-de-autocorrelação" class="section level3">
+<h3><span class="header-section-number">2.5.4</span> Teste de autocorrelação</h3>
+<p>Para confirmar que não há dependência das observações, isto é, que não temos sequências de pontos decrescentes ou crescentes vamos aplicar o teste de Durbin-Watson. As hipóteses do teste são:</p>
+<p><span class="math inline">\(H_0\)</span> : As observações são independentes.</p>
+<p><span class="math inline">\(H_1\)</span> : As observações não são independentes.</p>
+<table>
+<caption><span id="tab:durbin">Table 2.7: </span>Teste de autocorrelação de Durbin-Watson</caption>
+<thead>
+<tr class="header">
+<th align="center">Estatística DW</th>
+<th align="center">p-valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1,742</td>
+<td align="center">0,1971</td>
+</tr>
+</tbody>
+</table>
+<p>Como resultado temos um valor estatístico DW=1,7423 e que o valor <span class="math inline">\(p\)</span> associado a esse teste (0,1971) é maior que 0,05, sendo assim, aceitamos a hipótese nula <span class="math inline">\(H_0\)</span> de independência das observações ao nível de significância de 5%.</p>
+<p>No R o teste é realizado pela funçao <code>dwtest</code> do pacote <a href="https://cran.r-project.org/web/packages/lmtest/index.html"><em>lmtest</em></a></p>
+<pre class="r"><code>#library(lmtest)
+
+dwtest(lin_mod)</code></pre>
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  lin_mod
+## DW = 1,7, p-value = 0,2
+## alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+<p>Como conclusão temos que os critérios da RDC 166 que foram atendidos são:</p>
+<ul>
+<li>Coeficiente linear não significativo ao nível de significância de 5%;</li>
+<li>Coeficiente angular significativo ao nível de significância de 5%;</li>
+<li>Normalidade dos erros experimentais;</li>
+<li>Igualdade das variâncias ao nível de significância de 5% (modelo homocedástico);</li>
+<li>As observações são independentes.</li>
+</ul>
+</div>
+</div>
+<div id="limite-de-detecção-e-quantificação" class="section level2">
+<h2><span class="header-section-number">2.6</span> Limite de detecção e quantificação</h2>
+<p>A partir da análise de linearidade é fácil determinar os limites de detecção e quantificação:</p>
+<p>O limite de detecção é calculado como <span class="math inline">\(LOD=3S_r/b\)</span>, onde <span class="math inline">\(S_r\)</span> = desvio padrão dos resíduos e <span class="math inline">\(b\)</span>= coeficiente angular da curva de calibração.</p>
+<pre class="r"><code>LOD&lt;-(3*sd(lin_mod$residuals))/(lin_mod$coefficients[[2]])
+LOD</code></pre>
+<pre><code>## [1] 0,02193</code></pre>
+<p>O limite de quantificação é calculado como <span class="math inline">\(LOQ=10S_r/b\)</span>, onde <span class="math inline">\(S_r\)</span> = desvio padrão dos resíduos e <span class="math inline">\(b\)</span>= coeficiente angular da curva de calibração.</p>
+<pre class="r"><code>LOD&lt;-(3*sd(lin_mod$residuals))/(lin_mod$coefficients[[2]])
+LOD</code></pre>
+<pre><code>## [1] 0,02193</code></pre>
+</div>
+</div>
+<div id="detalhes-adicionais-sobre-desenvolvimento-do-documento-dinâmico" class="section level1">
+<h1><span class="header-section-number">3</span> Detalhes adicionais sobre desenvolvimento do documento dinâmico</h1>
+<div id="equações" class="section level2">
+<h2><span class="header-section-number">3.1</span> Equações</h2>
+<p>para trabalhar números num formato conveniente: comma como separador decimal, número adequado de algarismos significativos e notação científica para números muito grandes ou pequenos é necessário ajustar algumas opções do R no começo de documento, ex:</p>
+<pre class="r"><code>#### OPÇÕES ######
+options(OutDec= &quot;,&quot;)
+options(scipen=6)
+options(digits=4)</code></pre>
+<p>Na seção 2.4.1 mostramos uma fórmula com resultados que define o valor estatistico t como a razão entre o intercepto e o desvio padrão deste, num relatório automátizado é claro que estes valores são variáveis.</p>
+<p><span class="math display">\[
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        9713,8749
+        }
+        {
+        11134,7006
+        } 
+  = 0,8724
+\]</span></p>
+<p>Poderiamos fazer esta parte semi-automáticamente digitando os valores encontrados no objeto de clase “lm” (<code>summary(lin_mod)</code> permite acessar os componentes do modelo linear):</p>
+<p><img src="ext.PNG" /></p>
+<p>Porém esse não é nosso objetivo, para “brincar” com os valores produzidos no R é precisso conhecer a estrutura dos objetos, para isso utilizamos a função <code>str()</code></p>
+<pre class="r"><code>class(lin_mod)</code></pre>
+<pre><code>## [1] &quot;lm&quot;</code></pre>
+<pre class="r"><code>str(summary(lin_mod))</code></pre>
+<pre><code>## List of 11
+##  $ call         : language lm(formula = area ~ conc, data = curva_ex)
+##  $ terms        :Classes &#39;terms&#39;, &#39;formula&#39;  language area ~ conc
+##   .. ..- attr(*, &quot;variables&quot;)= language list(area, conc)
+##   .. ..- attr(*, &quot;factors&quot;)= int [1:2, 1] 0 1
+##   .. .. ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. .. .. ..$ : chr [1:2] &quot;area&quot; &quot;conc&quot;
+##   .. .. .. ..$ : chr &quot;conc&quot;
+##   .. ..- attr(*, &quot;term.labels&quot;)= chr &quot;conc&quot;
+##   .. ..- attr(*, &quot;order&quot;)= int 1
+##   .. ..- attr(*, &quot;intercept&quot;)= int 1
+##   .. ..- attr(*, &quot;response&quot;)= int 1
+##   .. ..- attr(*, &quot;.Environment&quot;)=&lt;environment: R_GlobalEnv&gt; 
+##   .. ..- attr(*, &quot;predvars&quot;)= language list(area, conc)
+##   .. ..- attr(*, &quot;dataClasses&quot;)= Named chr [1:2] &quot;numeric&quot; &quot;numeric&quot;
+##   .. .. ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;area&quot; &quot;conc&quot;
+##  $ residuals    : Named num [1:21] -4125 26729 4526 -2151 -17284 ...
+##   ..- attr(*, &quot;names&quot;)= chr [1:21] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; ...
+##  $ coefficients : num [1:2, 1:4] 9713,875 1375205,434 11134,701 9146,119 0,872 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : chr [1:2] &quot;(Intercept)&quot; &quot;conc&quot;
+##   .. ..$ : chr [1:4] &quot;Estimate&quot; &quot;Std. Error&quot; &quot;t value&quot; &quot;Pr(&gt;|t|)&quot;
+##  $ aliased      : Named logi [1:2] FALSE FALSE
+##   ..- attr(*, &quot;names&quot;)= chr [1:2] &quot;(Intercept)&quot; &quot;conc&quot;
+##  $ sigma        : num 10313
+##  $ df           : int [1:3] 2 19 2
+##  $ r.squared    : num 0,999
+##  $ adj.r.squared: num 0,999
+##  $ fstatistic   : Named num [1:3] 22608 1 19
+##   ..- attr(*, &quot;names&quot;)= chr [1:3] &quot;value&quot; &quot;numdf&quot; &quot;dendf&quot;
+##  $ cov.unscaled : num [1:2, 1:2] 1,166 -0,938 -0,938 0,787
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : chr [1:2] &quot;(Intercept)&quot; &quot;conc&quot;
+##   .. ..$ : chr [1:2] &quot;(Intercept)&quot; &quot;conc&quot;
+##  - attr(*, &quot;class&quot;)= chr &quot;summary.lm&quot;</code></pre>
+<p>Temos que o objeto é uma lista de 11 componentes, neste caso estamos interessados no componente que possui os coefficientes:</p>
+<pre class="r"><code>summary(lin_mod)$coefficients</code></pre>
+<pre><code>##             Estimate Std. Error  t value  Pr(&gt;|t|)
+## (Intercept)     9714      11135   0,8724 3,939e-01
+## conc         1375205       9146 150,3594 1,087e-30</code></pre>
+<p>Para extrair um valor deste data frame temos que <a href="https://rpubs.com/paternogbc/48099">indexar</a> o valor que queremos do vetor (<code>objeto[linhas,colunas]</code>)</p>
+<pre class="r"><code># Extrair intercepto:
+summary(lin_mod)$coefficients[1,1]</code></pre>
+<pre><code>## [1] 9714</code></pre>
+<pre class="r"><code># Extrair desvio padrão:
+summary(lin_mod)$coefficients[1,2]</code></pre>
+<pre><code>## [1] 11135</code></pre>
+<pre class="r"><code># Extrair estatistico t:
+summary(lin_mod)$coefficients[1,3]</code></pre>
+<pre><code>## [1] 0,8724</code></pre>
+<pre class="r"><code># Também é posível calcular este valor t pois conhecemos a fórmula:
+summary(lin_mod)$coefficients[1,1]/summary(lin_mod)$coefficients[1,2]</code></pre>
+<pre><code>## [1] 0,8724</code></pre>
+<p>As equações tem como base o <a href="http://each.uspnet.usp.br/sarajane/wp-content/uploads/2016/10/manual-latex-3.pdf"><span class="math inline">\(\LaTeX\)</span></a>, começamos com uma fórmula simples que não contém código R,</p>
+<pre><code>$$
+T = \frac{\hat{\beta_0}}{\sqrt{Var(\hat{\beta_0})}}= \frac{a}{b}=c
+$$</code></pre>
+<p>produz:</p>
+<p><span class="math display">\[
+T = \frac{\hat{\beta_{0}}}{\sqrt{Var(\hat{\beta_0})}} = \frac{a}{b} = c
+\]</span></p>
+<p>Agora, <span class="math inline">\(a\)</span> corresponde a <code>summary(lin_mod)$coefficients[1,1]</code>, <span class="math inline">\(b\)</span> corresponde a <code>summary(lin_mod)$coefficients[1,2]</code> e <span class="math inline">\(c\)</span> corresponde a <code>summary(lin_mod)$coefficients[1,3]</code> ou também <span class="math inline">\(c\)</span>=<code>(summary(lin_mod)$coefficients[1,1])</code>/<code>(summary(lin_mod)$coefficients[1,2])</code>.</p>
+<p>Misturando então <span class="math inline">\(\LaTeX\)</span> e código R conseguimos a equação que queremos mostrar,</p>
+<pre><code>$$
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        &#39;r summary(lin_mod)$coefficients[1,1]&#39;
+        }
+        {
+        &#39;r summary(lin_mod)$coefficients[1,2]&#39;
+        } 
+  = &#39;r summary(lin_mod)$coefficients[1,3]&#39;
+$$</code></pre>
+<p>Produz</p>
+<p><span class="math display">\[
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        9713,8749
+        }
+        {
+        11134,7006
+        } 
+  = 0,8724
+\]</span></p>
+</div>
+<div id="texto" class="section level2">
+<h2><span class="header-section-number">3.2</span> Texto</h2>
+<p>Na seção 2.5.2 apresentei o teste de normalidade e o como fazer ele no R, em esse e nos outros testes para resíduos é possível criar uma sequência de análise que no final permite criar vetores de texto com as “conclusões” que são possíveis no teste: aceitar ou não a hipótese nula:</p>
+<pre class="r"><code># teste de shapiro wilk
+sw&lt;-shapiro.test(lin_mod$residuals)
+
+
+# O objeto sw possui a classe &quot;htest&quot;, logo precissamos tirar dele o que interessa:
+# a estatistica w e o valor p (sw_p)
+w&lt;-sw$statistic
+sw_p&lt;-sw$p.value
+
+
+# Criamos um data frame com a função data.frame
+sw_df&lt;-data.frame(w, sw_p, row.names = NULL)
+
+# trocamos os nomes das colunas com a função colnames:
+colnames(sw_df) &lt;- c(&quot;Estatística w&quot;, &quot;p-valor&quot;)
+
+# Criamos uma tabela para deixar no relatório com os resultados do teste:
+sw_df %&gt;% 
+  kable(caption = &quot;Teste de normalidade de Shapiro-Wilk&quot;,  align=rep(&#39;c&#39;, 2))</code></pre>
+<table>
+<caption>(#tab:shapiro_ex)Teste de normalidade de Shapiro-Wilk</caption>
+<thead>
+<tr class="header">
+<th align="center">Estatística w</th>
+<th align="center">p-valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0,9663</td>
+<td align="center">0,651</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>## Parte lógica
+
+p_crit_sw &lt;-0.05  # Valor crítico de p segundo a RDC 166
+
+
+if(sw_p&lt; p_crit_sw){                  # se p-valor do teste é menor que o p crítico (0.05)
+  vetor_sw&lt;-c(&quot;menor&quot;, &quot;rejeitamos&quot;)  # o vetor vetor_sw vai conter as palabras menor e regeitamos
+} else {                              # se p-valor do teste é maior que o p crítico (0.05)
+  vetor_sw&lt;-c(&quot;maior&quot;, &quot;aceitamos&quot;)   # o vetor vetor_sw vai conter as palabras maior e aceitamos
+}</code></pre>
+<p>Assim, com esse vetor de palavaras criado podemos dinamizar o texto:</p>
+<p>Como resultado temos um valor estatístico w=<code>sw$statistic</code> e que o valor <span class="math inline">\(p\)</span> associado a esse teste (<code>sw$p.value</code>) é <code>vetor_sw[1]</code> que 0,05, sendo assim, <code>vetor_sw[2]</code> a hipótese nula <span class="math inline">\(H_0\)</span> de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.</p>
+<p>Produz:</p>
+<p>Como resultado temos um valor estatístico w=0,9663 e que o valor <span class="math inline">\(p\)</span> associado a esse teste (0,651) é maior que 0,05, sendo assim, aceitamos a hipótese nula <span class="math inline">\(H_0\)</span> de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.</p>
+</div>
+<div id="gráficos" class="section level2">
+<h2><span class="header-section-number">3.3</span> Gráficos</h2>
+<p>Esta é uma parte complexa quando se quer personalizar e formatar ao gosto os gráficos, neste caso eu atualizei uma função criada por Raju Rimal que permite a criação de 6 gráficos de diagnóstico personalizados:</p>
+<pre class="r"><code>#https://rpubs.com/therimalaya/43190 (modificado 12/12/20)
+
+diagPlot&lt;-function(model){
+    p1&lt;-ggplot(model, aes(.fitted, .resid))+geom_point()
+    p1&lt;-p1+stat_smooth(method=&quot;loess&quot;)+geom_hline(yintercept=0, col=&quot;red&quot;, linetype=&quot;dashed&quot;)
+    p1&lt;-p1+xlab(&quot;Valores ajustados&quot;)+ylab(&quot;Residuos&quot;)
+    p1&lt;-p1+ggtitle(&quot;Residuos vs Valores ajustados&quot;)+theme_bw()
+    
+    p2&lt;-ggplot(model, aes(qqnorm(.stdresid)[[1]], .stdresid))+geom_point(na.rm = TRUE)
+    p2&lt;-p2+geom_qq_line(aes(sample=.stdresid))+xlab(&quot;Quantis teóricos&quot;)+ylab(&quot;Resíduos padronizados&quot;)
+    p2&lt;-p2+ggtitle(&quot;Gráfico Q-Q&quot;)+theme_bw()
+    
+    p3&lt;-ggplot(model, aes(.fitted, sqrt(abs(.stdresid))))+geom_point(na.rm=TRUE)
+    p3&lt;-p3+stat_smooth(method=&quot;loess&quot;, na.rm = TRUE)+xlab(&quot;Valores ajustados&quot;)
+    p3&lt;-p3+ylab(expression(sqrt(&quot;|Resíduos padronizados|&quot;)))
+    p3&lt;-p3+ggtitle(&quot;Scale-Location&quot;)+theme_bw()
+    
+    p4&lt;-ggplot(model, aes(seq_along(.cooksd), .cooksd))+geom_bar(stat=&quot;identity&quot;, position=&quot;identity&quot;)
+    p4&lt;-p4+xlab(&quot;Número da observação&quot;)+ylab(&quot;Distância de Cook&quot;)
+    p4&lt;-p4+ggtitle(&quot;Distância de Cook&quot;)+theme_bw()
+    
+    p5&lt;-ggplot(model, aes(.hat, .stdresid))+geom_point(aes(size=.cooksd), na.rm=TRUE)
+    p5&lt;-p5+stat_smooth(method=&quot;loess&quot;, na.rm=TRUE)
+    p5&lt;-p5+xlab(&quot;Leverage&quot;)+ylab(&quot;Resíduos padronizados&quot;)
+    p5&lt;-p5+ggtitle(&quot;Resíduos vs Leverage&quot;)
+    p5&lt;-p5+scale_size_continuous(&quot;Distância de Cook&quot;, range=c(1,5))
+    p5&lt;-p5+theme_bw()+theme(legend.position=&quot;bottom&quot;)
+    
+    p6&lt;-ggplot(model, aes(.hat, .cooksd))+geom_point(na.rm=TRUE)+stat_smooth(method=&quot;loess&quot;, na.rm=TRUE)
+    p6&lt;-p6+xlab(&quot;Leverage hii&quot;)+ylab(&quot;Distância de Cook&quot;)
+    p6&lt;-p6+ggtitle(&quot;Distância de Cook vs Leverage hii/(1-hii)&quot;)
+    p6&lt;-p6+geom_abline(slope=seq(0,3,0.5), color=&quot;gray&quot;, linetype=&quot;dashed&quot;)
+    p6&lt;-p6+theme_bw()
+    
+    return(list(rvfPlot=p1, qqPlot=p2, sclLocPlot=p3, cdPlot=p4, rvlevPlot=p5, cvlPlot=p6))
+}</code></pre>
+<p>Criada a função <code>diagPlot</code> podemos aplicar ela a nosso modelo linear <code>lin_mod</code> e criar o objeto <code>diagPlts</code> que contém os 6 gráficos numa lista, com a função <code>grid.arrange</code> do pacote <a href="https://cran.r-project.org/web/packages/gridExtra/index.html">gridExtra</a> podemos plotar os objetos dessa lista como quisermos, podemos imprimir todos os 6 ou menos e num arranjo diferente:</p>
+<pre class="r"><code>diagPlts&lt;-diagPlot(lin_mod)
+
+class(diagPlts)
+
+#library(grid)
+#library(gridExtra)
+
+do.call(grid.arrange, c(diagPlts, top=&quot;Gráficos de diagnóstico de resíduos&quot;, ncol=1))</code></pre>
+<p><img src="/post/Linearidade1/index_files/figure-html/diagplot_ex-1.png" width="384" /></p>
+<p>Parece díficil e trabalhoso más com prática vai ficando cada día mais fácil, o bom é que esse trabalho só se faz uma vez, quando se tem que fazer o mesmo tipo de relatório várias vezes (exemplo relatorio de linearidade/validação) este trabalho se vê recompensado ao fazer um documento com este tipo de detalhes de forma rápida, reprodutível e livre de erros, pois todo é recalculado e diagramado de novo em poucos segundos.</p>
+</div>
+</div>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r-markdown/">R Markdown</a>
+  
+  <a class="badge badge-light" href="/tags/linearidade/">Linearidade</a>
+  
+  <a class="badge badge-light" href="">automatização</a>
+  
+  <a class="badge badge-light" href="">validação</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="">documento dinâmico</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu66856b498686ee1cc65495b86c06a655_279091_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></h5>
+      <h6 class="card-subtitle">Analista Químico</h6>
+      <p class="card-text" itemprop="description">Meus interesses de pesquisa incluem química analítica, ciência de dados e pesquisa reprodutível.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.facebook.com/" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/ayopasaa" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/horwitz/">Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</a></li>
+          
+          <li><a href="/post/rstudio-r/">Introdução e ferramentas de trabalho</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+<div class="container">
+  <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="/privacy/">Privacy Policy</a>
+  </p>
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+</div>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.8f3d53582b3c04a038fca31bcc86151b.js"></script>
+
+  </body>
+</html>
+

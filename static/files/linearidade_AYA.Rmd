@@ -1,0 +1,709 @@
+---
+title: "Linearidade"
+author: "Alejandro Yopasá-Arenas, PhD"
+date: "17/12/2020"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r pacotes-opcoes, message=FALSE, echo=FALSE, warning=FALSE, cache=FALSE}
+packages = c("tidyverse", "knitr",  "grid", "gridExtra", "ggstatsplot", "hrbrthemes", "olsrr", "lmtest")
+
+#use this function to check if each package is on the local machine
+#if a package is installed, it will be loaded
+#if any are not, the missing package(s) will be installed and loaded
+package.check <- lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+        install.packages(x, dependencies = TRUE, 
+                         repos = "http://cran.us.r-project.org")
+        library(x, character.only = TRUE)
+    }
+})
+
+#if (!require("pacman")) install.packages("pacman")
+#pacman::p_load(knitr, captioner, bundesligR, stringr)
+
+```
+
+```{r opcoes, echo=FALSE}
+
+#### OPÇÕES ######
+options(OutDec= ",")
+options(scipen=6)
+options(digits=4)
+```
+
+
+## Resultados experimentais
+
+
+```{r, echo=FALSE}
+setwd("C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\Linearidade1") # vai ser diferente para cada usuário
+```
+
+
+```{r, echo=FALSE}
+curva_ex<- read.csv2("dados_linearidade.csv", header = TRUE, skip = 0)
+
+colnames(curva_ex)<-c("conc", "area")
+
+# Para achar ajuda/explicação sobre determinada função do R basta digitar ? 
+# seguido da função: ex: ?read.csv2 vai abrir a aba Help no Rstudio mostrando as 
+# definições dos argumentos, etc...
+```
+
+
+```{r rescurva1, echo=FALSE}
+
+obs<-seq(1,length(curva_ex$conc), 1)
+
+x<-curva_ex$conc
+
+y<-curva_ex$area
+
+#yhat<-lin_mod$fitted.values
+
+#residuos<-lin_mod$residuals
+
+dados_cal<-data.frame(obs,x,y)
+
+colnames(dados_cal) <- c("No. Observação", "Concentração", "Resposta")
+
+
+dados_cal %>%
+  kable(caption = "Tabela de resultados", align=rep('c', 3))
+
+```
+
+
+
+## Ajuste do modelo linear
+
+O nosso modelo é representado por:
+
+$$
+Y_{ij}= \beta_0 + \beta_1 x_{ij} + \epsilon_{ij},\quad j=1,...,n_i \quad e \quad i=1,...k
+$$
+
+
+
+Em que:
+
+* $Y_{ij}$ representa o sinal analítico (área, absorbância. etc...);
+* $x_{ij}$ representa a concentração;
+* $\beta_0$ representa o coeficiente linear ou intercepto;
+* $\beta_1$ representa o coeficiente angular;
+* $\epsilon$ representa o erro experimental;
+* $n_i$  representa o número de réplicas do ponto $i$ de concentração;
+* $k$ representa o número de pontos ou níveis.    
+
+O ajuste de modelos lineares é feito no R fácilmente com a função `lm()`. A função faz a regressão e a análise da variância e covariância. Obtemos o seguinte modelo
+
+```{r, echo=FALSE}
+
+lin_mod<- lm(area~conc, data=curva_ex)
+
+# Neste caso vamos fazemos regressão da área (coluna 2) em função da concentração
+# (coluna 1) do objeto curva_ex e deixar os resultados num novo objeto que chamaremos de lin_mod
+
+```
+
+```{r summary, echo=FALSE, warning=FALSE}
+df <-
+  summary(lin_mod)$coefficients %>% 
+  as_tibble()
+
+colnames(df) <- c("Estimativa", "Desvio Padrão", "Valor t", "Pr(>|t|)")
+rownames(df) <- c("Intercepto", "Concentração")
+
+df %>% 
+  kable(caption = "Tabela de coeficientes", align=c('c','c','c', "c"))
+
+```
+
+
+Temos que os dados são ajustados por uma curva linear de intercepto= `r summary(lin_mod)$coefficients[1,1]` e coeficiente angular= `r summary(lin_mod)$coefficients[2,1]`.
+
+
+```{r GRA_LIN, echo=FALSE, warning=FALSE, fig.width=7}
+
+ggstatsplot::ggscatterstats(
+  data = curva_ex,
+  x = conc,
+  y = area,
+  xlab = "Concentração", # label for x axis
+  ylab = "Resposta analítica", # label for y axis
+  title = "Curva de calibração"
+)
+```
+
+```{r rescurva, echo=FALSE}
+
+obs<-seq(1,length(curva_ex$conc), 1)
+
+x<-curva_ex$conc
+
+y<-curva_ex$area
+
+yhat<-lin_mod$fitted.values
+
+residuos<-lin_mod$residuals
+
+dados_cal<-data.frame(obs,x,y,yhat,residuos)
+
+colnames(dados_cal) <- c("No. Observação", "Concentração", "Resposta", "Resposta ajustada", "Resíduo")
+
+
+dados_cal %>%
+  kable(caption = "Tabela de resultados do ajuste", align=rep('c', 5))
+
+```
+
+## Análise dos coeficientes do modelo linear:
+
+
+### Intercepto
+
+Com os resultados da tabela acima, além das estimativas dos parâmetros, podemos avaliar a significância dos parâmetros por meio do teste $t$. O valor t é calculado dividindo o valor do coeficiente pelo erro padrão. Em relação ao parâmetro intercepto, temos que as hipóteses são dadas por:
+
+$H_0$ : Intercepto é igual a zero ($\beta_0= 0$)
+
+$H_1$ : Intercepto é diferente de zero ($\beta_0 \neq 0$)
+
+O *valor* $t$ para o intercepto é dado por:
+
+
+$$
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        `r summary(lin_mod)$coefficients[1,1]`
+        }
+        {
+        `r summary(lin_mod)$coefficients[1,2]`
+        } 
+  = `r summary(lin_mod)$coefficients[1,3]`
+$$
+
+<!--
+$$
+t = \frac{
+          \hat{\beta_0}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_0})
+              }
+         } 
+  = \frac{
+        `r format(
+            summary(lin_mod)$coefficients[1,1],
+            scientific=FALSE, digits = 4, decimal.mark = "," 
+            )
+        `
+        }
+        {
+        `r format(
+            summary(lin_mod)$coefficients[1,2],
+            scientific=FALSE, digits= 4, decimal.mark = ","
+            )
+        `
+        } 
+  = `r format(
+        summary(lin_mod)$coefficients[1,3],
+        scientific = FALSE, digits = 4, decimal.mark = ","
+        )
+    `
+$$
+-->
+
+no qual $\sqrt{Var(\hat{\beta_0})}$ é o desvio padrão do intercepto dado nos resultados da tabela acima.
+
+```{r qt, echo=FALSE, results=FALSE, warning=FALSE}
+# nível de significancia
+a= 0.95
+
+# graus de liberdade (n-2)
+df= length(curva_ex[,1])-2
+
+# Valor crítico da distribuição t
+qt(a,df)
+```
+
+
+```{r vetor_b0, echo=FALSE, results=FALSE, warning=FALSE}
+Pr_i<-summary(lin_mod)$coefficients[1,4]
+sig<-0.05
+
+if(Pr_i < sig){
+  vetor_b0<-c("menor", "rejeitamos", "significativamente diferente de")
+} else {
+  vetor_b0<-c("maior", "aceitamos", "significativamente igual a") 
+}
+
+
+```
+
+
+```{r Pr_i2, eval=FALSE, echo=FALSE}
+
+#Parâmetros definidos acima
+Pr_i2<-2 * pt(abs(summary(lin_mod)$coefficients[1,3]), df, lower.tail = FALSE)
+Pr_i2
+Pr_i2==summary(lin_mod)$coefficients[1,4]
+```
+
+
+O valor crítico da distribuição $t$ ao nível de significância do 5% ($\alpha=0,05$) e $n-2$ graus de liberdade é dado por $t_{`r a`, `r df`}=
+`r qt(a,df)`$. Como o valor $p$ associado a esse teste $t$  $(2\times Pr(t_{`r a`, `r df`}>|t|)=`r summary(lin_mod)$coefficients[1,4]`)$ é `r vetor_b0[1]` que 0,05 `r vetor_b0[2]` $H_0$ e concluimos que o intercepto é `r vetor_b0[3]` zero ao nível de significância do 5%
+
+
+
+### Coeficiente angular
+
+Em relação ao coeficiente angular, temos que as hipóteses são:
+
+$H_0$ : Coeficiente angular é igual a zero ($\beta_1 = 0$)
+
+$H_1$ : Coeficiente angular é diferente de zero ($\beta_1 \neq 0$)
+
+O estatístico T do teste é dado por:
+
+$$
+T = \frac{
+          \hat{\beta_1}
+         }
+         {
+         \sqrt{
+                Var(\hat{\beta_1})
+              }
+         }
+  = \frac{
+          `r summary(lin_mod)$coefficients[2,1]`
+         }
+         {
+          `r summary(lin_mod)$coefficients[2,2]`
+         }
+  = `r summary(lin_mod)$coefficients[2,3]`
+$$
+
+
+```{r vetor_b1, echo=FALSE, results=FALSE, warning=FALSE}
+Pr_b1<-summary(lin_mod)$coefficients[2,4]
+sig<-0.05
+
+if(Pr_b1 < sig){
+  vetor_b1<-c("menor", "rejeitamos", "significativamente diferente de")
+} else {
+  vetor_b1<-c("maior", "aceitamos", "significativamente igual a") 
+}
+
+
+```
+
+
+```{r Pr_b1, eval=FALSE, echo=FALSE}
+
+#Parâmetros definidos acima
+Pr_b1<-2 * pt(abs(summary(lin_mod)$coefficients[2,3]), df, lower.tail = FALSE)
+Pr_b1
+Pr_b1==summary(lin_mod)$coefficients[2,4]
+```
+
+
+O valor crítico da distribuição $t$ ao nível de significância do 5% ($\alpha=0,05$) e $n-2$ graus de liberdade é dado por $t_{`r a`, `r df`}=
+`r qt(a,df)`$. Como o valor $p$ associado a esse teste $t$  ($2\times Pr(t_{`r a`, `r df`}>|t|)= `r summary(lin_mod)$coefficients[2,4]`$) é `r vetor_b1[1]` que 0,05 `r vetor_b1[2]` $H_0$ e concluimos que o coeficiente angular é `r vetor_b1[3]` zero ao nível de significância do 5%
+
+
+### Anova no método dos mínimos quadrados ordinários (MMQO)
+
+Avaliamos também a significância do modelo por meio do teste F da ANOVA. Vale ressaltar que temos um modelo de regressão simples, desta forma o teste F da ANOVA é equivalente ao teste $t$. A seguir, temos a Tabela da ANOVA.
+
+```{r anova, echo=FALSE, results=TRUE, warning=FALSE}
+
+
+df <-
+  anova(lin_mod) %>% 
+  as_tibble()
+
+colnames(df) <- c("Graus de liberdade", "Soma dos quadrados", "Quadrado médio", "valor-F", "Pr(>F)")
+rownames(df) <- c("Concentração", "Resíduos")
+
+df %>% 
+  kable(caption = "Tabela de anova", align=c('c','c','c', "c", "c"))
+
+```
+
+
+Para testarmos a significância do coeficiente angular do modelo com o teste F da ANOVA, apresentamos as seguintes hipóteses:
+
+$H_0$ : Coeficiente angular é igual a zero.
+
+$H_1$ : Coeficiente angular é diferente de zero.
+
+
+```{r FOBS, echo=FALSE, warning=FALSE, results=FALSE}
+
+
+SQR<-anova(lin_mod)[1,2]
+
+df_SQR<- 2-1
+
+SQE<-anova(lin_mod)[2,2]
+
+df_SQE<- length(curva_ex[,1])-2
+
+SQT<-SQR + SQE
+
+df_SQT<- length(curva_ex[,1])-1
+
+```
+
+
+
+A estatística de teste é dada pela divisão do quadrado médio da regressão (QMR) pelo quadrado médio dos resíduos ou erros (QME):
+
+$$
+\begin{eqnarray}
+F_{OBS}= \frac{QMR}{QME}
+        = \frac{\frac{SQR}{p-1}}{\frac{SQE}{n-p}}
+        = \frac{\frac{\sum_{i=1}^{n}(\hat{y_i}-\bar y)^2}{p-1}}
+              {\frac{\sum_{i=1}^{n}({y_i}-\hat{y_i})^2}{n-p}} \\
+F_{OBS}= \frac{\frac{`r SQR`}{`r df_SQR`}}
+              {\frac{`r SQE`}{`r df_SQE`}}
+        = `r (SQR/df_SQR)/(SQE/df_SQE)`
+\end{eqnarray}
+$$
+
+Onde $SQR$ é a soma dos quadrados da regressão, $SQE$ é a soma dos quadrados dos erros ou resíduos, $p$ é o número de parâmetros do modelo, $n$ é o número total de pontos, $\bar{y}$ é a média aritmética dos valores de y no centroide, $y_i$ é um valor individual de y obtido experimentalmente em um determinado ponto (iésimo ponto) e $\hat{y_i}$ é um valor individual de y calculado pelo modelo (equação) em um determinado ponto (i-ésimo ponto).
+
+
+```{r F, echo=FALSE, warning=FALSE, results=FALSE}
+
+crit_F<-qf(0.95, df_SQR, df_SQE)
+
+
+if(anova(lin_mod)[1,4]< crit_F){
+  vetor_F<-c("menor", "<")
+} else {
+  vetor_F<-c("maior", ">") 
+}
+
+
+Pr_anova<-anova(lin_mod)[1,4]
+sig<-0.05
+
+if(Pr_b1 < sig){
+  vetor_anova<-c("menor", "rejeitamos", "significativamente diferente de")
+} else {
+  vetor_anova<-c("maior", "aceitamos", "significativamente igual a") 
+}
+
+```
+
+
+
+A região crítica para o teste F é dada por $F_{\alpha, p-1, n-p}= F_{0.95,`r df_SQR`, `r df_SQE`} = `r crit_F`$. Como a  estatística observada é *maior* que o quantil da distribuição para a determinação da região crítica ($F_{OBS}$ `r vetor_F[2]` $F$) e o valor $p$ associado a esse teste $F$  ($2\times Pr(F_{0.95,`r df_SQR`, `r df_SQE`}>F)= `r summary(lin_mod)$coefficients[2,4]`$) é `r vetor_anova[1]` que 0,05 `r vetor_anova[2]` $H_0$ e concluimos que o coeficiente angular é `r vetor_anova[3]` zero ao nível de significância do 5%
+
+## Análise de Resíduos
+
+A tabela a seguir, apresenta a análise exploratória dos resíduos.
+
+```{r res, echo=FALSE}
+
+df <-
+  unclass(summary(lin_mod$residuals)) %>% 
+  t() %>% as.data.frame(row.names = NULL)
+
+
+colnames(df) <- c("Mínimo", "1Q", "Mediana", "Média", "3Q", "Máximo")
+
+df %>% 
+  kable(caption = "Tabela dos resíduos")
+
+```
+
+Observando a tabela acima, podemos estudar se os valores de mínimo e máximo, em módulo  apresentam ou não uma diferença notável, assim como a mediana e a média, o que nos dá indícios de que a distribuição dos resíduos é simétrica.
+
+O coeficiente de correlação de Pearson mede o grau de proporcionalidade entre a variável explicativa (concentração) e a varíavel resposta (área). Temos que o coeficiente de determinação R^2^ é dado pela divisão da soma de quadrados da regressão (SQR) pela soma de quadrados total (SQT=SQR+SQE):
+
+```{r res_options2, echo=FALSE}
+
+r_ex<-sqrt(SQR/SQT)
+r_crit<-0.990
+
+if(r_ex > r_crit){
+  vetor_r<-c("é", "acima")
+} else {
+  vetor_r<-c("não é", "abaixo") 
+}
+
+```
+
+
+$$
+\begin{eqnarray}
+R^2= \frac{SQR}{SQT}=\frac{SQE}{SQR+SQE}
+   = \frac{`r SQR`}{`r SQT`}
+   = `r (SQR/SQT)` \\
+r=\sqrt{R^2}=\sqrt{`r (SQR/SQT)`} =  `r sqrt(SQR/SQT)`
+\end{eqnarray}
+$$
+Logo o critério da RDC em relação ao coeficiente `r vetor_r[1]` satisfeto, visto que `r sqrt(SQR/SQT)` está `r vetor_r[2]` do valor especificado pela agência reguladora (0,990). Note que o coeficiente de determinação representa a relação sinal/ruído, em que SQR está relacionada ao sinal analítico e o ruído está relacionada ao SQT.
+
+
+
+### Gráficos de diagnóstico
+
+```{r function_diagnosis, echo=FALSE, warning=FALSE}
+
+#https://rpubs.com/therimalaya/43190 (modificado 12/12/20)
+
+diagPlot<-function(model){
+    p1<-ggplot(model, aes(.fitted, .resid))+geom_point()
+    p1<-p1+stat_smooth(method="loess")+geom_hline(yintercept=0, col="red", linetype="dashed")
+    p1<-p1+xlab("Valores ajustados")+ylab("Residuos")
+    p1<-p1+ggtitle("Residuos vs Valores ajustados")+theme_bw()
+    
+    p2<-ggplot(model, aes(qqnorm(.stdresid)[[1]], .stdresid))+geom_point(na.rm = TRUE)
+    p2<-p2+geom_qq_line(aes(sample=.stdresid))+xlab("Quantis teóricos")+ylab("Resíduos padronizados")
+    p2<-p2+ggtitle("Gráfico Q-Q")+theme_bw()
+    
+    p3<-ggplot(model, aes(.fitted, sqrt(abs(.stdresid))))+geom_point(na.rm=TRUE)
+    p3<-p3+stat_smooth(method="loess", na.rm = TRUE)+xlab("Valores ajustados")
+    p3<-p3+ylab(expression(sqrt("|Resíduos padronizados|")))
+    p3<-p3+ggtitle("Scale-Location")+theme_bw()
+    
+    p4<-ggplot(model, aes(seq_along(.cooksd), .cooksd))+geom_bar(stat="identity", position="identity")
+    p4<-p4+xlab("Número da observação")+ylab("Distância de Cook")
+    p4<-p4+ggtitle("Distância de Cook")+theme_bw()
+    
+    p5<-ggplot(model, aes(.hat, .stdresid))+geom_point(aes(size=.cooksd), na.rm=TRUE)
+    p5<-p5+stat_smooth(method="loess", na.rm=TRUE)
+    p5<-p5+xlab("Leverage")+ylab("Resíduos padronizados")
+    p5<-p5+ggtitle("Resíduos vs Leverage")
+    p5<-p5+scale_size_continuous("Distância de Cook", range=c(1,5))
+    p5<-p5+theme_bw()+theme(legend.position="bottom")
+    
+    p6<-ggplot(model, aes(.hat, .cooksd))+geom_point(na.rm=TRUE)+stat_smooth(method="loess", na.rm=TRUE)
+    p6<-p6+xlab("Leverage hii")+ylab("Distância de Cook")
+    p6<-p6+ggtitle("Distância de Cook vs Leverage hii/(1-hii)")
+    p6<-p6+geom_abline(slope=seq(0,3,0.5), color="gray", linetype="dashed")
+    p6<-p6+theme_bw()
+    
+    return(list(rvfPlot=p1, qqPlot=p2, sclLocPlot=p3, cdPlot=p4, rvlevPlot=p5, cvlPlot=p6))
+}
+```
+
+
+
+```{r diagplot, echo=FALSE, message=FALSE, warning=FALSE, results=FALSE, fig.height=10, fig.width=8}
+
+diagPlts<-diagPlot(lin_mod)
+
+
+do.call(grid.arrange, c(diagPlts, top="Gráficos de diagnóstico de resíduos", ncol=2))
+
+
+```
+
+* No gráfico de residuos vs valores ajustados observamos se existe comportamento não linear, dados dispersos homogenamente no redor de uma linha horizontal sem padrão aparente é um indicador de relação linear.
+
+* O gráfico Q-Q indica se os resíduos estão distribuidos normalmente. Se os resíduos seguem a linha reta é um indício de que a suposição  de normalidade para os erros experimentais é satisfeita.
+
+* O gráfico de *scale-location* indica se os resíduos estão distribuídos igualmente ao longo dos intervalos dos preditores, uma linea horizontal com pontos dispersos aleatóriamente na volta é um indicativo de que a suposição de homocedasticidade é satisfeita.
+
+* O gráfico de distância de Cook indica se existe algum punto influente, alguns indicam uma distância maior do que 1 para considerar um punto influente. [Outras referências](https://stats.stackexchange.com/questions/22161/how-to-read-cooks-distance-plots#:~:text=Cook%27s%20distance%20can%20be%20contrasted,dropped%20from%20the%20data%20set.) indicam como limite um valor de 4/n ou 4/(n-k-1), onde n=número de observações e k é o número de variáveis explicativas.
+
+* No gráfico de resíduos vs *leverage* observamos a dispersão dos resíduos em função do *leverage*. O *leverage* é uma medida de quão distantes os valores das variáveis independentes de uma observação estão daqueles das outras observações. O gráfico é utilizado principalmente para detectar heteroscedasticidade e não linearidade. A propagação de resíduos padronizados não deve mudar em função do leverage numa situação de homocedasticidade (variância constante).
+
+* O gráfico de distância de cook vs leverage indica se os pontos com alto *leverage* podem ter influência: ou seja, se excluí-los mudaria muito o modelo. Para isso, podemos observar a distância de Cook, que mede o efeito da exclusão de um ponto no vetor de parâmetro combinado. Uma diretriz aproximada, para tamanhos de amostra grandes, é considerar os valores de distância de Cook acima de 1 para indicar pontos altamente influentes e valores de *leverage* maiores que 2 vezes o número de preditores dividido pelo tamanho da amostra para indicar observações de alto *leverage* (no nosso caso esté limite sería $2\times (1/`r length(curva_ex[,1])`)=`r (2*1/length(curva_ex[,1]))`$). Observações de alto *leverage* são aquelas que possuem valores preditores muito distantes de suas médias, o que pode influenciar muito o modelo ajustado.
+
+Para validar as indicações sugeridas a partir da análise gráfica, vamos verificar as hipótese levantadas por meio dos testes estatísticos:
+
+### Teste de normalidade dos resíduos
+
+
+A seguir, avaliamos a normalidade dos erros experimentais por meio do teste de Shapiro-Wilk, no qual as hipóteses são:
+
+$H_0$ : A distribuição dos erros experimentais é normal
+
+$H_1$ : A distribuição dos erros experimentais não é normal
+
+```{r, shapiro, echo=FALSE, message=FALSE, warning=FALSE}
+sw<-shapiro.test(lin_mod$residuals)
+
+w<-sw$statistic
+sw_p<-sw$p.value
+
+sw_df<-data.frame(w, sw_p, row.names = NULL)
+
+colnames(sw_df) <- c("Estatística w", "p-valor")
+
+
+sw_df %>% 
+  kable(caption = "Teste de normalidade de Shapiro-Wilk",  align=rep('c', 2))
+
+#options(digits=4)
+
+
+p_crit_sw <-0.05
+
+if(sw_p< p_crit_sw){
+  vetor_sw<-c("menor", "rejeitamos")
+} else {
+  vetor_sw<-c("maior", "aceitamos") 
+}
+
+
+```
+
+
+
+Como resultado temos um valor estatístico w=`r sw[1]` e que o valor $p$ associado a esse teste (`r sw[2]`) é `r vetor_sw[1]` que 0,05, sendo assim, `r vetor_sw[2]` a hipótese nula $H_0$ de normalidade dos erros experimentais ao nível de significância de 5%. Note que o resultado do teste de Shapiro-Wilk está em conformidade com a análise gráfica do gráfico Q-Q.
+
+
+
+### Teste de homocedasticidade
+
+A seguir, analisamos a homoscedasticidade por meio do teste de Breusch-Pagan, no qual as hipóteses são:
+
+$H_0$ : As variâncias são iguais.
+
+$H_1$ : Pelo menos uma variância difere.
+
+
+```{r, breusch, echo=FALSE, message=FALSE, warning=FALSE}
+#Carregar pacote
+
+#library(lmtest)
+
+bp<-bptest(lin_mod)
+
+
+bp_df<-data.frame(bp$statistic, bp$p.value, row.names = NULL)
+
+colnames(bp_df) <- c("Estatística BP", "p-valor")
+
+bp_df %>% 
+  kable(caption = "Teste de homoscedasticidade de Breusch-Pagan",  align=rep('c', 2))
+
+#options(digits=4)
+
+
+p_crit_bp <-0.05
+
+if(bp$p.value< p_crit_bp){
+  vetor_bp<-c("menor", "rejeitamos", "heterocedástico")
+} else {
+  vetor_bp<-c("maior", "aceitamos", "homocedástico") 
+}
+
+
+```
+
+
+
+Como resultado temos um valor estatístico BP=`r bp$statistic` e que o valor $p$ associado a esse teste (`r bp$p.value`) é `r vetor_bp[1]` que 0,05, sendo assim, `r vetor_bp[2]` a hipótese nula $H_0$ de igualdade das variâncias ao nível de significância de 5%. Note que o resultado do teste está em conformidade com a análise gráfica dos resíduos X valores ajustados. Logo, temos um modelo `r vetor_bp[3]`.
+
+Conforme o [portal action](http://www.portalaction.com.br/validacao-de-metodologia-analitica/exemplo-linearidade-hplc) O teste de Breusch-Pagan é o que melhor se adequa neste caso, visto que assumimos a suposição de normalidade para os erros experimentais. Os teste de Cochran e de Brown-Forsythe não se adequam ao nosso objetivo pois necessitam de grupos e, como os dados do exemplo foram coletados de forma independente, os testes em questão não poderiam ser realizados. Já o teste de Goldfeld-Quandt tem como limitação a exigência de amostras relativamente grandes.
+
+
+
+
+### Teste de autocorrelação
+
+Para confirmar que não há dependência das observações, isto é, que não temos sequências de pontos decrescentes ou crescentes  vamos aplicar o teste de Durbin-Watson. As hipóteses do teste são:
+
+$H_0$ : As observações são independentes.
+
+$H_1$ : As observações não são independentes.
+
+
+```{r, durbin, echo=FALSE, message=FALSE, warning=FALSE}
+#Carregar pacote
+
+#library(lmtest)
+
+dw<-dwtest(lin_mod)
+
+
+dw_df<-data.frame(dw$statistic, dw$p.value, row.names = NULL)
+
+colnames(dw_df) <- c("Estatística DW", "p-valor")
+
+dw_df %>% 
+  kable(caption = "Teste de autocorrelação de Durbin-Watson",  align=rep('c', 2))
+
+
+p_crit_dw<-0.05
+
+if(dw$p.value< p_crit_dw){
+  vetor_dw<-c("menor", "rejeitamos")
+} else {
+  vetor_dw<-c("maior", "aceitamos") 
+}
+
+
+```
+
+
+
+Como resultado temos um valor estatístico DW=`r dw$statistic` e que o valor $p$ associado a esse teste (`r dw$p.value`) é `r vetor_dw[1]` que 0,05, sendo assim, `r vetor_dw[2]` a hipótese nula $H_0$ de independência das observações ao nível de significância de 5%. 
+
+
+## Conclusões
+
+```{r conclusions, echo=FALSE}
+if(Pr_i < sig){
+  vetor_b0_2<-c("Coeficiente linear significativo ao nível de significância de 5%")
+} else {
+  vetor_b0_2<-c("Coeficiente linear não significativo ao nível de significância de 5%") 
+}
+
+if(Pr_b1 < sig){
+  vetor_b1_2<-c("Coeficiente angular significativo ao nível de significância de 5%")
+} else {
+  vetor_b1_2<-c("Coeficiente angular não significativo ao nível de significância de 5%") 
+}
+
+if(sw_p< p_crit_sw){
+  vetor_sw_2<-c("Os erros experimentais não cumprem critério de normalidade")
+} else {
+  vetor_sw_2<-c("Normalidade dos erros experimentais") 
+}
+
+if(bp$p.value< p_crit_bp){
+  vetor_bp_2<-c("Diferências nas variâncias ao nível de significância de 5% (modelo heterocedástico)")
+} else {
+  vetor_bp_2<-c("Igualdade das variâncias ao nível de significância de 5% (modelo homocedástico)") 
+}
+
+if(dw$p.value< p_crit_dw){
+  vetor_dw_2<-c("As observações não são independentes (autocorrelação)")
+} else {
+  vetor_dw_2<-c("As observações são independentes") 
+}
+
+```
+
+
+
+Critérios da RDC 166:
+
+*	`r vetor_b0_2[1]`;
+* `r vetor_b1_2[1]`;
+* `r vetor_sw_2[1]`;
+* `r vetor_bp_2[1]`;
+* `r vetor_dw_2[1]`.
+
+

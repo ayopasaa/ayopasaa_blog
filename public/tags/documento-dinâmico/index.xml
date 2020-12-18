@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>documento dinâmico on Alejandro Yopasá Arenas</title>
+    <link>/tags/documento-din%C3%A2mico/</link>
+    <description>Recent content in documento dinâmico on Alejandro Yopasá Arenas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 17 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/documento-din%C3%A2mico/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166</title>
+      <link>/post/linearidade1/</link>
+      <pubDate>Thu, 17 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/linearidade1/</guid>
+      <description>Automatização da análise da Linearidade da validação analítica</description>
+    </item>
+    
+  </channel>
+</rss>

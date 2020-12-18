@@ -34,26 +34,71 @@
   
   <url>
     <loc>/authors/admin/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/authors/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/automatiza%C3%A7%C3%A3o/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/horwitz/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
+    <loc>/tags/documento-din%C3%A2mico/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/linearidade1/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/linearidade/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/r-markdown/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/valida%C3%A7%C3%A3o/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/valida%C3%A7%C3%A3o/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/horwitz/</loc>
     <lastmod>2020-12-06T00:00:00+00:00</lastmod>
   </url>
   
@@ -68,32 +113,7 @@
   </url>
   
   <url>
-    <loc>/tags/r-markdown/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/categories/valida%C3%A7%C3%A3o/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/valida%C3%A7%C3%A3o/</loc>
-    <lastmod>2020-12-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/rstudio-r/</loc>
-    <lastmod>2020-12-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/r/</loc>
     <lastmod>2020-12-05T00:00:00+00:00</lastmod>
   </url>
   
