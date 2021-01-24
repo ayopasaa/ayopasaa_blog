@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.3.1">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Alejandro Yopasá Arenas">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="capacidade do processo">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/201220-specifications/">
+
+  
+
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.e2f43c4e621c76c264988f66a867d2af.css">
+
+  
+
+  
+  
+  
+
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/201220-specifications/">
+
+  
+  
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Alejandro Yopasá Arenas">
+  <meta property="og:url" content="/post/201220-specifications/">
+  <meta property="og:title" content="Specifications and method/process capability: two sides of the same coin | Alejandro Yopasá Arenas">
+  <meta property="og:description" content="capacidade do processo"><meta property="og:image" content="/img/icon-192.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2021-01-04T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2021-01-04T00:00:00&#43;00:00">
+  
+
+  
+
+  <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<script async type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+  <title>Specifications and method/process capability: two sides of the same coin | Alejandro Yopasá Arenas</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" role="textbox" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Alejandro Yopasá Arenas</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured">
+            
+            <span>Publicações</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#contact">
+            
+            <span>Contato</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/files/Curriculim_Vitae_Alejandro_Yopasa_082020.pdf">
+            
+            <span>CV</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Specifications and method/process capability: two sides of the same coin</h1>
+
+  
+  <p class="page-subtitle">sixsigma in R</p>
+  
+
+  
+    
+
+
+
+<meta content="2021-01-04 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+<meta content="2021-01-04 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+
+
+  <span itemprop="author name" itemtype="http://schema.org/Person"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></span>
+
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    <time>Jan 4, 2021</time>
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder"></i>
+    <a href="/categories/desenvolvimento/">Desenvolvimento</a>, <a href="/categories/qbd/">QbD</a>, <a href="/categories/qualidade/">Qualidade</a></span>
+  
+
+  
+    
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=&amp;url="
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u="
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=&amp;title="
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=&amp;body=">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="btn-links mb-3">
+  
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  
+    
+  
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#processo-vs-especificações"><span class="toc-section-number">0.1</span> Processo vs Especificações ()</a><ul>
+<li><a href="#fórmulas"><span class="toc-section-number">0.1.1</span> Fórmulas</a></li>
+</ul></li>
+<li><a href="#how-will-it-be-possible-to-ensure-the-variability-of-the-production-process-is-covered-by-the-specification-with-limited-number-of-manufacturing-scale-lots-that-are-available-at-the-time-of-submission"><span class="toc-section-number">0.2</span> How will it be possible to ensure the variability of the production process is covered by the specification with limited number of manufacturing scale lots that are available at the time of submission?</a></li>
+</ul>
+</div>
+
+<p><a href="https://towardsdatascience.com/process-capability-analysis-with-r-1a4ccc2d4270" class="uri">https://towardsdatascience.com/process-capability-analysis-with-r-1a4ccc2d4270</a>
+<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/" class="uri">https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/</a>
+<a href="https://www.wiley.com/en-us/ICH+Quality+Guidelines%3A+An+Implementation+Guide-p-9781118971116" class="uri">https://www.wiley.com/en-us/ICH+Quality+Guidelines%3A+An+Implementation+Guide-p-9781118971116</a></p>
+<p>A norma <a href="https://www.ema.europa.eu/en/documents/scientific-guideline/ich-q-6-test-procedures-acceptance-criteria-new-drug-substances-new-drug-products-chemical_en.pdf">ICH Q6A</a> define especificações como “uma lista de testes, referências a procedimentos analíticos e critérios de aceitação apropriados, que são limites numéricos, faixas ou outros critérios para os testes descritos”. A ligação entre as especificações e os parâmetros de processo críticos subjacentes (CPPs) e atributos de qualidade críticos, que são gerados como parte de uma submissão do tipo <strong>QbD</strong> (<em>Quality by Design</em>) nunca foram totalmente articulados, embora todos façam parte do estratégia de controle geral [(<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/">Elder, D.P. 2018</a>).</p>
+<p>ICH Q6A não inclui nenhuma discussão sobre a capacidade do processo (<strong>Cp</strong>). No entanto, tornou-se claro com o advento do QbD que uma compreensão abrangente do efeito da variabilidade do processo e metodologias de suporte são necessária antes que especificações robustas possam ser definidas (<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/">Elder, D.P. 2018</a>).</p>
+<div id="processo-vs-especificações" class="section level2">
+<h2><span class="header-section-number">0.1</span> Processo vs Especificações ()</h2>
+<p>A pontuação sigma de um processo (<span class="math inline">\(Z\)</span>) é um número simples que transmite como um processo se ajusta às especificações do cliente. Os processos que atingem um nível sigma de 6 podem ser considerados como processos projetados “quase que perfeitamente” (ou seja, com quase zero defeitos). Um valor sigma de 6 implica que menos de 3,4 DPMO (defeitos por milhão de oportunidades) será alcançado. O sigma é o número de desvios padrão que podem ser encaixados entre o limite da especificação e a média de um processo. É calculado usando a fórmula:</p>
+<p><span class="math display">\[
+Z=  min \left( \frac{LSE-\bar x}{\sigma}, \frac{\bar x - LIE}{\sigma} \right)
+\]</span>
+Onde <span class="math inline">\(LSE\)</span> é o límite superior da especificação, <span class="math inline">\(LIE\)</span> é o límite inferior da especificação, <span class="math inline">\(\bar x\)</span> é a média do processo e <span class="math inline">\(\sigma\)</span> é o desvio padrão.</p>
+<div id="fórmulas" class="section level3">
+<h3><span class="header-section-number">0.1.1</span> Fórmulas</h3>
+<p>Os índices de capacidade comparam diretamente as especificações do cliente com o desempenho do processo. Eles são baseados no fato de que os limites naturais ou limites efetivos de um processo são aqueles entre a média e ± 3 desvios padrão (ou seja, onde 99,73% dos dados estão contidos). Um processo onde a maioria de todas as medições residem dentro da faixa de especificação permitida é um processo “capaz” de 6 sigma.</p>
+<p>A capacidade de processo (Cp) é calculada usando a fórmula:</p>
+<p><span class="math display">\[
+C_{p} =  \left( \frac{LSE-LIE}{6\sigma} \right)
+\]</span></p>
+<p>Este índice pressupõe que os dados estão centralizados dentro da faixa de especificação, por exemplo no caso de um IFA: 100% para potência de IFA, ± 2% para a faixa especificada, ou seja. 98,0-102,0%. No entanto, esse não é normalmente o caso; a presença de impurezas significa que o processo do fármaco está descentrado em <span class="math inline">\(100-x\)</span>, onde <span class="math inline">\(x\)</span> é o valor total de todas as impurezas encontradas no processo. Isso é refletido pelo índice de capacidade do processo ajustado (<span class="math inline">\(C_{pk}\)</span>). Um processo com um <span class="math inline">\(C_p\)</span> de 2 poderia ter um <span class="math inline">\(C_{pk}\)</span> de 1,5, o que equivaleria a uma taxa de falha de quatro defeitos em cada milhão de avaliações. Portanto, a capacidade ou variabilidade do processo (incluindo a variabilidade do método) é um dos parâmetros-chave na definição de especificações robustas (<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/">Elder, D.P. 2018</a>).</p>
+<p><span class="math display">\[
+C_{pk}=  min \left( \frac{LSE-\bar x}{3\sigma}, \frac{\bar x - LIE}{3\sigma} \right)
+\]</span>
+Ou seja, <span class="math inline">\(Z= 3C_{pk}\)</span>, em geral, um valor de <span class="math inline">\(C_{pk}\)</span>= 1,33 é aceitável (Z=4), porém, entre maior o valor é melhor pois teremos um menor número de Defeitos por um Milhão de Oportunidades-DPMO, o DPMO expressa o número de itens fora de especificação em um milhão de itens produzidos.</p>
+<p><strong>EJEMPLO PESO DE COMPRIMIDOS</strong></p>
+</div>
+</div>
+<div id="how-will-it-be-possible-to-ensure-the-variability-of-the-production-process-is-covered-by-the-specification-with-limited-number-of-manufacturing-scale-lots-that-are-available-at-the-time-of-submission" class="section level2">
+<h2><span class="header-section-number">0.2</span> How will it be possible to ensure the variability of the production process is covered by the specification with limited number of manufacturing scale lots that are available at the time of submission?</h2>
+<p>ever, regulators have indicated that it is “not considered appropriate to add method variability as determined in analytical method validation to the variation seen in batch results as this variability is already included in the batch results and therefore will be counted twice” .10 This perspective is predicated on the view that measurement uncertainty will always be smaller than batch variation. This is true if the sample size of the number of batches in question are sufficiently large reflecting the total population (typically a minimum of 30 batches).11 In practice many new drug products will submit regulatory files with a limited number of batches, ie. three at commercial scale, accompanied by a number of development batches at smaller scale. specification is tightened during the review process and / or takes no account of process / method variability, this can turn a capable process into a non-capable process leading to OOS results or batch failures. Unfortunately, this is an increasingly common incidence during regulatory review, where reviewers consider that by further constraining the proposed specification they will make the process / specification more discriminating ensuring patient safety; simply, all that occurs are more batch failures of product that are of an acceptable quality.3</p>
+<p>t is widely accepted that method variability is frequently greater than manufacturing process variability, particularly for API processes.12-13 Intermediate precision is the most appropriate method validation parameter for assessing Cp and should be taken into consideration when proposing any specification limits, or when assessing the capability of the method when the specifications are “constrained”, as is the case for API assay, ie. 98.0-102.0%. Therefore, a specification of 100.0 ±2% i.e. 4% range for a 3-sigma process is equivalent to a total variability of 0.67%.Thus the method variability needs to be at least half this value, ie. 0.34% (or less).13 The allowable method variability is further constrained as the true means of the specification is less than 100%, ie. 100- total impurities.</p>
+<p>Thus, the supporting methods need to be 6σ capability (ie. show decreased variability) and hence the total method deviation is required to be ≤ one twelfth of the total allowable range or tolerance, ie. 0.17% (or less).13 Based on this significant high-performance liquid chromatography (HPLC) method variability, several commentators14-16 have expressed significant misgivings about the utility of the standard HPLC assay method to monitor drug substance quality. Kredla et al.17 commented that, “assay results are simply not stability-indicating [….] due to the large assay variability associated with them”.</p>
+<p>É amplamente aceito que a variabilidade do método analítico é frequentemente maior que a variabiliade do processo de manufactura, em particular para processos de IFA. Sendo assim, se sugere que a <strong>precisão intermediária é o parâmetro de validação analítica mais apropriado para determinar o Cp</strong> é deve ser tido em conta quando propostos os limites das especificações.</p>
+<p>Seguindo com o exemplo do IFA, uma especificação de 100,0 ± 2%, ou seja, uma faixa de 4% para um processo de 3-sigma, é equivalente a uma variabilidade total de 0,67%.</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+3=  min \left( \frac{102-100}{\sigma}, \frac{100 - 98}{\sigma} \right) = \frac{2}{\sigma} \\
+\sigma=2/3= 0,67\%
+\end{eqnarray}
+\]</span></p>
+<p>Assim, a <strong>variabilidade do método</strong> deve ser pelo menos metade desse valor, ou seja, 0,34%, ou menos(Recomendo rever o post sobre <a href="https://ayopasaa.netlify.app/post/horwitz/">Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</a>. A variabilidade do método permitida é ainda mais restrita, pois a verdadeira média da especificação é inferior a 100%, ou seja. 100 - impurezas totais. Por exemplo, para testosterona IFA o total de impurezas é de máximo 0,6% (BP), assim:</p>
+<p><span class="math display">\[
+\begin{eqnarray}
+3=  min \left( \frac{102-99,4}{\sigma}, \frac{99,4 - 98}{\sigma} \right) =min \left( \frac{2,6}{\sigma}, \frac{1,4}{\sigma} \right)= \frac{1,4}{\sigma} \\
+\sigma= 1,4/3= 0,47\%
+\end{eqnarray}
+\]</span></p>
+<p>Given that Mean of the sample is 6 and std. dev=0.02. Specification limits are 6+0.05, 6-0.05</p>
+<p>Find the sigma level of this process.</p>
+<p>Assuming the distribution of the sample to be normal. Use pnorm() function to first find area to the lest of USL and then same function to find area to left of LSL and subtract both. This will give you area between LSL and USL.</p>
+<p>Area under LSL and USL= pnorm(6.05,6,0.02)-pnorm(5.95,6,0.02) = 0.9875
+Area in defects region= 1 – Area under LSL and USL = 0.0124</p>
+<p>DPMO= 0.0124 x 1000000 ~ 12400 DPMO ~ 3.8 Sigma Level</p>
+<p>Imagem para postagem</p>
+<p>Process vs. Specifications
+The sigma score of a process (Z) is a simple number that conveys how a process fits the customer specifications. Processes that reach a sigma level of 6 may be considered as “almost perfectly” (i.e. with almost zero defects) designed processes. A sigma value of 6 implies that less than 3.4 DPMO (defects per million opportunities) will be attained. The sigma is the number of standard deviations that fit between the specification limit and the mean of a process. It is calculated using the formula:
+Image for post</p>
+<p>A capacidade do processo mede a saída de um processo “sob controle” avaliando a razão da largura da especificação do processo (ou faixa) para a propagação dos valores do processo usando unidades de desvio padrão. À medida que a capacidade do processo melhora, a variabilidade diminui e se torna mais centrada entre os limites de especificação. Um processo em que a maioria de todas as medições reside dentro da faixa de especificação permitida é um processo capaz de 6 sigma3 (Tabela 1).</p>
+</div>
+
+    </div>
+
+    
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/r-markdown/">R Markdown</a>
+  
+  <a class="badge badge-light" href="/tags/qualidade/">Qualidade</a>
+  
+  <a class="badge badge-light" href="/tags/qbd/">QbD</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+</div>
+
+
+
+    
+      
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  
+
+
+
+
+
+  
+  <div class="media author-card" itemscope itemtype="http://schema.org/Person">
+    
+      
+      <img class="portrait mr-3" src="/authors/admin/avatar_hu66856b498686ee1cc65495b86c06a655_279091_250x250_fill_q90_lanczos_center.jpg" itemprop="image" alt="Avatar">
+    
+
+    <div class="media-body">
+      <h5 class="card-title" itemprop="name"><a href="/authors/admin/">Alejandro Yopasá Arenas</a></h5>
+      <h6 class="card-subtitle">Analista Químico</h6>
+      <p class="card-text" itemprop="description">Meus interesses de pesquisa incluem química analítica, ciência de dados e pesquisa reprodutível.</p>
+      <ul class="network-icon" aria-hidden="true">
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="/#contact" >
+              <i class="fas fa-envelope"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://www.facebook.com/" target="_blank" rel="noopener">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+        
+          
+          
+          
+            
+          
+          
+          
+          
+          
+            
+          
+          <li>
+            <a itemprop="sameAs" href="https://github.com/ayopasaa" target="_blank" rel="noopener">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+
+
+      
+      
+      <div class="article-widget">
+        <div class="hr-light"></div>
+        <h3>Related</h3>
+        <ul>
+          
+          <li><a href="/post/comparabilidade/">Aspectos metodológicos em relação às mudanças de processo e/ou mudanças de método analítico que afetam um produto comercializado</a></li>
+          
+          <li><a href="/post/linearidade1/">Geração automática de relatórios analíticos 1.  Linearidade conforme RDC 166</a></li>
+          
+          <li><a href="/post/horwitz/">Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação</a></li>
+          
+          <li><a href="/post/rstudio-r/">Introdução e ferramentas de trabalho</a></li>
+          
+        </ul>
+      </div>
+      
+    
+
+    
+
+    
+
+
+  </div>
+</article>
+
+<div class="container">
+  <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="/privacy/">Privacy Policy</a>
+  </p>
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+</div>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "results found",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.8f3d53582b3c04a038fca31bcc86151b.js"></script>
+
+  </body>
+</html>
+

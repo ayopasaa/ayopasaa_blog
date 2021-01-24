@@ -1,0 +1,264 @@
+---
+authors:
+- admin
+projects: ["Química Analítica"]
+categories: ["Validação", "Desenvolvimento", "QbD", "Qualidade"]
+date: "2021-01-04T00:00:00Z"
+draft: TRUE
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: "Aspectos metodológicos em relação às mudanças de processo e/ou mudanças de método analítico que afetam um produto comercializado"
+subtitle:  "Análise 1 do  EMA/CHMP/138502/2017 sobre Metodologia estatística para a avaliação comparativa dos atributos de qualidade no desenvolvimento de medicamentos"
+summary: Aspectos metodológicos em relação às abordagens de comparação de dados estatísticos 1 (EMA/CHMP/138502/2017) 
+tags: ["R Markdown", "automatização", "validação", "R", "documento dinâmico"]
+output:
+  blogdown::html_page:
+      number_sections: true
+      toc: TRUE
+---
+
+```{r pacotes-opcoes, message=FALSE, echo=FALSE, warning=FALSE, cache=FALSE}
+packages = c("tidyverse", "knitr", "DiagrammeR")
+
+#use this function to check if each package is on the local machine
+#if a package is installed, it will be loaded
+#if any are not, the missing package(s) will be installed and loaded
+package.check <- lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+        install.packages(x, dependencies = TRUE, 
+                         repos = "http://cran.us.r-project.org")
+        library(x, character.only = TRUE)
+    }
+})
+
+
+```
+
+
+https://www.a3p.org/en/comparability-equivalence-similarity-how-statistics-can-help-us-to-demonstrate-these-and-soon-the-end-of-blind-testing-for-health-authorities-and-manufacturers/
+
+https://www.ema.europa.eu/en/statistical-methodology-comparative-assessment-quality-attributes-drug-development
+
+# The different statistical approaches and their limitations
+
+It is important to emphasize that the document firmly states that comparability should be assessed on several characteristics and that the statistical approach should be adapted to each type of characteristic. 
+
+## Choice of characteristics to be compared and objectives
+
+Para cada atributo de qualidade selecionado, o objetivo é *comparar* os resultados de ambos os processos de fabricação.
+
+A abordagem estatística deve ser baseada no tipo de dados: contínuos ou discretos.
+
+Em estatística temos uma clasificação das variáveis:
+
+
+```{r, echo=FALSE}
+#library(DiagrammeR)
+
+mermaid("
+  graph TB
+  Variável-->Qualitativa
+  Qualitativa-->Nominal
+  Qualitativa-->Ordinal
+  Variável-->Quantitativa
+  Quantitativa-->Contínua
+  Quantitativa-->Discreta
+        ")
+```
+
+Uma variável **quantitativa** é uma variável que reflete a noção de magnitude, representa uma medida e é numérica. 
+
+Uma variável **quantitativa discreta** é uma variável para a qual os valores podem ser contados e têm um número finito de possibilidades finitas. Os valores são frequentemente (mas nem sempre) inteiros. Um exemplo de variável discreta seria o número de cápsulas produzidos num lote. Mesmo que leve muito tempo para contar as unidades num lote grande, ainda é tecnicamente viável. Além disso o número de possibilidades é finito. Qualquer que seja o número de nunca será 100001,58 ou 1214545,912, então o número de possibilidades é finito e, portanto, contável.
+
+Por outro lado, variáveis **quantitativas contínuas** são variáveis cujos valores não são contáveis e têm um número infinito de possibilidades. Por exemplo a massa e o comprimento: imagine se pesar em uma balança digital que dá pesos até o décimo de miligrama mais próximo. Você obterá medidas arredondadas para o décimo mais próximo, como 252,3 mg ou 120,7 mg. Os pesos reais podem teoricamente ser qualquer valor em um intervalo, como 252,378746546794 ou algo parecido. Portanto, com uma variável quantitativa discreta, você pode contar os valores possíveis para a variável sem arredondamento. Com uma variável contínua, você não pode.
+
+
+Para dados contínuos, uma das opções é comparar a média das distribuições, que pode ser complementada por uma comparação do desvio ou da variância das distribuições. De forma mais geral, a comparação de dados é baseada principalmente nas seguintes opções:
+
+
+### Compliance with specification limits
+
+Control limits have no relationship to specification limits. 
+
+If a product is outside the control limits, it simply means that the process has changed; the product might be in or out of specification. The shift could be caused by a decrease or increase in variation but has no relation to the specification limits. 
+
+Control limits are typically set to +3 standard deviations from the mean. For variable data, two control charts are used to evaluate the characteristic: one chart to show the stability of the process mean and another to describe the stability of the variation of individual data values. 
+ 
+Control limits must never be calculated based on specification limits.
+
+This approach allows a comparison of each characteristic of a lot with a predefined specification which can be one-sided or two-sided. In this case, it is important to check how and when these intervals were defined, to check their relevance to the study objective as well as to ensure that the process in place at the time of the definition of specifications is still representative of the current process which will be used as a reference.
+
+### Non-inferiority comparison
+In this case, two series of lots are compared with the objective of demonstrating that one of the two processes does not produce a product of inferior quality to the other measured in accordance with appropriate product characteristics.
+
+In statistics this corresponds to a one-tailed statistical test. One of the classic approaches is to carry out a non-inferiority investigation via a comparison of the data with a one-tailed interval derived from a real sample and with an interval defined a priori.
+
+### Comparison with a two-tailed interval of similarity/equivalence
+In this case, we are seeking rather to demonstrate that the product quality of the 2 processes is equivalent, that is to say that the two processes generate products of an equivalent quality.
+
+One of the approaches is to define a two-tailed confidence interval and to compare this interval with a predefined equivalence margin.
+
+This approach implies the hypothesis of reproducible processes.
+
+1.2.2 Understanding the sources of variability of quality data
+In this paragraph, the health authorities wished to emphasize the importance of taking account of the fact that comparative studies will be carried out on the basis of product quality data from different lots and that consequently the variability of the process and the analytical methods will be factors in the comparability. It is therefore important prior to a study to fully understand the process and its variability as well as to know the variability of the analytical methods. It is therefore recommended to reduce the assignable sources of variability as far as possible in order to only retain the process’s intrinsic sources of variability.
+
+Different sources of variability have been listed as an example without claiming to be exhaustive:
+
+Inter-lot variability
+Intra-lot variability
+Intra-sample variability
+Analytical variability
+This point is important as the more variable the reference process, the greater will be the spread of the comparability criterion and therefore the pertinence of the study will be reduced. Sample size will also be dependent on overall variability.
+
+1.2-3 Randomization of samples / experimental approach
+As has been broached several times already, the data to be analyzed should be representative of the process to be evaluated. The ideal scenario would be to adopt a randomization approach to sampling. But this approach implies that each unit must have the same chance of being selected. In the context of product quality attributes, this approach is not really applicable, since in general the number of post-modification lots is limited, and lots are manufactured consecutively.
+
+In this case, once again, it is important to understand the variability of the process so as to define a representative sampling plan and avoid over-restrictive sampling which does not allow a relevant comparative analysis to be made. If the sampling plan is not representative, then whatever statistical model is implemented, the resulting interpretation will not be robust.
+In certain cases, pseudo-randomized sampling can be implemented in order to deliberately choose lots which are representative of certain conditions.
+
+1.2-4 Measurement methods for describing the differences between two processes
+Once the parameters of interest have been selected, the next step is to identify the measurement methods for describing the differences between the parameters for the two data distributions. For example, for a comparative analysis of means, the measurement method corresponds to the difference between means or the ratio of means.
+The definition of these measurement methods for describing the difference between two unknown data distributions amounts to calculating the difference existing between these two distributions and therefore of simplifying the analysis.
+
+1.2-5. Statistical intervals incorporating the quantification of uncertainties
+The calculation of certain statistical intervals can in some cases allow quantification of the uncertainty associated with the fact that a conclusion will be made on the basis of a sample which is applicable to all the lots which will be manufactured with this process.
+So as to make maximum use of the properties of the statistical intervals in defining comparability criteria, it is essential that the objective of the comparison and the measurement methods for characterizing the differences are chosen with great care.
+
+1.2-5-1 comparability approaches based on commonly encountered intervals
+It should be reiterated that a clear distinction must be made between the quantification of uncertainties using statistical intervals and the definition of comparability criteria.
+In practice, the comparability intervals or criteria are frequently based on a statistical interval, as for example: min/max or tolerance interval calculated for a characteristic of the reference product.
+
+Min/Max Approach
+The Min/Max approach describes the spread of the data for a sample but does not take into account the uncertainty associated with the data distribution.
+
+The Min/Max approach is recommended rather for comparing the product quality attributes of two series of lots before and after modification. The analysis will therefore consist in checking that for each product quality attribute selected, the minimum and maximum value obtained for all post-modification lots falls within the Min/Max range defined on a sample representative of the reference process before modification.
+
+This approach has its limitations and is relatively non-discriminatory, as the smaller the number of post-modifications lots the higher are the chances of falling within the Min/Max reference interval and therefore of claiming a false comparability.
+
+Tolerance interval & x-sigma approaches
+A tolerance interval is generally calculated to estimate the spread of data for a proportion (p) of the population covered with a confidence level (c) of x%.
+
+Although the tolerance interval is conceptually appropriate for describing the uncertainty level associated with an unknown data distribution, its use requires particular attention:
+– Verification of the normality of the data distribution.
+– The choice of values for parameters p and c.
+
+And requires a large number of lots in order to compensate for the limitations of these approaches.
+
+1.2-5-2 principles for calculating the statistical intervals for the comparison of quality attributes
+
+Prediction intervals
+Prediction intervals allow us to describe a predictive interval incorporating data which will be generated in the future. They can be calculated for a single future observation or several (k) observations.
+
+Confidence intervals
+These are most often used for non-inferiority studies during clinical studies.
+
+1.3 Specificities for comparability studies in the context of a process modification
+The necessity to have a sample which is representative of the units produced is one of the limiting factors. As, even though it is easy to obtain a sample which is representative of the process before modification, it is difficult to carry out an analysis with a sample which is representative of the process after modification. No minimum number of post-modification lots is required by the authorities. But the number of lots should be defined on the basis of the reproducibility and variability of the process.
+
+Finally, the authorities require the statistical methods and the sample size to be justified while taking account of process variability.
+
+In summary, it can be seen in this document that the subject of comparability studies and associated statistical analyses is still confused given its complexity and the level of expertise required. In fact, in this document there is a lack of differentiation between the statistical analyses to be implemented for biosimilars, for post-approval modifications or transfers of processes/analytical methods and for processes in the development phase. In these 3 cases, the objectives and the conditions are very different and therefore the statistical tools must be appropriate. That is why the general comments summarized in the following paragraph mainly focus on more precise definitions, and a reorganization of the document in order to separate the 3 major themes: biosimilars, post-approval modifications or transfers of processes and methods, and processes in the development phase/clinical studies.
+
+ # Introdução
+
+https://www.ema.europa.eu/en/documents/scientific-guideline/draft-reflection-paper-statistical-methodology-comparative-assessment-quality-attributes-drug_en.pdf
+
+ The document focusses on methodological aspects in relation to statistical
+63 data-comparison approaches for the settings of: pre- and post-manufacturing change, biosimilar
+64 developments as well as generics’ development. 
+
+Any process modification made to a commercialized process must be supported by a validation study demonstrating the control and reproducibility of the modified process, and must also be supplemented by a comparability study in order to demonstrate that the quality of the product obtained after the process modification is comparable to that of the product before modification. This comparability will thus help to limit or even avoid the need for clinical studies for post-approval change.
+One of the most important elements for demonstrating this comparability is the use of statistics. Yet we still need to know which statistical tools to use and design studies appropriately. Sample size, number of repetitions, risk levels… are all difficult parameters to define for non-statisticians. Increasing numbers of companies now have their own “statistics” department or call on the services of companies which specialize in statistics. But here again, difficulties are often encountered linked to misunderstandings between two different areas of expertise: the process/product experts and the statisticians.
+
+It is not easy for the person commissioning the study to express their requirements clearly. Faced with a vague expression of need, the statistician cannot provide a suitable response without understanding the problem in depth. We then have a statistical analysis which at best leads to uninterpretable results and at worst to an erroneous interpretation such as, for example, the non-comparability of results even though the results are comparable, or the reverse.
+
+https://www.a3p.org/en/comparability-equivalence-similarity-how-statistics-can-help-us-to-demonstrate-these-and-soon-the-end-of-blind-testing-for-health-authorities-and-manufacturers/
+
+
+So, the objective of this document is to present the statistical approaches which allow product quality data to be compared, or in other words product characteristics in the following 3 cases:
+
+process changes and/or analytical method changes that impact a marketed product,
+comparison of a biosimilar candidate to a reference drug
+comparison of a generic drug with a reference drug
+
+• the comparison of a particular drug product in versions pre- and post-manufacturing change,
+83 • the comparison of a candidate biosimilar product to a reference medicinal product,
+84 • the comparison of a candidate generic product to the reference medicinal product;
+as abordagens estatísticas que permitem que os dados de qualidade do produto sejam comparados, ou em outras palavras, as características do produto nos seguintes 3 casos:
+
+Aspectos metodológicos em relação às abordagens de comparação de dados estatísticos 1: Mudanças de processo e / ou mudanças de método analítico que afetam um produto comercializado
+
+mudanças de processo e / ou mudanças de método analítico que afetam um produto comercializado,
+comparação de um candidato biossimilar a um medicamento de referência
+comparação de um medicamento genérico com um medicamento de referência
+
+ It is also supposed to trigger further discussion of realistic requirements to demonstrate
+74 'similarity on the quality level' in the different contexts mentioned above. The paper however also
+75 discusses likely limitations hampering statistical inference, pointing towards meaningful – but
+76 expectedly less stringent – alternatives.
+
+#Summary of items which merit reflection when planning data comparisons on the quality level 0u The different statistical approaches and their limitations
+
+
+## General description of comparison setting/comparison objectives ou 1.2-1. Choice of characteristics to be compared and objectives
+
+
+
+
+
+904  Given the QAs of interest, categorisation of QAs regarding scale of measurement
+905 (binary to continuous)
+906  For each QA, decision upon the characteristic/parameter of interest by which
+907 underlying data distributions will be compared (e.g. mean, variance, etc.)
+908 o If no such characteristic/parameter can be identified, options for data comparison would
+909 be limited to methods using data from single observation as such: # plan for a
+910 descriptive comparison approach making use of tabular and graphical presentations of
+911 the data measured/observed;
+912  Translation to statistical objectives, e.g. deciding upon one- or two-sided comparison
+913 approach per QA
+914 o If no statistical hypothesis can be formulated: # plan for a descriptive approach
+915 presenting the estimates derived for the chosen parameters (e.g. descriptive presentation
+916 of means);
+917  Identification of the unit of observation; at the same time exploration of potential
+918 sources of variability in QAs' data to be retrieved
+919 o If sources of variability of the manufacturing process remain obscure, a straight forward
+920 definition of the adequate unit of observation for comparative data analysis will be
+921 hampered: # describe uncertainties related to sources of variability and based on that,
+922 justify any choice of the unit of observation in case further statistical comparison is
+923 planned;
+924  Consideration for which potential sources of variability the data analyses can be
+925 controlled for
+926  Sampling strategy
+927 o Description of whether there are prospective considerations for the sampling of units for
+928 analysis, covering options for random sampling and deliberate selection approaches;
+929 o Judgement concerning (expected) representativeness, if representativeness cannot be
+930 assumed: # plan for a descriptive approach presenting the estimates derived for the
+931 chosen parameters (e.g. descriptive presentation of means);
+932 o After sampling: Description of actual sampling process (according to plan?); Justify any
+933 'non-selection' of units which might have been available for investigation;
+934  Definition of metric/method to describe difference/distance between the chosen
+935 parameters (e.g. difference in means, ratio of means, etc.)
+936  Evaluation whether the so chosen setup for QA data comparison would allow for
+937 inferential statistical approach
+938 o Estimation (of the defined metric) based on sample data, including methods to quantify
+939 uncertainty of estimation (e.g. by confidence intervals/regions, etc.);
+940 o Choice and description of the selected statistical approach for comparison;
+941 Identification/Justification of (distributional) assumptions made with the methods applied;
+942  Pre-specification of an acceptance range for the analysis of each QA separately (e.g.
+943 equivalence margin, non-inferiority margin)
+Reflection paper on statistical methodology for the comparative assessment of quality
+attributes in drug development
+EMA/CHMP/138502/2017 Page 24/24
+944 o If knowledge about the association between quality characteristics and clinical outcome
+945 (efficacy/safety) is limited, the specification of acceptance ranges might remain arbitrary
+946 and controversial: # reconsider the whole inferential statistical approach, as
+947 interpretation of outcome might remain inconclusive;
+948  Consideration regarding the risk for a false positive conclusion on similarity
+949 (equivalence/non-inferiority) based on the similarity decision criteria defined
+950 o Reflection of the assumed rigor of similarity decision criteria seen required in context of
+951 the particular comparison setting;
+952
+

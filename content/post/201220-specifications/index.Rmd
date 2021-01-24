@@ -1,0 +1,150 @@
+---
+authors:
+- admin
+projects: ["Química Analítica"]
+categories: ["Desenvolvimento", "QbD", "Qualidade"]
+date: "2021-01-04T00:00:00Z"
+draft: TRUE
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: "Specifications and method/process capability: two sides of the same coin"
+subtitle:  "sixsigma in R"
+summary: capacidade do processo 
+tags: ["R Markdown", "Qualidade", "QbD", "R", ]
+output:
+  blogdown::html_page:
+      number_sections: true
+      toc: TRUE
+---
+
+https://towardsdatascience.com/process-capability-analysis-with-r-1a4ccc2d4270
+https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/
+https://www.wiley.com/en-us/ICH+Quality+Guidelines%3A+An+Implementation+Guide-p-9781118971116
+
+
+```{r pacotes-opcoes, message=FALSE, echo=FALSE, warning=FALSE, cache=FALSE}
+packages = c("tidyverse", "knitr", "DiagrammeR")
+
+#use this function to check if each package is on the local machine
+#if a package is installed, it will be loaded
+#if any are not, the missing package(s) will be installed and loaded
+package.check <- lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+        install.packages(x, dependencies = TRUE, 
+                         repos = "http://cran.us.r-project.org")
+        library(x, character.only = TRUE)
+    }
+})
+
+
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+A norma [ICH Q6A](https://www.ema.europa.eu/en/documents/scientific-guideline/ich-q-6-test-procedures-acceptance-criteria-new-drug-substances-new-drug-products-chemical_en.pdf) define especificações como “uma lista de testes, referências a procedimentos analíticos e critérios de aceitação apropriados, que são limites numéricos, faixas ou outros critérios para os testes descritos”. A ligação entre as especificações e os parâmetros de processo críticos subjacentes (CPPs) e atributos de qualidade críticos, que são gerados como parte de uma submissão do tipo **QbD** (*Quality by Design*) nunca foram totalmente articulados, embora todos façam parte do estratégia de controle geral ([Elder, D.P. 2018](https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/)).
+
+A ICH Q6A não inclui nenhuma discussão sobre a capacidade do processo (**Cp**). No entanto, tornou-se claro com o advento do QbD que uma compreensão abrangente do efeito da variabilidade do processo e metodologias de suporte são necessária antes que especificações robustas possam ser definidas ([Elder, D.P. 2018](https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/)).
+
+## Processo vs Especificações ()
+
+A pontuação sigma de um processo ($Z$) é um número simples que transmite como um processo se ajusta às especificações do cliente. Os processos que atingem um nível sigma de 6 podem ser considerados como processos projetados "quase que perfeitamente" (ou seja, com quase zero defeitos). Um valor sigma de 6 implica que menos de 3,4 DPMO (defeitos por milhão de oportunidades) será alcançado. O sigma é o número de desvios padrão que podem ser encaixados entre o limite da especificação e a média de um processo. É calculado usando a fórmula:
+
+$$
+Z=  min \left( \frac{LSE-\bar x}{\sigma}, \frac{\bar x - LIE}{\sigma} \right)
+$$
+Onde $LSE$ é o límite superior da especificação, $LIE$ é o límite inferior da especificação, $\bar x$ é a média do processo e $\sigma$ é o desvio padrão.
+
+### Fórmulas
+
+
+Os índices de capacidade comparam diretamente as especificações do cliente com o desempenho do processo. Eles são baseados no fato de que os limites naturais ou limites efetivos de um processo são aqueles entre a média e ± 3 desvios padrão (ou seja, onde 99,73% dos dados estão contidos). Um processo onde a maioria de todas as medições residem dentro da faixa de especificação permitida é um processo "capaz" de 6 sigma.
+
+A capacidade de processo (Cp) é calculada usando a fórmula:
+
+$$
+C_{p} =  \left( \frac{LSE-LIE}{6\sigma} \right)
+$$
+
+Este índice pressupõe que os dados estão centralizados dentro da faixa de especificação, por exemplo no caso de um IFA: 100% para potência de IFA, ± 2% para a faixa especificada, ou seja. 98,0-102,0%. No entanto, esse não é normalmente o caso; a presença de impurezas significa que o processo do fármaco está descentrado em $100-x$, onde $x$ é o valor total de todas as impurezas encontradas no processo. Isso é refletido pelo índice de capacidade do processo ajustado ($C_{pk}$). Um processo com um $C_p$ de 2 poderia ter um $C_{pk}$ de 1,5, o que equivaleria a uma taxa de falha de quatro defeitos em cada milhão de avaliações. Portanto, a capacidade ou variabilidade do processo (incluindo a variabilidade do método) é um dos parâmetros-chave na definição de especificações robustas ([Elder, D.P. 2018](https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/)).
+
+
+$$
+C_{pk}=  min \left( \frac{LSE-\bar x}{3\sigma}, \frac{\bar x - LIE}{3\sigma} \right)
+$$
+ Ou seja, $Z= 3C_{pk}$, em geral, um valor de $C_{pk}$= 1,33 é aceitável (Z=4), porém, entre maior o valor é melhor pois teremos um menor número de Defeitos por um Milhão de Oportunidades-DPMO, o DPMO expressa o número de itens fora de especificação em um milhão de itens produzidos.
+ 
+ 
+ 
+ 
+ **EJEMPLO PESO DE COMPRIMIDOS**
+ 
+ 
+## How will it be possible to ensure the variability of the production process is covered by the specification with limited number of manufacturing scale lots that are available at the time of submission?
+
+
+ever, regulators have indicated that it is “not considered appropriate to add method variability as determined in analytical method validation to the variation seen in batch results as this variability is already included in the batch results and therefore will be counted twice” .10 This perspective is predicated on the view that measurement uncertainty will always be smaller than batch variation. This is true if the sample size of the number of batches in question are sufficiently large reflecting the total population (typically a minimum of 30 batches).11 In practice many new drug products will submit regulatory files with a limited number of batches, ie. three at commercial scale, accompanied by a number of development batches at smaller scale.  specification is tightened during the review process and / or takes no account of process / method variability, this can turn a capable process into a non-capable process leading to OOS results or batch failures. Unfortunately, this is an increasingly common incidence during regulatory review, where reviewers consider that by further constraining the proposed specification they will make the process / specification more discriminating ensuring patient safety; simply, all that occurs are more batch failures of product that are of an acceptable quality.3
+
+
+t is widely accepted that method variability is frequently greater than manufacturing process variability, particularly for API processes.12-13 Intermediate precision is the most appropriate method validation parameter for assessing Cp and should be taken into consideration when proposing any specification limits, or when assessing the capability of the method when the specifications are “constrained”, as is the case for API assay, ie. 98.0-102.0%. Therefore, a specification of 100.0 ±2% i.e. 4% range for a 3-sigma process is equivalent to a total variability of 0.67%.Thus the method variability needs to be at least half this value, ie. 0.34% (or less).13 The allowable method variability is further constrained as the true means of the specification is less than 100%, ie. 100- total impurities.
+
+Thus, the supporting methods need to be 6σ capability (ie. show decreased variability) and hence the total method deviation is required to be ≤ one twelfth of the total allowable range or tolerance, ie. 0.17% (or less).13 Based on this significant high-performance liquid chromatography (HPLC) method variability, several commentators14-16 have expressed significant misgivings about the utility of the standard HPLC assay method to monitor drug substance quality. Kredla et al.17 commented that, “assay results are simply not stability-indicating [….] due to the large assay variability associated with them”.
+
+
+É amplamente aceito que a variabilidade do método analítico é frequentemente maior que a variabiliade do processo de manufactura, em particular para processos de IFA. Sendo assim, se sugere que a **precisão intermediária é o parâmetro de validação analítica mais apropriado para determinar o Cp** é deve ser tido em conta quando propostos os limites das especificações.
+
+
+Seguindo com o exemplo do IFA, uma especificação de 100,0 ± 2%, ou seja, uma faixa de 4% para um processo de 3-sigma, é equivalente a uma variabilidade total de 0,67%.
+
+$$
+\begin{eqnarray}
+3=  min \left( \frac{102-100}{\sigma}, \frac{100 - 98}{\sigma} \right) = \frac{2}{\sigma} \\
+\sigma=2/3= 0,67\%
+\end{eqnarray}
+$$
+
+
+Assim, a **variabilidade do método** deve ser pelo menos metade desse valor, ou seja, 0,34%, ou menos(Recomendo rever o post sobre [Predição do Desvio Padrão Relativo da Reprodutibilidade em Validação](https://ayopasaa.netlify.app/post/horwitz/). A variabilidade do método permitida é ainda mais restrita, pois a verdadeira média da especificação é inferior a 100%, ou seja. 100 - impurezas totais. Por exemplo, para testosterona IFA o total de impurezas é de máximo 0,6% (BP), assim: 
+
+$$
+\begin{eqnarray}
+3=  min \left( \frac{102-99,4}{\sigma}, \frac{99,4 - 98}{\sigma} \right) =min \left( \frac{2,6}{\sigma}, \frac{1,4}{\sigma} \right)= \frac{1,4}{\sigma} \\
+\sigma= 1,4/3= 0,47\%
+\end{eqnarray}
+$$
+
+
+ 
+ Given that Mean of the sample is 6 and std. dev=0.02. Specification limits are 6+0.05, 6-0.05
+
+Find the sigma level of this process.
+
+Assuming the distribution of the sample to be normal. Use pnorm() function to first find area to the lest of USL and then same function to find area to left of LSL and subtract both. This will give you area between LSL and USL.
+
+Area under LSL and USL= pnorm(6.05,6,0.02)-pnorm(5.95,6,0.02) = 0.9875
+Area in defects region= 1 – Area under LSL and USL = 0.0124
+
+DPMO= 0.0124 x 1000000 ~ 12400 DPMO ~ 3.8 Sigma Level
+
+
+
+
+
+Imagem para postagem
+
+Process vs. Specifications
+The sigma score of a process (Z) is a simple number that conveys how a process fits the customer specifications. Processes that reach a sigma level of 6 may be considered as “almost perfectly” (i.e. with almost zero defects) designed processes. A sigma value of 6 implies that less than 3.4 DPMO (defects per million opportunities) will be attained. The sigma is the number of standard deviations that fit between the specification limit and the mean of a process. It is calculated using the formula:
+Image for post
+
+
+
+
+
+A capacidade do processo mede a saída de um processo "sob controle" avaliando a razão da largura da especificação do processo (ou faixa) para a propagação dos valores do processo usando unidades de desvio padrão. À medida que a capacidade do processo melhora, a variabilidade diminui e se torna mais centrada entre os limites de especificação. Um processo em que a maioria de todas as medições reside dentro da faixa de especificação permitida é um processo capaz de 6 sigma3 (Tabela 1).
+
+

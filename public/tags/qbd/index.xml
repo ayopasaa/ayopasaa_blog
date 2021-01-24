@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>QbD on Alejandro Yopasá Arenas</title>
+    <link>/tags/qbd/</link>
+    <description>Recent content in QbD on Alejandro Yopasá Arenas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/qbd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Specifications and method/process capability: two sides of the same coin</title>
+      <link>/post/201220-specifications/</link>
+      <pubDate>Mon, 04 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/201220-specifications/</guid>
+      <description>capacidade do processo</description>
+    </item>
+    
+  </channel>
+</rss>
