@@ -22,7 +22,8 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#processo-vs-especificações"><span class="toc-section-number">0.1</span> Processo vs Especificações ()</a><ul>
+<li><a href="#processo-vs-especificações"><span class="toc-section-number">0.1</span> Processo vs Especificações ()</a>
+<ul>
 <li><a href="#fórmulas"><span class="toc-section-number">0.1.1</span> Fórmulas</a></li>
 </ul></li>
 <li><a href="#how-will-it-be-possible-to-ensure-the-variability-of-the-production-process-is-covered-by-the-specification-with-limited-number-of-manufacturing-scale-lots-that-are-available-at-the-time-of-submission"><span class="toc-section-number">0.2</span> How will it be possible to ensure the variability of the production process is covered by the specification with limited number of manufacturing scale lots that are available at the time of submission?</a></li>
@@ -32,16 +33,26 @@ output:
 <p><a href="https://towardsdatascience.com/process-capability-analysis-with-r-1a4ccc2d4270" class="uri">https://towardsdatascience.com/process-capability-analysis-with-r-1a4ccc2d4270</a>
 <a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/" class="uri">https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/</a>
 <a href="https://www.wiley.com/en-us/ICH+Quality+Guidelines%3A+An+Implementation+Guide-p-9781118971116" class="uri">https://www.wiley.com/en-us/ICH+Quality+Guidelines%3A+An+Implementation+Guide-p-9781118971116</a></p>
-<p>A norma <a href="https://www.ema.europa.eu/en/documents/scientific-guideline/ich-q-6-test-procedures-acceptance-criteria-new-drug-substances-new-drug-products-chemical_en.pdf">ICH Q6A</a> define especificações como “uma lista de testes, referências a procedimentos analíticos e critérios de aceitação apropriados, que são limites numéricos, faixas ou outros critérios para os testes descritos”. A ligação entre as especificações e os parâmetros de processo críticos subjacentes (CPPs) e atributos de qualidade críticos, que são gerados como parte de uma submissão do tipo <strong>QbD</strong> (<em>Quality by Design</em>) nunca foram totalmente articulados, embora todos façam parte do estratégia de controle geral [(<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/">Elder, D.P. 2018</a>).</p>
-<p>ICH Q6A não inclui nenhuma discussão sobre a capacidade do processo (<strong>Cp</strong>). No entanto, tornou-se claro com o advento do QbD que uma compreensão abrangente do efeito da variabilidade do processo e metodologias de suporte são necessária antes que especificações robustas possam ser definidas (<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/">Elder, D.P. 2018</a>).</p>
-<div id="processo-vs-especificações" class="section level2">
+<pre><code>## package &#39;downloader&#39; successfully unpacked and MD5 sums checked
+## package &#39;influenceR&#39; successfully unpacked and MD5 sums checked
+## package &#39;readr&#39; successfully unpacked and MD5 sums checked
+## package &#39;visNetwork&#39; successfully unpacked and MD5 sums checked
+## package &#39;DiagrammeRsvg&#39; successfully unpacked and MD5 sums checked
+## package &#39;rsvg&#39; successfully unpacked and MD5 sums checked
+## package &#39;DiagrammeR&#39; successfully unpacked and MD5 sums checked
+## 
+## The downloaded binary packages are in
+##  C:\Users\Alejandro\AppData\Local\Temp\RtmpA1Tojg\downloaded_packages</code></pre>
+<p>A norma <a href="https://www.ema.europa.eu/en/documents/scientific-guideline/ich-q-6-test-procedures-acceptance-criteria-new-drug-substances-new-drug-products-chemical_en.pdf">ICH Q6A</a> define especificações como “uma lista de testes, referências a procedimentos analíticos e critérios de aceitação apropriados, que são limites numéricos, faixas ou outros critérios para os testes descritos”. A ligação entre as especificações e os parâmetros de processo críticos subjacentes (CPPs) e atributos de qualidade críticos, que são gerados como parte de uma submissão do tipo <strong>QbD</strong> (<em>Quality by Design</em>) nunca foram totalmente articulados, embora todos façam parte do estratégia de controle geral (<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/">Elder, D.P. 2018</a>).</p>
+<p>A ICH Q6A não inclui nenhuma discussão sobre a capacidade do processo (<strong>Cp</strong>). No entanto, tornou-se claro com o advento do QbD que uma compreensão abrangente do efeito da variabilidade do processo e metodologias de suporte são necessária antes que especificações robustas possam ser definidas (<a href="https://www.europeanpharmaceuticalreview.com/article/78949/method-process-capability/">Elder, D.P. 2018</a>).</p>
+<div id="processo-vs-especificações" class="section level2" number="0.1">
 <h2><span class="header-section-number">0.1</span> Processo vs Especificações ()</h2>
 <p>A pontuação sigma de um processo (<span class="math inline">\(Z\)</span>) é um número simples que transmite como um processo se ajusta às especificações do cliente. Os processos que atingem um nível sigma de 6 podem ser considerados como processos projetados “quase que perfeitamente” (ou seja, com quase zero defeitos). Um valor sigma de 6 implica que menos de 3,4 DPMO (defeitos por milhão de oportunidades) será alcançado. O sigma é o número de desvios padrão que podem ser encaixados entre o limite da especificação e a média de um processo. É calculado usando a fórmula:</p>
 <p><span class="math display">\[
 Z=  min \left( \frac{LSE-\bar x}{\sigma}, \frac{\bar x - LIE}{\sigma} \right)
 \]</span>
 Onde <span class="math inline">\(LSE\)</span> é o límite superior da especificação, <span class="math inline">\(LIE\)</span> é o límite inferior da especificação, <span class="math inline">\(\bar x\)</span> é a média do processo e <span class="math inline">\(\sigma\)</span> é o desvio padrão.</p>
-<div id="fórmulas" class="section level3">
+<div id="fórmulas" class="section level3" number="0.1.1">
 <h3><span class="header-section-number">0.1.1</span> Fórmulas</h3>
 <p>Os índices de capacidade comparam diretamente as especificações do cliente com o desempenho do processo. Eles são baseados no fato de que os limites naturais ou limites efetivos de um processo são aqueles entre a média e ± 3 desvios padrão (ou seja, onde 99,73% dos dados estão contidos). Um processo onde a maioria de todas as medições residem dentro da faixa de especificação permitida é um processo “capaz” de 6 sigma.</p>
 <p>A capacidade de processo (Cp) é calculada usando a fórmula:</p>
@@ -56,7 +67,7 @@ Ou seja, <span class="math inline">\(Z= 3C_{pk}\)</span>, em geral, um valor de 
 <p><strong>EJEMPLO PESO DE COMPRIMIDOS</strong></p>
 </div>
 </div>
-<div id="how-will-it-be-possible-to-ensure-the-variability-of-the-production-process-is-covered-by-the-specification-with-limited-number-of-manufacturing-scale-lots-that-are-available-at-the-time-of-submission" class="section level2">
+<div id="how-will-it-be-possible-to-ensure-the-variability-of-the-production-process-is-covered-by-the-specification-with-limited-number-of-manufacturing-scale-lots-that-are-available-at-the-time-of-submission" class="section level2" number="0.2">
 <h2><span class="header-section-number">0.2</span> How will it be possible to ensure the variability of the production process is covered by the specification with limited number of manufacturing scale lots that are available at the time of submission?</h2>
 <p>ever, regulators have indicated that it is “not considered appropriate to add method variability as determined in analytical method validation to the variation seen in batch results as this variability is already included in the batch results and therefore will be counted twice” .10 This perspective is predicated on the view that measurement uncertainty will always be smaller than batch variation. This is true if the sample size of the number of batches in question are sufficiently large reflecting the total population (typically a minimum of 30 batches).11 In practice many new drug products will submit regulatory files with a limited number of batches, ie. three at commercial scale, accompanied by a number of development batches at smaller scale. specification is tightened during the review process and / or takes no account of process / method variability, this can turn a capable process into a non-capable process leading to OOS results or batch failures. Unfortunately, this is an increasingly common incidence during regulatory review, where reviewers consider that by further constraining the proposed specification they will make the process / specification more discriminating ensuring patient safety; simply, all that occurs are more batch failures of product that are of an acceptable quality.3</p>
 <p>t is widely accepted that method variability is frequently greater than manufacturing process variability, particularly for API processes.12-13 Intermediate precision is the most appropriate method validation parameter for assessing Cp and should be taken into consideration when proposing any specification limits, or when assessing the capability of the method when the specifications are “constrained”, as is the case for API assay, ie. 98.0-102.0%. Therefore, a specification of 100.0 ±2% i.e. 4% range for a 3-sigma process is equivalent to a total variability of 0.67%.Thus the method variability needs to be at least half this value, ie. 0.34% (or less).13 The allowable method variability is further constrained as the true means of the specification is less than 100%, ie. 100- total impurities.</p>

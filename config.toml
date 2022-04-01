@@ -66,3 +66,8 @@ math = true # Added 0919 https://github.com/rstudio/blogdown/issues/36
   category = "categories"
   publication_type = "publication_types"
   author = "authors"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
