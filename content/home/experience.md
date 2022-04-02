@@ -37,7 +37,7 @@ date_format = "Jan 2006"
   company_url = ""
   location = "Jundiaí, Brasil"
   date_start = "2019-10-16"
-  date_end = ""
+  date_end = "2021-03-14"
   description = """
 
   """
