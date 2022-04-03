@@ -1,0 +1,219 @@
+---
+authors:
+- admin
+projects: ["Química Analítica"]
+categories: ["QbD", "DoE"]
+date: "2022-04-02T00:00:00Z"
+draft: false
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: Robustez de métodos analíticos 1.  Desenho experimental de Youden 
+subtitle:  Análise de desenhos experimentais no paradigma QbD de forma automatizada no R
+summary: Automatização da análise da robustez por um planejamento de Youden
+tags: ["R Markdown", "Robustez", "Automatização", "Desenvolvimento Analítico", "R", "Documento Dinâmico", "DoE", "QbD"]
+output:
+  blogdown::html_page:
+      number_sections: false
+      toc: TRUE
+---
+
+```{r pacotes-opcoes, message=FALSE, echo=FALSE, warning=FALSE, cache=FALSE}
+packages = c("tidyverse","FrF2", "knitr")
+#use this function to check if each package is on the local machine
+#if a package is installed, it will be loaded
+#if any are not, the missing package(s) will be installed and loaded
+package.check <- lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+        install.packages(x, dependencies = TRUE, 
+                         repos = "http://cran.us.r-project.org")
+        library(x, character.only = TRUE)
+    }
+})
+
+```
+
+
+## Avaliação da robustez de forma multivariada?
+
+O Conselho Internacional de Harmonização (ICH) divulgou recentemente dois projetos de diretrizes que visam promover processos analíticos mais robustos.
+ 
+A diretriz Q14 harmonizaria as abordagens científicas para o desenvolvimento de métodos analíticos, enquanto o documento Q2(R2) abrange os princípios de validação para o uso de procedimentos que utilizam o infravermelho próximo (NIR) e a espectroscopia Raman, que geralmente exigem métodos estatísticos multivariados (e é claro que o R consegue trabalhar com esses dados também!, vou mostrar como em próximos post)
+ 
+
+O documento ICH Q14 descreve uma abordagem mínima ou aprimorada. Também descreve os elementos de um "perfil analítico de destino" (ATP, *analytical target profile*) que é incorporado na abordagem aprimorada. O ATP é descrito como “um resumo prospectivo das características de desempenho que descrevem a finalidade pretendida e os critérios de desempenho previstos de uma medição analítica”. A diretriz também discute como desenvolver procedimentos analíticos multivariados, como procedimentos para testes de liberação em tempo real, e aborda onde as informações de desenvolvimento de procedimentos analíticos devem ir no Documento Técnico Comum (CTD).
+
+É apenas uma questão de tempo até que conceitos como planejamento de experimentos (DoE, *Design of Experiments"), QbD, ATP e outros se tornem parte de nossos regulamentos e normas para desenvolvimento analítico e, portanto, também façam parte de nosso trabalho diário.
+
+Neste post, discutirei o teste de robustez de Youden, recomendado em várias diretrizes da [AOAC](http://www.eoma.aoac.org/app_k.pdf).
+
+
+
+## Teste de Robustez de Youden
+
+Embora os principais fatores que contribuem para a variabilidade de um método possam ser explorados pelo procedimento clássico, uma variável de cada vez ou **univariado**, para examinar o efeito de fatores menos importantes pode ser realizado por um teste de robustez simples de Youden [Youden, W.J., & Steiner, E.H. (1975) Statistical Manual of the Association of Official Analytical Chemists, pp 50–55]. Este desenho **multivariado** permite explorar o efeito de **7 fatores** em um único experimento exigindo apenas **oito determinações!**. Também permite determinar de forma aproximada o desvio padrão esperado da variabilidade dos fatores que estão “no controle”. Um exemplo de análise de robustez na determinação de um ingrediente ativo em uma amostra por HPLC é detalhado a continuação.
+
+
+### Planejamento:
+
+O primeiro é escolher sete fatores que podem afetar o resultado da análise e atribuir valores altos e baixos razoáveis a eles, é possivel fazer um desenho para estudar os fatores que afetam o preparo da amostra, para estudar os fatores que afetam a separação cromatográfica, ou misturar os fatores de extração/separação como no exemplo que segue: 
+
+
+```{r, echo=FALSE}
+# No Rstudio tabelas são inseridas facilmente utilizando o pacote insert_table
+# install.packages("devtools")
+#devtools::install_github("lbusett/insert_table")
+
+my_tbl <- tibble::tribble(
+                      ~Fator,         ~Alto,              ~Baixo,
+            "Tipo de coluna",       "A: Coluna 1",             "a: Coluna 2",
+     "Temperatura da coluna",           "B: 35ºC",                 "b: 30ºC",
+       "Vazão da Fase Móvel",     "C: 1,2 mL/min",           "c: 1,0 mL/min",
+                  "Vidraria",          "D: Âmbar",         "d: transparente",
+         "Tempo de extração",      "E: 5 minutos",            "e: 3 minutos",
+   "Temperatura de extração",          "F: 60 °C", "f: Temperatura ambiente",
+          "Tipo de extração", "G: Mesa agitadora",            "g: Ultrassom"
+   )
+require(knitr)
+kable(my_tbl, digits = 3, row.names = FALSE, align = "c", caption = "Definição dos fatores")
+```
+
+
+Depois conduzimos oito ensaios (uma única análise que reflete um conjunto de níveis de fator) utilizando as combinações específicas de valores altos e baixos para os fatores a seguir, e registramos o resultado obtido para cada combinação. (É essencial que os fatores sejam combinados exatamente como especificado ou serão tiradas conclusões errôneas.) 
+
+
+
+
+```{r, echo=FALSE}
+
+my_tbl2 <- tibble::tribble(
+  ~Ensaio, ~F1, ~F2, ~F3, ~F4, ~F5, ~F6, ~F7,
+        1, "A", "B",  "C",  "D",  "E",  "F",  "G",
+        2, "A", "B",  "c",  "D",  "e",  "f",  "g",
+        3, "A", "b",  "C",  "d",  "E",  "f",  "g",
+        4, "A", "b",  "c",  "d",  "e",  "F",  "G",
+        5, "a", "B",  "C",  "d",  "e",  "F",  "g",
+        6, "a", "B",  "c",  "d",  "E",  "f",  "G",
+        7, "a", "b",  "C",  "D",  "e",  "f",  "G",
+        8, "a", "b",  "c",  "D",  "E",  "F",  "g"
+  )
+
+require(knitr)
+kable(my_tbl2, digits = 3, row.names = FALSE, align = "c",
+              caption = "Combinações a realizar")
+
+
+```
+
+
+Podemos reemprazar nessas combinações os fatores em maiúsculas por 1 e as minúsculas por -1 e numa planilha simples adicionar a resposta, que geralmente corresponde à porcentagem de recuperação:
+
+```{r, echo=FALSE}
+my_tbl3 <- tibble::tribble(
+  ~F1, ~F2, ~F3, ~F4, ~F5, ~F6, ~F7, ~Resposta,
+    1,   1,   1,   1,   1,   1,   1,                  "105,44",
+    1,   1,  -1,   1,  -1,  -1,  -1,                  "109,67",
+    1,  -1,   1,  -1,   1,  -1,  -1,                  "107,95",
+    1,  -1,  -1,  -1,  -1,   1,   1,                  "106,29",
+   -1,   1,   1,  -1,  -1,   1,  -1,                  "108,25",
+   -1,   1,  -1,  -1,   1,  -1,   1,                  "106,49",
+   -1,  -1,   1,   1,  -1,  -1,   1,                  "107,38",
+   -1,  -1,  -1,   1,   1,   1,  -1,                  "105,71"
+  )
+
+require(knitr)
+kable(my_tbl3, digits = 3, row.names = FALSE, align = "c",
+              caption = "Codificação da resposta e adição das respostas experimentais")
+
+```
+
+Um arquivo simples .csv contendo estas informações é fácil de importar e analizar no R ([como explicado em outros post](https://ayopasaa.netlify.app/post/linearidade1/))
+
+
+Uma forma de calcular os efeitos é encontrada nos anexos das guias da AOAC (ex: http://www.eoma.aoac.org/app_k.pdf). Aqui, faremos uso do pacote do R  [FrF2](https://cran.r-project.org/web/packages/FrF2/index.html) (*Fractional Factorial Designs with 2-Level Factors*), com ele podem ser criados planejamentos fatoriais fracionários regulares e não regulares de 2 níveis. Além disso, são oferecidas ferramentas de análise como gráficos de efeitos principais e gráficos de interação para todos os fatores simultaneamente, gráficos de cubo para observar os efeitos simultâneos de três fatores e gráfico meio normal (*half normal plot*)
+
+
+
+### Importar os dados 
+
+```{r, echo=TRUE}
+
+### Dados experimentais
+      
+setwd("C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\020422_rob") # Adicionar um endereço
+rob<- read.csv2("rob2.csv", header=TRUE) # importa o csv com o pacote read.csv2
+
+# Simplificar e padronizar os nomes da coluna e da resposta para y
+colnames(rob) <- c("F1","F2","F3","F4","F5","F6","F7", "y")
+rob    
+```
+
+### Creação do modelo linear 
+
+O primeiro passo é criar o modelo linear com todos os efeitos principais e as interações de dois fatores com a função lm
+
+
+```{r, echo= TRUE}
+# linear model with all main effects and 2-factor interactions
+iM.lm <- lm(y ~ (.)^2, data = rob)
+iM.lm
+
+```
+
+A continuação podemos voltar para a versão codificada se quisermos (A:G)
+
+```{r}
+    # determine aliases
+    aliases(iM.lm)
+    # coded version
+    aliases(iM.lm, code=TRUE)
+```
+
+### Visualização 
+
+A forma mais simples de analizar os resultados do modelo é pelo gráfico de Daniel. Ele permite analisar os experimentos fatoriais 2k (completos e fracionados) não replicados. A idéia central deste gráfico é semelhante àquela apresentada para o gráfico normal: comparar a distribuição da amostra com uma distribuição teórica que, neste caso, é a distribuição semi-normal ou normal. Neste gráfico, os efeitos cujos pontos estiverem claramente afastados de uma reta imaginária, formada pela nuvem de pontos, serão julgados ativos.
+
+
+O *normal plot* é realizado no R com a função DanielPlot do pacote FrF2
+
+```{r daniel, echo=TRUE}
+# normal plot of effects, default is autolabel with alpha=0.05
+DanielPlot(iM.lm)  
+DanielPlot(iM.lm,code=TRUE)
+DanielPlot(iM.lm,code=TRUE,alpha=0.5)
+
+```
+
+
+O *normal plot* é realizado com a mesma função deixando o parâmetro half como verdadeiro
+
+```{r}
+# half normal plot of effects
+DanielPlot(iM.lm,code=TRUE,alpha=0.5,half=TRUE)
+```
+
+Neste exemplo os fatores E, F e G parecem ter efeito significativo na resposta. O efeito pode ser visualizado no gráfico de efeitos principais, o gráfico é construído com a função MEPlot
+
+
+```{r}
+
+# main effects plots
+MEPlot(iM.lm)
+```
+
+
+Finalmente, com a funçaõ IAPlot construímos o gráfico de interações entre os fatores:
+
+
+```{r}
+# interaction plots
+IAPlot(iM.lm)
+
+```
+
+```{r}
+# interaction plots with attention drawn to aliases
+aus <- IAPlot(iM.lm, show.alias=TRUE)
+```
+

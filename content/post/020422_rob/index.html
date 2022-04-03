@@ -1,0 +1,397 @@
+---
+authors:
+- admin
+projects: ["Química Analítica"]
+categories: ["QbD", "DoE"]
+date: "2022-04-02T00:00:00Z"
+draft: false
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: Robustez de métodos analíticos 1.  Desenho experimental de Youden 
+subtitle:  Análise de desenhos experimentais no paradigma QbD de forma automatizada no R
+summary: Automatização da análise da robustez por um planejamento de Youden
+tags: ["R Markdown", "Robustez", "Automatização", "Desenvolvimento Analítico", "R", "Documento Dinâmico", "DoE", "QbD"]
+output:
+  blogdown::html_page:
+      number_sections: false
+      toc: TRUE
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#avaliação-da-robustez-de-forma-multivariada">Avaliação da robustez de forma multivariada?</a></li>
+<li><a href="#teste-de-robustez-de-youden">Teste de Robustez de Youden</a>
+<ul>
+<li><a href="#planejamento">Planejamento:</a></li>
+<li><a href="#importar-os-dados">Importar os dados</a></li>
+<li><a href="#creação-do-modelo-linear">Creação do modelo linear</a></li>
+<li><a href="#visualização">Visualização</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="avaliação-da-robustez-de-forma-multivariada" class="section level2">
+<h2>Avaliação da robustez de forma multivariada?</h2>
+<p>O Conselho Internacional de Harmonização (ICH) divulgou recentemente dois projetos de diretrizes que visam promover processos analíticos mais robustos.</p>
+<p>A diretriz Q14 harmonizaria as abordagens científicas para o desenvolvimento de métodos analíticos, enquanto o documento Q2(R2) abrange os princípios de validação para o uso de procedimentos que utilizam o infravermelho próximo (NIR) e a espectroscopia Raman, que geralmente exigem métodos estatísticos multivariados (e é claro que o R consegue trabalhar com esses dados também!, vou mostrar como em próximos post)</p>
+<p>O documento ICH Q14 descreve uma abordagem mínima ou aprimorada. Também descreve os elementos de um “perfil analítico de destino” (ATP, <em>analytical target profile</em>) que é incorporado na abordagem aprimorada. O ATP é descrito como “um resumo prospectivo das características de desempenho que descrevem a finalidade pretendida e os critérios de desempenho previstos de uma medição analítica”. A diretriz também discute como desenvolver procedimentos analíticos multivariados, como procedimentos para testes de liberação em tempo real, e aborda onde as informações de desenvolvimento de procedimentos analíticos devem ir no Documento Técnico Comum (CTD).</p>
+<p>É apenas uma questão de tempo até que conceitos como planejamento de experimentos (DoE, *Design of Experiments”), QbD, ATP e outros se tornem parte de nossos regulamentos e normas para desenvolvimento analítico e, portanto, também façam parte de nosso trabalho diário.</p>
+<p>Neste post, discutirei o teste de robustez de Youden, recomendado em várias diretrizes da <a href="http://www.eoma.aoac.org/app_k.pdf">AOAC</a>.</p>
+</div>
+<div id="teste-de-robustez-de-youden" class="section level2">
+<h2>Teste de Robustez de Youden</h2>
+<p>Embora os principais fatores que contribuem para a variabilidade de um método possam ser explorados pelo procedimento clássico, uma variável de cada vez ou <strong>univariado</strong>, para examinar o efeito de fatores menos importantes pode ser realizado por um teste de robustez simples de Youden [Youden, W.J., &amp; Steiner, E.H. (1975) Statistical Manual of the Association of Official Analytical Chemists, pp 50–55]. Este desenho <strong>multivariado</strong> permite explorar o efeito de <strong>7 fatores</strong> em um único experimento exigindo apenas <strong>oito determinações!</strong>. Também permite determinar de forma aproximada o desvio padrão esperado da variabilidade dos fatores que estão “no controle”. Um exemplo de análise de robustez na determinação de um ingrediente ativo em uma amostra por HPLC é detalhado a continuação.</p>
+<div id="planejamento" class="section level3">
+<h3>Planejamento:</h3>
+<p>O primeiro é escolher sete fatores que podem afetar o resultado da análise e atribuir valores altos e baixos razoáveis a eles, é possivel fazer um desenho para estudar os fatores que afetam o preparo da amostra, para estudar os fatores que afetam a separação cromatográfica, ou misturar os fatores de extração/separação como no exemplo que segue:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-1">Table 1: </span>Definição dos fatores</caption>
+<colgroup>
+<col width="36%" />
+<col width="27%" />
+<col width="36%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Fator</th>
+<th align="center">Alto</th>
+<th align="center">Baixo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Tipo de coluna</td>
+<td align="center">A: Coluna 1</td>
+<td align="center">a: Coluna 2</td>
+</tr>
+<tr class="even">
+<td align="center">Temperatura da coluna</td>
+<td align="center">B: 35ºC</td>
+<td align="center">b: 30ºC</td>
+</tr>
+<tr class="odd">
+<td align="center">Vazão da Fase Móvel</td>
+<td align="center">C: 1,2 mL/min</td>
+<td align="center">c: 1,0 mL/min</td>
+</tr>
+<tr class="even">
+<td align="center">Vidraria</td>
+<td align="center">D: Âmbar</td>
+<td align="center">d: transparente</td>
+</tr>
+<tr class="odd">
+<td align="center">Tempo de extração</td>
+<td align="center">E: 5 minutos</td>
+<td align="center">e: 3 minutos</td>
+</tr>
+<tr class="even">
+<td align="center">Temperatura de extração</td>
+<td align="center">F: 60 °C</td>
+<td align="center">f: Temperatura ambiente</td>
+</tr>
+<tr class="odd">
+<td align="center">Tipo de extração</td>
+<td align="center">G: Mesa agitadora</td>
+<td align="center">g: Ultrassom</td>
+</tr>
+</tbody>
+</table>
+<p>Depois conduzimos oito ensaios (uma única análise que reflete um conjunto de níveis de fator) utilizando as combinações específicas de valores altos e baixos para os fatores a seguir, e registramos o resultado obtido para cada combinação. (É essencial que os fatores sejam combinados exatamente como especificado ou serão tiradas conclusões errôneas.)</p>
+<table>
+<caption><span id="tab:unnamed-chunk-2">Table 2: </span>Combinações a realizar</caption>
+<thead>
+<tr class="header">
+<th align="center">Ensaio</th>
+<th align="center">F1</th>
+<th align="center">F2</th>
+<th align="center">F3</th>
+<th align="center">F4</th>
+<th align="center">F5</th>
+<th align="center">F6</th>
+<th align="center">F7</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">A</td>
+<td align="center">B</td>
+<td align="center">C</td>
+<td align="center">D</td>
+<td align="center">E</td>
+<td align="center">F</td>
+<td align="center">G</td>
+</tr>
+<tr class="even">
+<td align="center">2</td>
+<td align="center">A</td>
+<td align="center">B</td>
+<td align="center">c</td>
+<td align="center">D</td>
+<td align="center">e</td>
+<td align="center">f</td>
+<td align="center">g</td>
+</tr>
+<tr class="odd">
+<td align="center">3</td>
+<td align="center">A</td>
+<td align="center">b</td>
+<td align="center">C</td>
+<td align="center">d</td>
+<td align="center">E</td>
+<td align="center">f</td>
+<td align="center">g</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">A</td>
+<td align="center">b</td>
+<td align="center">c</td>
+<td align="center">d</td>
+<td align="center">e</td>
+<td align="center">F</td>
+<td align="center">G</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">a</td>
+<td align="center">B</td>
+<td align="center">C</td>
+<td align="center">d</td>
+<td align="center">e</td>
+<td align="center">F</td>
+<td align="center">g</td>
+</tr>
+<tr class="even">
+<td align="center">6</td>
+<td align="center">a</td>
+<td align="center">B</td>
+<td align="center">c</td>
+<td align="center">d</td>
+<td align="center">E</td>
+<td align="center">f</td>
+<td align="center">G</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">a</td>
+<td align="center">b</td>
+<td align="center">C</td>
+<td align="center">D</td>
+<td align="center">e</td>
+<td align="center">f</td>
+<td align="center">G</td>
+</tr>
+<tr class="even">
+<td align="center">8</td>
+<td align="center">a</td>
+<td align="center">b</td>
+<td align="center">c</td>
+<td align="center">D</td>
+<td align="center">E</td>
+<td align="center">F</td>
+<td align="center">g</td>
+</tr>
+</tbody>
+</table>
+<p>Podemos reemprazar nessas combinações os fatores em maiúsculas por 1 e as minúsculas por -1 e numa planilha simples adicionar a resposta, que geralmente corresponde à porcentagem de recuperação:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-3">Table 3: </span>Codificação da resposta e adição das respostas experimentais</caption>
+<thead>
+<tr class="header">
+<th align="center">F1</th>
+<th align="center">F2</th>
+<th align="center">F3</th>
+<th align="center">F4</th>
+<th align="center">F5</th>
+<th align="center">F6</th>
+<th align="center">F7</th>
+<th align="center">Resposta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">105,44</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">109,67</td>
+</tr>
+<tr class="odd">
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">107,95</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">106,29</td>
+</tr>
+<tr class="odd">
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">108,25</td>
+</tr>
+<tr class="even">
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">106,49</td>
+</tr>
+<tr class="odd">
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">107,38</td>
+</tr>
+<tr class="even">
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">-1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">-1</td>
+<td align="center">105,71</td>
+</tr>
+</tbody>
+</table>
+<p>Um arquivo simples .csv contendo estas informações é fácil de importar e analizar no R (<a href="https://ayopasaa.netlify.app/post/linearidade1/">como explicado em outros post</a>)</p>
+<p>Uma forma de calcular os efeitos é encontrada nos anexos das guias da AOAC (ex: <a href="http://www.eoma.aoac.org/app_k.pdf" class="uri">http://www.eoma.aoac.org/app_k.pdf</a>). Aqui, faremos uso do pacote do R <a href="https://cran.r-project.org/web/packages/FrF2/index.html">FrF2</a> (<em>Fractional Factorial Designs with 2-Level Factors</em>), com ele podem ser criados planejamentos fatoriais fracionários regulares e não regulares de 2 níveis. Além disso, são oferecidas ferramentas de análise como gráficos de efeitos principais e gráficos de interação para todos os fatores simultaneamente, gráficos de cubo para observar os efeitos simultâneos de três fatores e gráfico meio normal (<em>half normal plot</em>)</p>
+</div>
+<div id="importar-os-dados" class="section level3">
+<h3>Importar os dados</h3>
+<pre class="r"><code>### Dados experimentais
+      
+setwd(&quot;C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\020422_rob&quot;) # Adicionar um endereço
+rob&lt;- read.csv2(&quot;rob2.csv&quot;, header=TRUE) # importa o csv com o pacote read.csv2
+
+# Simplificar e padronizar os nomes da coluna e da resposta para y
+colnames(rob) &lt;- c(&quot;F1&quot;,&quot;F2&quot;,&quot;F3&quot;,&quot;F4&quot;,&quot;F5&quot;,&quot;F6&quot;,&quot;F7&quot;, &quot;y&quot;)
+rob    </code></pre>
+<pre><code>##   F1 F2 F3 F4 F5 F6 F7      y
+## 1  1  1  1  1  1  1  1 105.44
+## 2  1  1 -1  1 -1 -1 -1 109.67
+## 3  1 -1  1 -1  1 -1 -1 107.95
+## 4  1 -1 -1 -1 -1  1  1 106.29
+## 5 -1  1  1 -1 -1  1 -1 108.25
+## 6 -1  1 -1 -1  1 -1  1 106.49
+## 7 -1 -1  1  1 -1 -1  1 107.38
+## 8 -1 -1 -1  1  1  1 -1 105.71</code></pre>
+</div>
+<div id="creação-do-modelo-linear" class="section level3">
+<h3>Creação do modelo linear</h3>
+<p>O primeiro passo é criar o modelo linear com todos os efeitos principais e as interações de dois fatores com a função lm</p>
+<pre class="r"><code># linear model with all main effects and 2-factor interactions
+iM.lm &lt;- lm(y ~ (.)^2, data = rob)
+iM.lm</code></pre>
+<pre><code>## 
+## Call:
+## lm.default(formula = y ~ (.)^2, data = rob)
+## 
+## Coefficients:
+## (Intercept)           F1           F2           F3           F4           F5  
+##    107.1475       0.1900       0.3150       0.1075      -0.0975      -0.7500  
+##          F6           F7        F1:F2        F1:F3        F1:F4        F1:F5  
+##     -0.7250      -0.7475           NA           NA           NA           NA  
+##       F1:F6        F1:F7        F2:F3        F2:F4        F2:F5        F2:F6  
+##          NA           NA           NA           NA           NA           NA  
+##       F2:F7        F3:F4        F3:F5        F3:F6        F3:F7        F4:F5  
+##          NA           NA           NA           NA           NA           NA  
+##       F4:F6        F4:F7        F5:F6        F5:F7        F6:F7  
+##          NA           NA           NA           NA           NA</code></pre>
+<p>A continuação podemos voltar para a versão codificada se quisermos (A:G)</p>
+<pre class="r"><code>    # determine aliases
+    aliases(iM.lm)</code></pre>
+<pre><code>##                            
+##  F1 = F2:F4 = F3:F5 = F6:F7
+##  F2 = F1:F4 = F3:F6 = F5:F7
+##  F3 = F1:F5 = F2:F6 = F4:F7
+##  F4 = F1:F2 = F3:F7 = F5:F6
+##  F5 = F1:F3 = F2:F7 = F4:F6
+##  F6 = F1:F7 = F2:F3 = F4:F5
+##  F7 = F1:F6 = F2:F5 = F3:F4</code></pre>
+<pre class="r"><code>    # coded version
+    aliases(iM.lm, code=TRUE)</code></pre>
+<pre><code>## $legend
+##                                    
+## A=F1 B=F2 C=F3 D=F4 E=F5 F=F6 G=F7 
+## 
+## $aliases
+##                     
+##  A = B:D = C:E = F:G
+##  B = A:D = C:F = E:G
+##  C = A:E = B:F = D:G
+##  D = A:B = C:G = E:F
+##  E = A:C = B:G = D:F
+##  F = A:G = B:C = D:E
+##  G = A:F = B:E = C:D</code></pre>
+</div>
+<div id="visualização" class="section level3">
+<h3>Visualização</h3>
+<p>A forma mais simples de analizar os resultados do modelo é pelo gráfico de Daniel. Ele permite analisar os experimentos fatoriais 2k (completos e fracionados) não replicados. A idéia central deste gráfico é semelhante àquela apresentada para o gráfico normal: comparar a distribuição da amostra com uma distribuição teórica que, neste caso, é a distribuição semi-normal ou normal. Neste gráfico, os efeitos cujos pontos estiverem claramente afastados de uma reta imaginária, formada pela nuvem de pontos, serão julgados ativos.</p>
+<p>O <em>normal plot</em> é realizado no R com a função DanielPlot do pacote FrF2</p>
+<pre class="r"><code># normal plot of effects, default is autolabel with alpha=0.05
+DanielPlot(iM.lm)  
+DanielPlot(iM.lm,code=TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/daniel-1.png" width="672" /></p>
+<pre class="r"><code>DanielPlot(iM.lm,code=TRUE,alpha=0.5)</code></pre>
+<pre><code>## simulated critical values not available for all requests, used conservative ones</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/daniel-2.png" width="672" /></p>
+<p>O <em>normal plot</em> é realizado com a mesma função deixando o parâmetro half como verdadeiro</p>
+<pre class="r"><code># half normal plot of effects
+DanielPlot(iM.lm,code=TRUE,alpha=0.5,half=TRUE)</code></pre>
+<pre><code>## simulated critical values not available for all requests, used conservative ones</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Neste exemplo os fatores E, F e G parecem ter efeito significativo na resposta. O efeito pode ser visualizado no gráfico de efeitos principais, o gráfico é construído com a função MEPlot</p>
+<pre class="r"><code># main effects plots
+MEPlot(iM.lm)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Finalmente, com a funçaõ IAPlot construímos o gráfico de interações entre os fatores:</p>
+<pre class="r"><code># interaction plots
+IAPlot(iM.lm)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code># interaction plots with attention drawn to aliases
+aus &lt;- IAPlot(iM.lm, show.alias=TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+</div>
