@@ -302,7 +302,7 @@ output:
 <h3>Importar os dados</h3>
 <pre class="r"><code>### Dados experimentais
       
-setwd(&quot;C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\020422_rob&quot;) # Adicionar um endereço
+setwd(&quot;C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\Youden&quot;) # Adicionar um endereço
 rob&lt;- read.csv2(&quot;rob2.csv&quot;, header=TRUE) # importa o csv com o pacote read.csv2
 
 # Simplificar e padronizar os nomes da coluna e da resposta para y
@@ -393,5 +393,12 @@ IAPlot(iM.lm)</code></pre>
 <pre class="r"><code># interaction plots with attention drawn to aliases
 aus &lt;- IAPlot(iM.lm, show.alias=TRUE)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Este planejamento, que estuda 7 fatores com 8 experimentos, é um caso extremo, 8 corresponde ao menor número de respostas que pode ser utilizado para estimar o intercepto e 7 efeitos principais (um desenho factorial fraccionado <span class="math inline">\(2^{7-p}\)</span> pode ter 64 (<span class="math inline">\(p=1\)</span>), 32 (<span class="math inline">\(p=2\)</span>), 16 (<span class="math inline">\(p=3\)</span>), or 8 (<span class="math inline">\(p=4\)</span>) experimentos). Este planejamento fraccionado <span class="math inline">\(2^{7-4}\)</span> possui resolução <span class="math inline">\(III\)</span>. Em um desenho com resolução III os efeitos principais e interacões de segunda ordem (que são importantes) estão confundidos entre si, logo não seria válido ou interesseante para avaliar a robustez no desenvolvimento do método analítico (conforme preconiza o ICH Q14). Uma resolução mais interessante para experimentos de DA é a IV, nesta resolução os efeitos principais e interacões de terceira ordem (não tão importantes) estão confundidos entre si.</p>
+<p>Experimentos de resolução III são válidos nos estágios iniciais de nosso trabalho, pois podemos preferir rastrear muitos fatores, aceitando um padrão de confusão muito complexo, porque não temos certeza de quais fatores realmente afetam nossa resposta. Mais tarde, à medida que estamos otimizando nosso processo, particularmente quando nos aproximamos de um valor “ótimo”, então as interações de 2 fatores e talvez de 3 fatores são mais dominantes. Portanto, investigar e calcular esses efeitos com mais precisão se torna importante e temos que usar fatoriais completos. Mas até lá esperamos ter identificado e reduzido muito o número de fatores.</p>
+<p>No site [<a href="https://learnche.org/pid/design-analysis-experiments/fractional-factorial-designs/design-resolution" class="uri">https://learnche.org/pid/design-analysis-experiments/fractional-factorial-designs/design-resolution</a>] e em outros livros de DoE é possível estudar mais sobre resolução.</p>
+<div class="figure">
+<img src="DOE-trade-off-table.png" alt="" />
+<p class="caption"><em>Relação entre número/costo de experimentação e a resolução </em></p>
+</div>
 </div>
 </div>
