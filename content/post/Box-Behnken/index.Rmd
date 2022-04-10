@@ -1,0 +1,240 @@
+---
+authors:
+- admin
+projects: ["Química Analítica"]
+categories: ["QbD", "DoE"]
+date: "2022-04-08T00:00:00Z"
+draft: false
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: Robustez de métodos analíticos 2.  Desenho experimental de Box-Behnken
+subtitle:  Análise de desenhos experimentais no paradigma QbD de forma automatizada no R
+summary: Automatização da análise da robustez utilizando um desenho de Box-Behnken
+tags: ["R Markdown", "Robustez", "Automatização", "Desenvolvimento Analítico", "R", "Documento Dinâmico", "DoE", "QbD"]
+output:
+  blogdown::html_page:
+      number_sections: false
+      toc: TRUE
+---
+
+```{r pacotes-opcoes, message=FALSE, echo=FALSE, warning=FALSE, cache=FALSE}
+packages = c("tidyverse","FrF2", "knitr","rsm", "DoE.wrapper", "pid")
+#use this function to check if each package is on the local machine
+#if a package is installed, it will be loaded
+#if any are not, the missing package(s) will be installed and loaded
+package.check <- lapply(packages, FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+        install.packages(x, dependencies = TRUE, 
+                         repos = "http://cran.us.r-project.org")
+        library(x, character.only = TRUE)
+    }
+})
+
+```
+
+## Metodología de superfície de resposta
+
+
+A metodologia de superfície de resposta compreende um corpo de métodos para explorar condições ótimas de operação por meio de desenhos experimentais.  Normalmente, isso envolve fazer vários experimentos, usando os resultados de um experimento para fornecer orientação sobre o que fazer a seguir. A próxima ação pode ser focar o experimento em um conjunto diferente de condições ou coletar mais dados na região experimental atual para ajustar um modelo de ordem superior ou confirmar os resultados encontrados. A metodologia de superfície de resposta é frequentemente usada para refinar modelos depois que foram determinados os fatores importantes usando desenhos de triagem ou fatoriais.
+
+A diferença entre uma equação de superfície de resposta e a equação para um planejamento fatorial é a adição dos termos quadráticos que permitem modelar a curvatura na resposta, tornando-os úteis para:
+
+* Compreender ou mapear uma região de uma superfície de resposta. As equações de superfície de resposta modelam como as mudanças nas variáveis afetam uma resposta de interesse.
+* Encontrar os níveis de variáveis que otimizam uma resposta.
+* Seleção das condições de operação para *atender as especificações*.
+
+Neste post vou apresentar o pacote **rsm**, projetado para fornecer suporte ao R para métodos de superfície de resposta padrão. As funções são fornecidas para gerar planejamento central composto (*Central-Composite Design*) e Box-Behnken. Para a análise dos dados resultantes, o pacote fornece estimativa da superfície de resposta, testes da sua falta de ajuste, exibição gráfica da superfície ajustada e análises de acompanhamento, como subida mais íngreme (*steepest ascent*), análise canônica e análise de cume (ridge analysis).
+
+Desenhos Box-Behnken geralmente têm menos pontos do que os desenhos compostos centrais, portanto, são mais baratos de executar para um mesmo número de fatores. Eles podem estimar eficientemente os coeficientes de primeira e segunda ordem; no entanto, eles não podem incluir experimentos de um desenho fatorial. Os desenhos Box-Behnken sempre têm 3 níveis por fator, ao contrário dos desenhos compostos centrais que podem ter até 5. Os desenhos Box-Behnken nunca incluem experimenttos onde todos os fatores estão em sua configuração extrema (todos os fatores no valor máximo ou no mínimo).
+
+## Gerando o desenho de Box-Behnken
+
+A incerteza de medição de um procedimento analítico depende de muitos parâmetros, incluindo a concentração do analito, propriedades da matriz, técnica de preparação de amostra e técnica de medição. Como a incerteza que se propaga do preparo de amostras geralmente é a maior contribuinte à incerteza global (existem [guías de evaluação da incerteza da EDQM](https://www.edqm.eu/documents/52006/287801/Evaluation+of+MU+-+Annex+1+Bottom-up+approach+–+Annex+1.3+Estimation+of+the+measurement+uncertainty+for+assay+using+HPLC+method.pdf/adf9bc9e-b1d0-5647-94f6-41538cec05e4?t=1638796135983)), temos como resultado frecuente em planejamentos de screening que os fatores de preparo de amostra são os mais significativos quando analisados em conjunto com fatores instrumentais. Em muitos casos os maiores esforzos de otimização devem ser realizados no preparo da amostra deixando em segundo plano a otimização dos fatores instrumentais.
+
+
+Neste exemplo, vamos supor que numa triagem ou experimento fatorial foi encontrado que os os fatores significativos são todos do processo de extração/preconcentração: pH, Concentração de EDTA e relação PSA:C18 (metodología QuEChERS). 
+
+
+
+As funções *ccd* e *bbd* estão disponíveis para generar o desenho de superfície de resposta padrão, neste exemplo, para 3 fatores com dois pontos centrais:
+
+
+ 
+```{r}
+
+#install.packages("rsm")
+#library(rsm)
+
+BBD_1<- bbd(3, block=FALSE, randomize=TRUE, n0=2)
+
+BBD_1
+
+```
+
+Neste exemplo vamos variar o pH entre 4 e 8, a concentração de EDTA entre 0.1 M e 0.3 M, e a razão PSA:C18 vai variar entre 1,5 e 0,5. Podemos codificar então as varíaveis com valores com significado químico:
+
+
+```{r}
+
+# Os dados são armazenados de forma codificada usando essas fórmulas de codificação ...
+# x1 ~ (pH - 6)/2           O pH vai variar entre 4 e 8
+# x2 ~ (EDTA - 0.2)/0.1     A [EDTA] vai variar entre 0.1 M e 0.3 M
+# x3 ~ (PSA:C18 - 1)/0.5    A razão PSA:C18 vai variar entre 1,5 e 0,5
+
+BBD_2<- bbd(3, block=FALSE, randomize=TRUE, n0=2, coding = 
+              list(x1 ~ (pH - 6)/2, x2 ~ (EDTA - 0.2)/0.1, x3 ~ (PSA_C18 - 1)/0.5))
+
+BBD_2
+
+
+```
+
+
+```{r, eval=FALSE, echo=FALSE}
+# Deixando tudo numa tabela pronta para anexar aos nossos documentos dinâmicos
+
+colnames(BBD_2)<- c("Ordem preparo", "Ordem estatístico", "pH", "EDTA", "PSA:C18")
+
+knitr::kable(BBD_2, align= c("c", "c", "c", "c", "c"), 
+             caption = "Experimentos necessários para otimização da metodología QuEChERS")
+```
+
+Para avaliar os fatores temos então que realizar 14 experimentos na ordem estabelecida pela tabela, ou sejá temos que realizar os experimentos de forma aleatória e não na ordem estatística.
+
+## Ajustando um modelo de superfície de resposta
+
+
+Vamos supor que realizamos os 14 experimentos e determinamos a porcentagem de recuperação, podemos planilhar os resultados do desenho e salvar como um csv simples para importar posteriormente no R. 
+
+![*Exemplo de planilha com as respostas do planejamento, salvamos como .csv e damos um nome, ex DoE_bbd.csv *](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Box-Behnken/res_exp.PNG)
+
+Importamos os resultados utilizando a função *read.csv2*
+
+```{r}
+### Dados experimentais
+      
+setwd("C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\Box-Behnken") # Adicionar um endereço
+BBD_exp<- read.csv2("DoE_bbd.csv", header=TRUE) # importa o csv de nome DoE_bbd com o pacote read.csv2
+BBD_exp
+```
+
+
+Podemos codificar de novo simplesmente os resultados com a função *coded.data*
+
+```{r}
+BBD_exp_coded<- coded.data(BBD_exp, x1 ~ (pH - 6)/2, x2 ~ (EDTA - 0.2)/0.1, x3 ~ (PSA.C18 - 1.0)/0.5 )
+BBD_exp_coded
+```
+
+Esta listagem se parece muito com os dados originais, mas internamente, os dados estão salvos na forma codificada, como pode ser visto fazendo uma transformação para um data.frame:
+
+```{r}
+as.data.frame(BBD_exp_coded)
+```
+
+
+Uma superfície de resposta é ajustada usando a função *rsm*. Esta é uma extensão de *lm* e funciona quase exatamente como ela; no entanto, a fórmula do modelo para *rsm* deve fazer uso das funções especiais FO, TWI, PQ ou SO (para “first-order”, “two-way interaction”, “pure quadratic” e “second-order”, respectivamente), porque a presença destes especifica a porção da superfície de resposta do modelo. Outros termos que não envolvam essas funções podem ser incluídos no modelo; muitas vezes, esses termos incluem fatores de bloqueio e outros preditores categóricos.
+
+Em nosso exemplo temos uma variável de resposta, "Recuperação", e três preditores codificados x1, x2, e X3. Ajustamos  um modelo de superfície de resposta de primeira ordem aos nossos dados:
+
+
+```{r}
+### Ajuste de modelo de superficie de resposta de primeira ordem:
+      
+BBD.rsm <- rsm(Recuperação ~ FO(x1, x2, x3), data= BBD_exp_coded)  # cria o modelo
+summary(BBD.rsm)                                                   # Apresenta um sumário do modelo
+```
+
+O que vemos no sumário é a típica informação para um objeto *lm* (com uma pequena diferença), seguido por algumas informações adicionais específicas das superfícies de resposta. A diferença sutil é que a rotulagem dos coeficientes de regressão é simplificada (não vemos “FO” lá). A tabela de análise de variância mostrada inclui um detalhamento de falta de ajuste e erro puro, e também recebemos informações sobre a direção da subida mais íngreme (steepest-ascent). Como o conjunto de dados é um objeto *coded.data*, as informações de subida mais íngreme também são apresentadas em unidades originais. (Embora o *rsm* não exija um conjunto de dados *coded.data*, o uso de um é altamente recomendado.)
+
+Neste exemplo em particular, a informação de subida mais íngreme é de pouca utilidade, porque há uma falta significativa de ajuste para este modelo (p<0,05). Isso sugere que devemos tentar um modelo de ordem superior. Por exemplo, poderíamos tentar ajustar um modelo de segunda ordem:
+
+
+
+
+```{r}
+
+### Ajuste de modelo de superficie de resposta de segunda ordem:
+      
+BBD_SO.rsm <- rsm(Recuperação ~ SO(x1, x2, x3), data= BBD_exp_coded)  # cria o modelo
+
+summary(BBD_SO.rsm)          # Apresenta um sumário do modelo
+```
+
+
+A falta de ajuste agora não é significativa (p > 0,05). O resumo para um modelo de segunda ordem fornece resultados de uma análise canônica da superfície em vez de para a subida mais íngreme. A análise indica que o ponto estacionário da superfície ajustada está em (5,99, 0,20, 1,00) em unidades codificadas, bem dentro da região experimental; temos que dois dos três autovalores (eigenvalues) são negativos, se os três fossem negativos indicariam que o ponto estacionário é um máximo (este seria o tipo de situação com que sonhamos na experimentação de superfície de resposta - evidência clara de um conjunto próximo de condições ótimas)(https://cran.r-project.org/web/packages/rsm/vignettes/rsm.pdf).
+
+
+
+```{r, eval=FALSE, echo=FALSE}
+
+# fit the first-order with two-way interaction model: LACK OF FIT
+BBD_TWI.rsm <- rsm(Recuperação ~ FO(x1, x2, x3) + TWI(x1, x2, x3), data = BBD_exp_coded)
+
+summary(BBD_TWI.rsm)
+```
+
+
+
+## Análise gráfico da superfície de resposta
+
+Quando um modelo de regressão é ajustado usando dois ou mais preditores contínuos, é útil apresentar uma visualização gráfica da superfície ajustada. Para isso, as funções *contour.lm*, *persp.lm* e *image.lm* foram desenvolvidas e incorporadas ao pacote *rsm*, visto que a visualização de superfícies é especialmente importante quando se utilizam métodos de superfície de resposta. As três funções são métodos *S3* para objetos da classe *lm*, ou classes (como *rsm*) que são derivados de objetos *lm*.
+
+Os gráficos de contorno são gerados utilizando a função *contour* e os gráficos em perspectiva com a função *persp*:
+
+
+
+```{r}
+# second-order model
+
+contour(BBD_SO.rsm, ~ x1 + x2, image = TRUE, main="second-order model")
+persp(BBD_SO.rsm, x2 ~ x1, zlab = "y", main="second-order model")
+```
+
+```{r}
+# second-order model
+
+contour(BBD_SO.rsm, ~ x2 + x3, image = TRUE, main="second-order model")
+persp(BBD_SO.rsm, x3 ~ x2, zlab = "y", main="second-order model")
+```
+
+```{r}
+# second-order model
+
+contour(BBD_SO.rsm, ~ x1 + x3, image = TRUE, main="second-order model")
+persp(BBD_SO.rsm, x3 ~ x1, zlab = "y", main="second-order model")
+```
+
+ A superfície de resposta entre a concentração de EDTA e a razão PSA:C18 mostra a curvatura, efeito de ambos os termos quadrados e mostra a recuperação máxima. Temos que em pH menores a 4 ou maiores a 8 poderiamos encontrar outros máximos locais. 
+
+
+
+O gráfico de pareto pode ser construido com a função *paretoPlot* do pacote *pid*
+
+```{r}
+#install.packages("pid")
+#library(pid)
+
+paretoPlot(BBD_SO.rsm)
+```
+
+
+Finalmente, os gráficos de diagnóstico são construidos utilizando simplesmente a função *plot* do R base.
+
+
+```{r}
+# plot diagnistics
+plot(BBD_SO.rsm)
+
+```
+
+## Conclusão
+
+Quanto ao software, o R, provavelmente junto com o Phyton, é o único software de código aberto que combina todo o espectro de DoE e otimização com a flexibilidade de uma poderosa linguagem de script que permite qualquer tipo de pré e pós-processamento de dados em um ambiente de software. Isso dá vantagens ao R frente a muitas ferramentas comerciais baseadas em GUI que geralmente vendem facilidade de uso em detrimento da flexibilidade (https://bookdown.org/gerhard_krennrich/doe_and_optimization/).
+
+
+Uma das grandes vantagens é que com um mesmo arquivo de R (.Rmd) podemos trabalhar tanto a robustez quanto outras análises, por exemplo a da linearidade. O documento dinâmico gerado é praticamente o relatório de desenvolvimento. O documento dinâmico é reprodutível e possui menos erros pois o processo requer mínima intervenção humana (é possível incluso a leitura direita de por exemplo os pdf gerados pelo Empower). Como só e gerenciado o código-fonte do documento, ficamos livres de etapas manuais como ter que refazer um gráfico ou uma tabela após qualquer alteração nos dados.
+
+![*Processo de geração de relatórios dinâmicos*](C:/Users/Alejandro/Dropbox/ayopasaa_blog/content/post/Box-Behnken/blog-lin1.PNG)

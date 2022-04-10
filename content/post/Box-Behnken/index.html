@@ -1,0 +1,314 @@
+---
+authors:
+- admin
+projects: ["Química Analítica"]
+categories: ["QbD", "DoE"]
+date: "2022-04-08T00:00:00Z"
+draft: false
+featured: true
+image:
+  caption: ""
+  focal_point: ""
+title: Robustez de métodos analíticos 2.  Desenho experimental de Box-Behnken
+subtitle:  Análise de desenhos experimentais no paradigma QbD de forma automatizada no R
+summary: Automatização da análise da robustez utilizando um desenho de Box-Behnken
+tags: ["R Markdown", "Robustez", "Automatização", "Desenvolvimento Analítico", "R", "Documento Dinâmico", "DoE", "QbD"]
+output:
+  blogdown::html_page:
+      number_sections: false
+      toc: TRUE
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#metodología-de-superfície-de-resposta">Metodología de superfície de resposta</a></li>
+<li><a href="#gerando-o-desenho-de-box-behnken">Gerando o desenho de Box-Behnken</a></li>
+<li><a href="#ajustando-um-modelo-de-superfície-de-resposta">Ajustando um modelo de superfície de resposta</a></li>
+<li><a href="#análise-gráfico-da-superfície-de-resposta">Análise gráfico da superfície de resposta</a></li>
+<li><a href="#conclusão">Conclusão</a></li>
+</ul>
+</div>
+
+<div id="metodología-de-superfície-de-resposta" class="section level2">
+<h2>Metodología de superfície de resposta</h2>
+<p>A metodologia de superfície de resposta compreende um corpo de métodos para explorar condições ótimas de operação por meio de desenhos experimentais. Normalmente, isso envolve fazer vários experimentos, usando os resultados de um experimento para fornecer orientação sobre o que fazer a seguir. A próxima ação pode ser focar o experimento em um conjunto diferente de condições ou coletar mais dados na região experimental atual para ajustar um modelo de ordem superior ou confirmar os resultados encontrados. A metodologia de superfície de resposta é frequentemente usada para refinar modelos depois que foram determinados os fatores importantes usando desenhos de triagem ou fatoriais.</p>
+<p>A diferença entre uma equação de superfície de resposta e a equação para um planejamento fatorial é a adição dos termos quadráticos que permitem modelar a curvatura na resposta, tornando-os úteis para:</p>
+<ul>
+<li>Compreender ou mapear uma região de uma superfície de resposta. As equações de superfície de resposta modelam como as mudanças nas variáveis afetam uma resposta de interesse.</li>
+<li>Encontrar os níveis de variáveis que otimizam uma resposta.</li>
+<li>Seleção das condições de operação para <em>atender as especificações</em>.</li>
+</ul>
+<p>Neste post vou apresentar o pacote <strong>rsm</strong>, projetado para fornecer suporte ao R para métodos de superfície de resposta padrão. As funções são fornecidas para gerar planejamento central composto (<em>Central-Composite Design</em>) e Box-Behnken. Para a análise dos dados resultantes, o pacote fornece estimativa da superfície de resposta, testes da sua falta de ajuste, exibição gráfica da superfície ajustada e análises de acompanhamento, como subida mais íngreme (<em>steepest ascent</em>), análise canônica e análise de cume (ridge analysis).</p>
+<p>Desenhos Box-Behnken geralmente têm menos pontos do que os desenhos compostos centrais, portanto, são mais baratos de executar para um mesmo número de fatores. Eles podem estimar eficientemente os coeficientes de primeira e segunda ordem; no entanto, eles não podem incluir experimentos de um desenho fatorial. Os desenhos Box-Behnken sempre têm 3 níveis por fator, ao contrário dos desenhos compostos centrais que podem ter até 5. Os desenhos Box-Behnken nunca incluem experimenttos onde todos os fatores estão em sua configuração extrema (todos os fatores no valor máximo ou no mínimo).</p>
+</div>
+<div id="gerando-o-desenho-de-box-behnken" class="section level2">
+<h2>Gerando o desenho de Box-Behnken</h2>
+<p>A incerteza de medição de um procedimento analítico depende de muitos parâmetros, incluindo a concentração do analito, propriedades da matriz, técnica de preparação de amostra e técnica de medição. Como a incerteza que se propaga do preparo de amostras geralmente é a maior contribuinte à incerteza global (existem <a href="https://www.edqm.eu/documents/52006/287801/Evaluation+of+MU+-+Annex+1+Bottom-up+approach+–+Annex+1.3+Estimation+of+the+measurement+uncertainty+for+assay+using+HPLC+method.pdf/adf9bc9e-b1d0-5647-94f6-41538cec05e4?t=1638796135983">guías de evaluação da incerteza da EDQM</a>), temos como resultado frecuente em planejamentos de screening que os fatores de preparo de amostra são os mais significativos quando analisados em conjunto com fatores instrumentais. Em muitos casos os maiores esforzos de otimização devem ser realizados no preparo da amostra deixando em segundo plano a otimização dos fatores instrumentais.</p>
+<p>Neste exemplo, vamos supor que numa triagem ou experimento fatorial foi encontrado que os os fatores significativos são todos do processo de extração/preconcentração: pH, Concentração de EDTA e relação PSA:C18 (metodología QuEChERS).</p>
+<p>As funções <em>ccd</em> e <em>bbd</em> estão disponíveis para generar o desenho de superfície de resposta padrão, neste exemplo, para 3 fatores com dois pontos centrais:</p>
+<pre class="r"><code>#install.packages(&quot;rsm&quot;)
+#library(rsm)
+
+BBD_1&lt;- bbd(3, block=FALSE, randomize=TRUE, n0=2)
+
+BBD_1</code></pre>
+<pre><code>##    run.order std.order x1.as.is x2.as.is x3.as.is
+## 1          1        12        0        1        1
+## 2          2         6        1        0       -1
+## 3          3         2        1       -1        0
+## 4          4        13        0        0        0
+## 5          5         3       -1        1        0
+## 6          6         9        0       -1       -1
+## 7          7         5       -1        0       -1
+## 8          8        11        0       -1        1
+## 9          9        14        0        0        0
+## 10        10         1       -1       -1        0
+## 11        11        10        0        1       -1
+## 12        12         8        1        0        1
+## 13        13         7       -1        0        1
+## 14        14         4        1        1        0
+## 
+## Data are stored in coded form using these coding formulas ...
+## x1 ~ x1.as.is
+## x2 ~ x2.as.is
+## x3 ~ x3.as.is</code></pre>
+<p>Neste exemplo vamos variar o pH entre 4 e 8, a concentração de EDTA entre 0.1 M e 0.3 M, e a razão PSA:C18 vai variar entre 1,5 e 0,5. Podemos codificar então as varíaveis com valores com significado químico:</p>
+<pre class="r"><code># Os dados são armazenados de forma codificada usando essas fórmulas de codificação ...
+# x1 ~ (pH - 6)/2           O pH vai variar entre 4 e 8
+# x2 ~ (EDTA - 0.2)/0.1     A [EDTA] vai variar entre 0.1 M e 0.3 M
+# x3 ~ (PSA:C18 - 1)/0.5    A razão PSA:C18 vai variar entre 1,5 e 0,5
+
+BBD_2&lt;- bbd(3, block=FALSE, randomize=TRUE, n0=2, coding = 
+              list(x1 ~ (pH - 6)/2, x2 ~ (EDTA - 0.2)/0.1, x3 ~ (PSA_C18 - 1)/0.5))
+
+BBD_2</code></pre>
+<pre><code>##    run.order std.order pH EDTA PSA_C18
+## 1          1        13  6  0.2     1.0
+## 2          2        10  6  0.3     0.5
+## 3          3         4  8  0.3     1.0
+## 4          4        11  6  0.1     1.5
+## 5          5         5  4  0.2     0.5
+## 6          6         3  4  0.3     1.0
+## 7          7         7  4  0.2     1.5
+## 8          8         1  4  0.1     1.0
+## 9          9         2  8  0.1     1.0
+## 10        10         9  6  0.1     0.5
+## 11        11         8  8  0.2     1.5
+## 12        12        12  6  0.3     1.5
+## 13        13         6  8  0.2     0.5
+## 14        14        14  6  0.2     1.0
+## 
+## Data are stored in coded form using these coding formulas ...
+## x1 ~ (pH - 6)/2
+## x2 ~ (EDTA - 0.2)/0.1
+## x3 ~ (PSA_C18 - 1)/0.5</code></pre>
+<p>Para avaliar os fatores temos então que realizar 14 experimentos na ordem estabelecida pela tabela, ou sejá temos que realizar os experimentos de forma aleatória e não na ordem estatística.</p>
+</div>
+<div id="ajustando-um-modelo-de-superfície-de-resposta" class="section level2">
+<h2>Ajustando um modelo de superfície de resposta</h2>
+<p>Vamos supor que realizamos os 14 experimentos e determinamos a porcentagem de recuperação, podemos planilhar os resultados do desenho e salvar como um csv simples para importar posteriormente no R.</p>
+<div class="figure">
+<img src="res_exp.PNG" alt="" />
+<p class="caption"><em>Exemplo de planilha com as respostas do planejamento, salvamos como .csv e damos um nome, ex DoE_bbd.csv </em></p>
+</div>
+<p>Importamos os resultados utilizando a função <em>read.csv2</em></p>
+<pre class="r"><code>### Dados experimentais
+      
+setwd(&quot;C:\\Users\\Alejandro\\Dropbox\\ayopasaa_blog\\content\\post\\Box-Behnken&quot;) # Adicionar um endereço
+BBD_exp&lt;- read.csv2(&quot;DoE_bbd.csv&quot;, header=TRUE) # importa o csv de nome DoE_bbd com o pacote read.csv2
+BBD_exp</code></pre>
+<pre><code>##    pH EDTA PSA.C18 Recuperação
+## 1   4  0.2     0.5        93.5
+## 2   8  0.2     1.5        94.4
+## 3   6  0.1     1.5        82.5
+## 4   6  0.2     1.0        95.1
+## 5   4  0.1     1.0        93.2
+## 6   6  0.3     1.5        81.4
+## 7   4  0.3     1.0        93.4
+## 8   4  0.2     1.5        94.4
+## 9   8  0.2     0.5        94.1
+## 10  6  0.1     0.5        82.2
+## 11  6  0.2     1.0        94.6
+## 12  6  0.3     0.5        83.7
+## 13  8  0.1     1.0        93.4
+## 14  8  0.3     1.0        93.1</code></pre>
+<p>Podemos codificar de novo simplesmente os resultados com a função <em>coded.data</em></p>
+<pre class="r"><code>BBD_exp_coded&lt;- coded.data(BBD_exp, x1 ~ (pH - 6)/2, x2 ~ (EDTA - 0.2)/0.1, x3 ~ (PSA.C18 - 1.0)/0.5 )
+BBD_exp_coded</code></pre>
+<pre><code>##    pH EDTA PSA.C18 Recuperação
+## 1   4  0.2     0.5        93.5
+## 2   8  0.2     1.5        94.4
+## 3   6  0.1     1.5        82.5
+## 4   6  0.2     1.0        95.1
+## 5   4  0.1     1.0        93.2
+## 6   6  0.3     1.5        81.4
+## 7   4  0.3     1.0        93.4
+## 8   4  0.2     1.5        94.4
+## 9   8  0.2     0.5        94.1
+## 10  6  0.1     0.5        82.2
+## 11  6  0.2     1.0        94.6
+## 12  6  0.3     0.5        83.7
+## 13  8  0.1     1.0        93.4
+## 14  8  0.3     1.0        93.1
+## 
+## Data are stored in coded form using these coding formulas ...
+## x1 ~ (pH - 6)/2
+## x2 ~ (EDTA - 0.2)/0.1
+## x3 ~ (PSA.C18 - 1)/0.5</code></pre>
+<p>Esta listagem se parece muito com os dados originais, mas internamente, os dados estão salvos na forma codificada, como pode ser visto fazendo uma transformação para um data.frame:</p>
+<pre class="r"><code>as.data.frame(BBD_exp_coded)</code></pre>
+<pre><code>##    x1 x2 x3 Recuperação
+## 1  -1  0 -1        93.5
+## 2   1  0  1        94.4
+## 3   0 -1  1        82.5
+## 4   0  0  0        95.1
+## 5  -1 -1  0        93.2
+## 6   0  1  1        81.4
+## 7  -1  1  0        93.4
+## 8  -1  0  1        94.4
+## 9   1  0 -1        94.1
+## 10  0 -1 -1        82.2
+## 11  0  0  0        94.6
+## 12  0  1 -1        83.7
+## 13  1 -1  0        93.4
+## 14  1  1  0        93.1</code></pre>
+<p>Uma superfície de resposta é ajustada usando a função <em>rsm</em>. Esta é uma extensão de <em>lm</em> e funciona quase exatamente como ela; no entanto, a fórmula do modelo para <em>rsm</em> deve fazer uso das funções especiais FO, TWI, PQ ou SO (para “first-order”, “two-way interaction”, “pure quadratic” e “second-order”, respectivamente), porque a presença destes especifica a porção da superfície de resposta do modelo. Outros termos que não envolvam essas funções podem ser incluídos no modelo; muitas vezes, esses termos incluem fatores de bloqueio e outros preditores categóricos.</p>
+<p>Em nosso exemplo temos uma variável de resposta, “Recuperação”, e três preditores codificados x1, x2, e X3. Ajustamos um modelo de superfície de resposta de primeira ordem aos nossos dados:</p>
+<pre class="r"><code>### Ajuste de modelo de superficie de resposta de primeira ordem:
+      
+BBD.rsm &lt;- rsm(Recuperação ~ FO(x1, x2, x3), data= BBD_exp_coded)  # cria o modelo
+summary(BBD.rsm)                                                   # Apresenta um sumário do modelo</code></pre>
+<pre><code>## 
+## Call:
+## rsm(formula = Recuperação ~ FO(x1, x2, x3), data = BBD_exp_coded)
+## 
+##             Estimate Std. Error t value  Pr(&gt;|t|)    
+## (Intercept)  90.6429     1.6535 54.8200 9.888e-14 ***
+## x1            0.0625     2.1873  0.0286    0.9778    
+## x2            0.0375     2.1873  0.0171    0.9867    
+## x3           -0.1000     2.1873 -0.0457    0.9644    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Multiple R-squared:  0.0003199,  Adjusted R-squared:  -0.2996 
+## F-statistic: 0.001067 on 3 and 10 DF,  p-value: 0.9999
+## 
+## Analysis of Variance Table
+## 
+## Response: Recuperação
+##                Df Sum Sq Mean Sq  F value  Pr(&gt;F)
+## FO(x1, x2, x3)  3   0.12   0.041   0.0011 0.99995
+## Residuals      10 382.75  38.275                 
+## Lack of fit     9 382.63  42.514 340.1127 0.04206
+## Pure error      1   0.13   0.125                 
+## 
+## Direction of steepest ascent (at radius 1):
+##         x1         x2         x3 
+##  0.5050763  0.3030458 -0.8081220 
+## 
+## Corresponding increment in original units:
+##          pH        EDTA     PSA.C18 
+##  1.01015254  0.03030458 -0.40406102</code></pre>
+<p>O que vemos no sumário é a típica informação para um objeto <em>lm</em> (com uma pequena diferença), seguido por algumas informações adicionais específicas das superfícies de resposta. A diferença sutil é que a rotulagem dos coeficientes de regressão é simplificada (não vemos “FO” lá). A tabela de análise de variância mostrada inclui um detalhamento de falta de ajuste e erro puro, e também recebemos informações sobre a direção da subida mais íngreme (steepest-ascent). Como o conjunto de dados é um objeto <em>coded.data</em>, as informações de subida mais íngreme também são apresentadas em unidades originais. (Embora o <em>rsm</em> não exija um conjunto de dados <em>coded.data</em>, o uso de um é altamente recomendado.)</p>
+<p>Neste exemplo em particular, a informação de subida mais íngreme é de pouca utilidade, porque há uma falta significativa de ajuste para este modelo (p&lt;0,05). Isso sugere que devemos tentar um modelo de ordem superior. Por exemplo, poderíamos tentar ajustar um modelo de segunda ordem:</p>
+<pre class="r"><code>### Ajuste de modelo de superficie de resposta de segunda ordem:
+      
+BBD_SO.rsm &lt;- rsm(Recuperação ~ SO(x1, x2, x3), data= BBD_exp_coded)  # cria o modelo
+
+summary(BBD_SO.rsm)          # Apresenta um sumário do modelo</code></pre>
+<pre><code>## 
+## Call:
+## rsm(formula = Recuperação ~ SO(x1, x2, x3), data = BBD_exp_coded)
+## 
+##             Estimate Std. Error  t value  Pr(&gt;|t|)    
+## (Intercept) 94.85000    0.43265 219.2295 2.597e-09 ***
+## x1           0.06250    0.21633   0.2889 0.7870004    
+## x2           0.03750    0.21633   0.1733 0.8707954    
+## x3          -0.10000    0.21633  -0.4623 0.6679165    
+## x1:x2       -0.12500    0.30593  -0.4086 0.7037693    
+## x1:x3       -0.15000    0.30593  -0.4903 0.6495953    
+## x2:x3       -0.65000    0.30593  -2.1247 0.1008115    
+## x1^2         5.03750    0.34204  14.7278 0.0001237 ***
+## x2^2        -6.61250    0.34204 -19.3325 4.220e-05 ***
+## x3^2        -5.78750    0.34204 -16.9205 7.152e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Multiple R-squared:  0.9961, Adjusted R-squared:  0.9873 
+## F-statistic: 113.2 on 9 and 4 DF,  p-value: 0.0001876
+## 
+## Analysis of Variance Table
+## 
+## Response: Recuperação
+##                 Df Sum Sq Mean Sq  F value    Pr(&gt;F)
+## FO(x1, x2, x3)   3   0.12   0.041   0.1091    0.9504
+## TWI(x1, x2, x3)  3   1.84   0.614   1.6405    0.3147
+## PQ(x1, x2, x3)   3 379.41 126.471 337.8180 2.894e-05
+## Residuals        4   1.50   0.374                   
+## Lack of fit      3   1.37   0.457   3.6600    0.3627
+## Pure error       1   0.13   0.125                   
+## 
+## Stationary point of response surface:
+##           x1           x2           x3 
+## -0.006292414  0.003324798 -0.008744471 
+## 
+## Stationary point in original units:
+##        pH      EDTA   PSA.C18 
+## 5.9874152 0.2003325 0.9956278 
+## 
+## Eigenanalysis:
+## eigen() decomposition
+## $values
+## [1]  5.038331 -5.675088 -6.725743
+## 
+## $vectors
+##            [,1]         [,2]         [,3]
+## x1  0.999963676  0.004701339 -0.007109484
+## x2 -0.005175317 -0.327846892 -0.944716694
+## x3 -0.006772256  0.944719172 -0.327810652</code></pre>
+<p>A falta de ajuste agora não é significativa (p &gt; 0,05). O resumo para um modelo de segunda ordem fornece resultados de uma análise canônica da superfície em vez de para a subida mais íngreme. A análise indica que o ponto estacionário da superfície ajustada está em (5,99, 0,20, 1,00) em unidades codificadas, bem dentro da região experimental; temos que dois dos três autovalores (eigenvalues) são negativos, se os três fossem negativos indicariam que o ponto estacionário é um máximo (este seria o tipo de situação com que sonhamos na experimentação de superfície de resposta - evidência clara de um conjunto próximo de condições ótimas)(<a href="https://cran.r-project.org/web/packages/rsm/vignettes/rsm.pdf" class="uri">https://cran.r-project.org/web/packages/rsm/vignettes/rsm.pdf</a>).</p>
+</div>
+<div id="análise-gráfico-da-superfície-de-resposta" class="section level2">
+<h2>Análise gráfico da superfície de resposta</h2>
+<p>Quando um modelo de regressão é ajustado usando dois ou mais preditores contínuos, é útil apresentar uma visualização gráfica da superfície ajustada. Para isso, as funções <em>contour.lm</em>, <em>persp.lm</em> e <em>image.lm</em> foram desenvolvidas e incorporadas ao pacote <em>rsm</em>, visto que a visualização de superfícies é especialmente importante quando se utilizam métodos de superfície de resposta. As três funções são métodos <em>S3</em> para objetos da classe <em>lm</em>, ou classes (como <em>rsm</em>) que são derivados de objetos <em>lm</em>.</p>
+<p>Os gráficos de contorno são gerados utilizando a função <em>contour</em> e os gráficos em perspectiva com a função <em>persp</em>:</p>
+<pre class="r"><code># second-order model
+
+contour(BBD_SO.rsm, ~ x1 + x2, image = TRUE, main=&quot;second-order model&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>persp(BBD_SO.rsm, x2 ~ x1, zlab = &quot;y&quot;, main=&quot;second-order model&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-2.png" width="672" /></p>
+<pre class="r"><code># second-order model
+
+contour(BBD_SO.rsm, ~ x2 + x3, image = TRUE, main=&quot;second-order model&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>persp(BBD_SO.rsm, x3 ~ x2, zlab = &quot;y&quot;, main=&quot;second-order model&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<pre class="r"><code># second-order model
+
+contour(BBD_SO.rsm, ~ x1 + x3, image = TRUE, main=&quot;second-order model&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>persp(BBD_SO.rsm, x3 ~ x1, zlab = &quot;y&quot;, main=&quot;second-order model&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
+<p>A superfície de resposta entre a concentração de EDTA e a razão PSA:C18 mostra a curvatura, efeito de ambos os termos quadrados e mostra a recuperação máxima. Temos que em pH menores a 4 ou maiores a 8 poderiamos encontrar outros máximos locais.</p>
+<p>O gráfico de pareto pode ser construido com a função <em>paretoPlot</em> do pacote <em>pid</em></p>
+<pre class="r"><code>#install.packages(&quot;pid&quot;)
+#library(pid)
+
+paretoPlot(BBD_SO.rsm)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-2.png" width="672" /></p>
+<p>Finalmente, os gráficos de diagnóstico são construidos utilizando simplesmente a função <em>plot</em> do R base.</p>
+<pre class="r"><code># plot diagnistics
+plot(BBD_SO.rsm)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-2.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-3.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-4.png" width="672" /></p>
+</div>
+<div id="conclusão" class="section level2">
+<h2>Conclusão</h2>
+<p>Quanto ao software, o R, provavelmente junto com o Phyton, é o único software de código aberto que combina todo o espectro de DoE e otimização com a flexibilidade de uma poderosa linguagem de script que permite qualquer tipo de pré e pós-processamento de dados em um ambiente de software. Isso dá vantagens ao R frente a muitas ferramentas comerciais baseadas em GUI que geralmente vendem facilidade de uso em detrimento da flexibilidade (<a href="https://bookdown.org/gerhard_krennrich/doe_and_optimization/" class="uri">https://bookdown.org/gerhard_krennrich/doe_and_optimization/</a>).</p>
+<p>Uma das grandes vantagens é que com um mesmo arquivo de R (.Rmd) podemos trabalhar tanto a robustez quanto outras análises, por exemplo a da linearidade. O documento dinâmico gerado é praticamente o relatório de desenvolvimento. O documento dinâmico é reprodutível e possui menos erros pois o processo requer mínima intervenção humana (é possível incluso a leitura direita de por exemplo os pdf gerados pelo Empower). Como só e gerenciado o código-fonte do documento, ficamos livres de etapas manuais como ter que refazer um gráfico ou uma tabela após qualquer alteração nos dados.</p>
+<div class="figure">
+<img src="blog-lin1.png" alt="" />
+<p class="caption"><em>Processo de geração de relatórios dinâmicos</em></p>
+</div>
+</div>
