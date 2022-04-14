@@ -10,6 +10,7 @@ date_end: "2030-06-01T15:00:00Z"
 event: Academic Theme Conference
 event_url: https://example.org
 featured: false
+draft: true
 image:
   caption: 'Image credit: [**Unsplash**](https://unsplash.com/photos/bzdhc5b3Bxs)'
   focal_point: Right
